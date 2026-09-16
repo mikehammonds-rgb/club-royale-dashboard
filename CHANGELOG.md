@@ -2,6 +2,13 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-16 — Documented Claude's git push fallback
+
+- Confirmed Claude's cloud sandbox cannot push directly to this repository (session-level git-proxy restriction, independent of credentials) and that routing git through Mike's Mac via the device-bridge local shell also does not currently work (`device_bash` reports the local sandbox fails to start, even after app restarts on current version 2.110.0).
+- Decided the interim fallback: Claude commits locally and hands Mike a patch/file plus exact commands to run from his own working local clone (`~/Documents/club-royale-dashboard`), which has normal push access.
+- Documented this in `WORKFLOW.md` (new section 8, "Git push access by agent") and `AI_STATE.md` so Codex/ChatGPT and any future Claude session both understand the current push-access split without re-diagnosing it.
+- No offer, sailing, booking, or application data changed.
+
 ## 2026-09-16 — Mike offer refresh
 
 - Live-checked Mike's signed-in Royal Caribbean Club Royale account (Claude, via browser automation on the user's authenticated session).

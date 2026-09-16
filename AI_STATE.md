@@ -49,6 +49,12 @@ Last reconciled with repository `main`: 2026-09-16.
 - No service worker means no guaranteed offline operation or background content refresh.
 - Full member/reservation details are private. Avoid adding further sensitive raw portal material to Git.
 
+## Git push access by agent
+
+- Codex/ChatGPT pushes directly to this repository from its own environment.
+- Claude (cloud sandbox) is blocked from pushing to this repository by its own outbound git proxy at the session level — confirmed independent of credentials. An attempt to route around this via Mike's Mac (device-bridge local shell) also failed; that shell does not start on his device as of 2026-09-16, even after app restarts.
+- Current fallback: Claude commits locally, hands Mike a patch/updated file plus exact git commands, and Mike pushes from his own working local clone (`~/Documents/club-royale-dashboard`). See `WORKFLOW.md` section 8 for detail. Revisit if either blocker is later resolved.
+
 ## Migration state
 
 - GitHub `main` now contains the complete current source rather than only an uploaded archive.
