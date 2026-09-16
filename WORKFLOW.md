@@ -1,129 +1,89 @@
-# Club Royale Refresh, Validation, and Release Workflow
+# Working and Refresh Workflow
 
-## What “refresh the dashboard” means
+## 1. Preflight for every change
 
-A refresh is a repository update based on a newly verified, signed-in Royal Caribbean Club Royale portal session for a named member. It is not a browser reload and the dashboard cannot fetch portal offers by itself.
+1. Read all six root handoff documents listed in `AGENTS.md`.
+2. Run `git status`, switch to `main`, and run `git pull --ff-only origin main`.
+3. Stop and resolve unexpected local changes before touching overlapping files.
+4. Confirm the requested member and refresh scope. Never mix Mike and Tully data.
+5. Record the live portal check time, member, source, active code count, usable slot count, and whether each offer's sailing table and details were opened.
+6. Never commit credentials, session data, browser cookies, or raw private exports. Do not trigger a portal download without the user's approval.
 
-Never label a maintenance-only build or documentation update as a portal refresh.
+## 2. Capture and compare the live Club Royale state
 
-## 1. Preflight
+1. Open the authenticated Royal Caribbean Club Royale offers page for the requested member.
+2. Compare every live tile with both the current active offers and historical records. Count repeated instances of the same code; a code shown twice is two usable slots.
+3. Classify each code as unchanged, changed, new, returned, or removed. A removed code can later return.
+4. Open offer details and the issued offer's actual “View sailings” link. Preserve its instance-specific URL rather than fabricating a bare code URL.
+5. Capture offer name, redeem-by date, usable copies, FreePlay/perk text, benefit, cabin choices, and whether it is a cruise comp (`comp`).
+6. Capture each eligible sailing row as an itinerary group: offer code, date lines, itinerary, link, port, room category, and ship.
+7. Re-check standing or saved searches affected by the refresh, including the built-in Christmas Day search. “Aboard on” means the date falls within the cruise interval, including a return-date match that docks that morning.
 
-1. Read `AGENTS.md`, `AI_STATE.md`, `PROJECT_MAP.md`, `DATA_SCHEMA.md`, and the latest `CHANGELOG.md` entries.
-2. Confirm which member is in scope. Do not mix Mike and Tully.
-3. Inspect `git status`; preserve unrelated user changes.
-4. Record the current offer codes, `uses` counts, snapshot date, portal summary, group count, expanded dated-sailing count, and relevant booked trips.
-5. Treat `data/` and the current code as authoritative. Use `maintenance/docs/` only as historical evidence.
+## 3. Update canonical data without erasing history
 
-## 2. Obtain live evidence
+1. Save the verified active offers in the correct canonical file:
+   - Mike: `data/club-royale-data.js`
+   - Tully: offer section of `data/tully-data.js`
+2. Generate or update the member's sailing groups:
+   - Mike: use `maintenance/build_live_offer_snapshot.mjs <verified-input.json> data/live-sailing-groups.js YYYY-MM-DD` when the captured input matches that builder's contract.
+   - Tully: use `maintenance/build_member_data.mjs <verified-input.json> data/tully-data.js`, after updating its embedded offer metadata from verified data.
+3. Update the member in `data/member-profiles.js`: profile/tier values, `snapshot`, `portalCheck` counts and arrays, returned codes, and explanatory note.
+4. Preserve removed/expired history in `CHANGELOG.md`, `AI_STATE.md` when still operationally relevant, and an append-only D1 snapshot/migration when cloud history must be exposed. Do not leave removed codes in active offer/Finder data.
+5. Preserve booked-offer snapshots such as `data/mike-26pas603.js`; a booked offer can remain historically important after it leaves the active account.
+6. If booking facts changed, update both `data/booked-cruises.js` and the matching fallback/seed booking in `app/api/state/route.ts`. Add an idempotent `app_metadata`-guarded migration when existing D1 rows also need the correction.
+7. For a new refresh history record, add an idempotent `member_offer_snapshots` insert in `app/api/state/route.ts` or a migration. Never overwrite earlier snapshots.
+8. Update `README.md` counts/date if its “Current data” section changed.
 
-1. Use `https://www.royalcaribbean.com/club-royale/offers?country=USA` in the user's authenticated browser session. If redirected, let the user sign in; never request or store credentials.
-2. If the portal briefly reports zero offers or fails to load, retry and cross-check before treating everything as removed. Royal Caribbean has previously produced transient empty/error states.
-3. Inventory every visible offer instance, including duplicate copies. Capture:
-   - offer code and name;
-   - number of issued copies;
-   - redeem-by date;
-   - benefit text and complimentary/discounted cabin terms;
-   - bonus FreePlay and other details;
-   - whether it is cruise-comp eligible or FreePlay-only.
-4. Compare with both the active dataset and known removed/history references. Offers can disappear early or later return.
-5. Open each issued offer's own “View sailings” link. Royal Caribbean uses an instance-specific `playerOfferId`; a guessed bare offer URL is not reliable.
-6. Capture every eligible row needed by the dashboard: ship, departure port, itinerary, room category, departure dates, and itinerary link. Confirm itinerary night count because the client derives return dates from the `N Night` text.
-7. Do not download exports without the user's explicit approval.
+## 4. Synchronize deployable static files
 
-## 3. Reconcile without destroying history
-
-Classify differences as new, removed, changed, returned, or duplicate-count changes.
-
-- Active inventory must match the live member account.
-- Do not delete confirmed cruises when an offer disappears.
-- Do not make historical `data/mike-26pas603.js` rows active unless live evidence says the offer is currently active and the active datasets are intentionally updated.
-- A missing offer is removed from the active offer map and active sailing groups, but its existence belongs in the new snapshot/change summary and changelog.
-- A returned offer is restored from freshly verified evidence and added to that member's `returnedOffers` when the UI should badge it.
-- Keep “itinerary groups” distinct from “dated sailings.” `sailingGroups.length` counts groups; the client expands each group's compact date tokens into individual dated rows and deduplicates by offer, ship, port, itinerary, room, and departure.
-- Preserve each member's local/D1 saved searches, offer statuses, and bookings. Source refreshes must not overwrite user state.
-
-## 4. Update canonical source files
-
-For Mike:
-
-1. Update `data/club-royale-data.js` (`MIKE_OFFERS`).
-2. Update `data/live-sailing-groups.js` (`MIKE_ROYAL_SAILING_GROUPS`).
-3. Update Mike's entry in `data/member-profiles.js`: `snapshot`, `returnedOffers`, and every `portalCheck` field.
-4. Add an idempotent member snapshot/profile update in `app/api/state/route.ts` if the refreshed state should appear in cloud history. Use a unique metadata key and do not rewrite earlier snapshots.
-
-For Tully:
-
-1. Update both `TULLY_OFFERS` and `TULLY_ROYAL_SAILING_GROUPS` in `data/tully-data.js`.
-2. Update Tully's entry in `data/member-profiles.js`.
-3. Add an idempotent member snapshot/profile update in `app/api/state/route.ts` when appropriate.
-
-For booking changes, update both `data/booked-cruises.js` and the matching seed/migration behavior in `app/api/state/route.ts`. A D1 row that already exists is not changed by `INSERT OR IGNORE`; use an idempotent migration marker for intended updates.
-
-Do not edit `public/` directly. Run `pnpm sync-static` or `pnpm build` to regenerate it.
-
-## 5. Recheck product behavior
-
-After any refresh:
-
-1. Re-run standing/saved searches affected by added, changed, or removed rows. The built-in Christmas search means aboard on Dec. 25, 2026; a cruise qualifies when that date is within the sailing interval, not only when it departs that day.
-2. Confirm active Finder results only reference active, cruise-comp-eligible offers.
-3. Confirm duplicate offers create the correct number of slot ledger entries.
-4. Confirm `portalCheck.uniqueOffers`, `usableSlots`, and `sailingRows` agree with the active data.
-5. Confirm Mike and Tully still show only their own offers, Finder results, searches, statuses, and trips.
-6. Update `AI_STATE.md` and append a dated `CHANGELOG.md` entry with the exact member, evidence date, counts, files, schema status, validation, and deployment status.
-
-If this refresh changes any procedure or project convention—not just the offer data—update every affected handoff file in the same change. Never leave a new workflow only in chat, code comments, or one model's memory. Reconcile `AGENTS.md`, `PROJECT_MAP.md`, `WORKFLOW.md`, `DATA_SCHEMA.md`, `AI_STATE.md`, and `CHANGELOG.md` before handing the repository to another AI.
-
-## 6. Validate and build
-
-Run from the repository root:
+Run:
 
 ```sh
+pnpm sync-static
+```
+
+This copies root `index.html`, `app.js`, `styles.css`, and `data/*.js` to `public/`. Do not manually maintain divergent public copies.
+
+Verify all pairs are byte-identical:
+
+```sh
+cmp index.html public/index.html
+cmp app.js public/app.js
+cmp styles.css public/styles.css
+for file in data/*.js; do cmp "$file" "public/data/$(basename "$file")"; done
+```
+
+## 5. Validate the refresh
+
+1. Validate the data mechanically: parse every data file, confirm expected offer codes and object keys, expand grouped dates with the same logic as `app.js`, and reconcile unique offers, usable slots, itinerary groups, and dated-sailing counts with `portalCheck`.
+2. Confirm every sailing references an active offer, except explicitly preserved historical files that are not wired into `sailingGroups`.
+3. Confirm dates are valid ISO results, itinerary text contains a parseable night count, cabin labels match UI expectations, and no generated text contains `undefined` or `NaN`.
+4. Confirm Mike and Tully remain separate after switching accounts: offers, Finder results, bookings, saved searches, statuses, and snapshots must not leak between members.
+5. Exercise the visible flows on desktop and a mobile viewport: Overview, all Offers, duplicate slots, default Florida/Oasis Finder, date search, Christmas preset, saved search, comparison, Trips, notes/checklist, and member switching.
+6. Run the production build:
+
+```sh
+pnpm install --frozen-lockfile
 pnpm build
 ```
 
-The build runs `scripts/sync-static.mjs` first. Then verify:
+`pnpm build` runs `sync-static` first. Fix build, runtime, or browser-console errors before publishing.
 
-- root `index.html`, `app.js`, and `styles.css` match their `public/` copies;
-- every canonical `data/*.js` listed by the sync script matches `public/data/`;
-- no active sailing group references a missing offer;
-- all `uses` values are positive integers;
-- ISO dates are valid and each itinerary contains a usable night count;
-- active group and expanded-row counts match `portalCheck` for each refreshed member;
-- the rendered page contains no visible `undefined` or `NaN`.
+## 6. Mobile/PWA refresh behavior
 
-For UI changes, run the development server and test at minimum:
+The current project provides a web-app manifest, standalone display mode, Apple metadata, and icons, but no service worker. Therefore:
 
-- desktop width and a narrow mobile viewport (about 390 px);
-- all four bottom-navigation views;
-- member switching and isolation;
-- update-instructions dialog (it must explain the manual workflow, not imply a direct refresh);
-- offer sorting/statuses and duplicate slots;
-- Finder defaults, date semantics, filters, saved search flow, pagination, comparison dialog, and Christmas preset;
-- Trips/calendar/dialog and persistence;
-- browser console for runtime errors.
+1. Always sync `public/` and complete a new deployment after data/code changes.
+2. Test the normal hosted URL while online at a mobile viewport.
+3. Test an installed Home Screen/standalone copy by fully closing it, reopening it online, and navigating between views. If an older response remains in the browser cache, reload the hosted page or clear that site's cached web data, then reopen the installed app.
+4. Do not claim offline support or background refresh. A true offline cache requires a deliberately added and tested service worker.
+5. Confirm `start_url` (`/#overview`), scope (`/`), icons, theme color, and Apple touch behavior after any path/domain change.
 
-## 7. Commit and deploy
+## 7. Record, commit, and push
 
-1. Review the diff for unrelated or generated-only edits.
-2. Commit the source and its synchronized `public/` copies together when the task includes a commit.
-3. Push only when requested or when continuing an explicitly authorized release workflow.
-4. The existing Site is identified by `.openai/hosting.json`; do not create a new project. Build/package the current verified commit, save a new version to that project, retain its current custom audience, and deploy the saved version.
-5. Verify the live URL on mobile and desktop after deployment. A successful local build or prepared deployment archive is not a deployment.
-6. Record the deployed commit/version and timestamp in `AI_STATE.md` and `CHANGELOG.md`. If publishing is intentionally stopped, say exactly where it stopped.
-
-## Refresh completion checklist
-
-- [ ] Named member and live evidence date recorded
-- [ ] Offer instances and duplicate counts reconciled
-- [ ] Offer details and every active sailing group checked
-- [ ] Active data updated; booked/history data preserved
-- [ ] Profile and cloud snapshot metadata updated
-- [ ] Standing searches rechecked
-- [ ] Canonical files synchronized to `public/`
-- [ ] Data invariants passed
-- [ ] Production build passed
-- [ ] Mobile and desktop behavior checked when UI changed
-- [ ] `AI_STATE.md` and `CHANGELOG.md` updated
-- [ ] Any changed workflow/schema/architecture/rule is reflected across the six handoff files
-- [ ] Deployment status stated accurately
+1. Update `AI_STATE.md` with the new verified snapshot, architecture/deployment changes, open constraints, and migration status.
+2. Add a dated `CHANGELOG.md` entry containing the member, source date, before/after counts, important code changes, history preserved, and checks run.
+3. Review `git diff` and `git status`; confirm no raw capture, secret, or unrelated file is staged.
+4. Commit to `main` with a concise message such as `Refresh Mike Club Royale snapshot for YYYY-MM-DD`.
+5. Push to `origin main`, fetch/inspect the remote, and confirm local `HEAD` equals `origin/main`.
+6. Report the commit hash, live snapshot counts, validation/build outcome, deployment status, and any remaining manual action. GitHub is not updated until the push succeeds.

@@ -1,64 +1,65 @@
 # Current AI State
 
-Last reconciled against repository code: 2026-09-16. This documentation pass did not access either live Royal Caribbean account and did not refresh offer data.
+Last reconciled with repository `main`: 2026-09-16.
 
-## Repository state
+## Canonical repository and branch
 
-- Canonical repository: `club-royale-source`, branch `main`.
-- Repository HEAD before this documentation change: `abba4de` (`Standardize booked cruise details`, 2026-09-13).
-- Local branch was 8 commits ahead of its configured remote at inspection time.
-- Application stack: static HTML/CSS/JavaScript dashboard served from `public/`, Next/vinext redirect and API shell, Cloudflare D1 member state, OpenAI Sites project configured in `.openai/hosting.json`.
-- Production build command: `pnpm build` (runs static synchronization first).
+- Repository: `mikehammonds-rgb/club-royale-dashboard`
+- Canonical branch: `main`
+- Canonical collaboration state: the six root handoff documents plus the current code and data in this repository.
+- Chat history, Claude artifacts, `NEXT_SESSION.md`, and `maintenance/docs/` are supporting history only. They must not override newer committed code/data.
 
-## Last verified portal snapshots in source
+## Current architecture
 
-### Mike
+- Hybrid vinext/Next.js application targeting Cloudflare/OpenAI Sites.
+- `/` redirects to the static browser dashboard at `/index.html`.
+- The editable UI is plain `index.html` + `styles.css` + `app.js`; `scripts/sync-static.mjs` copies it and `data/*.js` to `public/` before development/build.
+- `/api/state` provides optional Cloudflare D1 persistence. Without D1, the app continues with seeds and member-scoped `localStorage`.
+- D1 is initialized at request time with `db/schema.ts` statements and idempotent seed/migration guards stored in `app_metadata`.
+- Mobile install metadata and icons exist. No service worker/offline cache exists.
 
-- Snapshot date: 2026-09-12.
-- Active source data: 4 unique codes, 6 usable slots, 897 expanded dated casino-comp rows.
-- Active codes: `26TOR704` (2 uses), `26RCL904` (1), `26TOR604` (2), `26QFP204` (1).
-- September 12 change summary: added `26TOR704`; removed `26VAR504`, `26MIX504`, and `26EST204`; `26TOR704` and `26TOR604` have duplicate copies.
-- `26TOR604` is marked as a returned offer.
-- Four confirmed cruises are seeded for Mike. Booked offer `26PAS603` is no longer in the active offer map; its booked trip and separate Aug. 29 sailing snapshot are intentionally preserved.
-- Source says the standard Florida-port Christmas 2026 search had no qualifying active-offer cruise covering Dec. 25 as of the Sep. 12 refresh. Mike's already booked Dec. 24 Wonder cruise is preserved in Trips.
+## Current verified datasets
 
-### Tully
+- Mike snapshot: 2026-09-12; 4 active unique offer codes, 6 usable slots, 897 expanded dated sailing rows. Active codes: `26TOR704`, `26RCL904`, `26TOR604`, `26QFP204`. Duplicate codes: `26TOR704`, `26TOR604`.
+- Tully snapshot: 2026-08-27; 12 offer codes/slots and 1,207 expanded sailing rows in profile metadata. One FreePlay-only offer is marked `comp: false` and excluded from Finder results.
+- Mike has four seeded booked cruises. The Christmas 2026 Wonder booking uses historical offer `26PAS603`; its August 29 sailing snapshot is preserved separately and is not part of the active Finder dataset.
+- The UI keeps members separate except for the account switcher. Do not restore earlier combined comparison/overlap presentation.
 
-- Snapshot date: 2026-08-27.
-- Active source data: 12 unique codes, 12 usable slots, 1,207 expanded dated rows in the portal summary.
-- One offer (`26FRP109`) is FreePlay-only with `comp: false`, so it is excluded from Finder's casino-comp results.
-- No confirmed cruises are seeded for Tully.
+## Key shipped features
 
-These are source snapshots, not claims about the portal on 2026-09-16. Several stored redeem-by dates are now at or before the current date, so the next “refresh” request must perform a new live reconciliation rather than merely changing dates or marking everything expired by assumption.
+- Overview with priority offer, live-derived counts, change summary, next trip, and planning shortcuts.
+- Complete offer library, urgency sorting, duplicate-copy ledger, and per-slot status.
+- Sailing Finder with aboard-date logic, Florida/all-port scope, class/ship/length/cabin/month/FreePlay filters, saved searches, Christmas preset, opportunity scoring, conflict and back-to-back detection, and comparison tray.
+- Trips/calendar with detailed costs, packages, companions, notes, and checklist completion.
+- Per-member cloud/browser persistence for bookings, saved searches, and offer statuses.
+- Responsive mobile navigation plus installable web-app metadata.
 
-## Current product decisions
+## Known constraints and risks
 
-- Mike and Tully remain completely separate in presentation and persisted state; only the account switcher is shared.
-- The app has four views: Overview, Offers, Find, and Trips.
-- Finder is member-scoped, expands compact itinerary groups to dated sailings, defaults to Florida ports and Oasis class, supports aboard-date semantics, and ranks cabin category before FreePlay in its cabin-value calculation.
-- Duplicate offers create separate redemption slots.
-- Bookings and history survive removal of an active offer.
-- The update control is instructional. The dashboard cannot authenticate to or refresh Royal Caribbean on its own.
-- Mobile/PWA behavior and bottom navigation are first-class requirements.
-- No scheduled expiring-offer push notification is wanted; prior project history says the user declined it.
+- Royal Caribbean data is a manually verified snapshot, not a live API feed. The dashboard cannot authenticate to or refresh the portal by itself.
+- Root and `public/` static files are duplicates by deployment design and must remain byte-identical through `sync-static`.
+- Current data is committed as executable JS constants with no formal runtime validator or automated test suite.
+- `app/api/state/route.ts` duplicates booking/profile seed facts from `data/`; relevant refreshes must update both or introduce a clearer generated source.
+- `maintenance/build_member_data.mjs` embeds Tully offer metadata and can overwrite the combined Tully data file; verify it before running.
+- `maintenance/refresh-2026-08-26.mjs`, `maintenance/build_data.py`, and `maintenance/docs/` describe older data shapes or Claude-artifact workflows and are not the current production build path.
+- `README.md` still describes an older August snapshot and should be brought into line during the next data/product documentation refresh.
+- The HTML sync dialog contains some hard-coded August 26 copy even though live header values are rendered from member data. Treat hard-coded explanatory counts/dates as cleanup debt.
+- A clean `pnpm build` currently transforms the application modules, then the OpenAI Sites plugin fails because `.openai/hosting.json` is absent from the repository. Restore or regenerate the correct project-specific hosting configuration before treating the build as publishable; do not invent its project values.
+- No service worker means no guaranteed offline operation or background content refresh.
+- Full member/reservation details are private. Avoid adding further sensitive raw portal material to Git.
 
-## Deployment state
+## Migration state
 
-- `.openai/hosting.json` points to the existing Site project and D1 binding.
-- The Sep. 12 source refresh was built and pushed; historical notes say a deployment archive was prepared and the final Site save/deploy was stopped at the user's request.
-- A later note says the member-separation change was completed “after the September 12 refresh was published,” which conflicts with the earlier deployment sentence. Git proves the source changes exist but does not prove the live Site version.
-- Therefore deployment status is **not independently verified**. Before publishing or claiming the live site is current, inspect the existing Site's deployed version and compare it with the current commit. Preserve its custom audience.
+- GitHub `main` now contains the complete current source rather than only an uploaded archive.
+- The product has moved from earlier standalone Claude artifact pages to the current static dashboard inside a vinext/Next.js Cloudflare application.
+- Multi-member D1 tables were added after legacy single-member tables. Runtime initialization still retains and migrates legacy rows to Mike once.
+- Shared, model-neutral handoff documentation was added on 2026-09-16. GitHub is now the intended handoff point for both ChatGPT/Codex and Claude.
+- The September 12 refreshed source was previously prepared for deployment, but `NEXT_SESSION.md` says final Site save/deploy had not yet occurred at that handoff. Verify the actual hosting/deployment state before claiming the September 12 snapshot is live.
 
-## Known issues and documentation debt
+## Next safe priorities
 
-- `README.md` still describes an Aug. 23/Aug. 26-era offer count and should not be used for current counts.
-- `index.html` contains old placeholder verification text in the update dialog, but `app.js` replaces it at runtime with the active member's current source snapshot.
-- `maintenance/docs/03-workflow-procedures.md` describes superseded Claude artifact pages and an older source hierarchy. It remains historical reference only.
-- `NEXT_SESSION.md` contains conflicting publication wording, reconciled above.
-- The repository has no dedicated automated test script; build plus invariant/browser verification is required.
-
-## Next safe actions
-
-1. For an offer refresh, follow `WORKFLOW.md` with the named member's signed-in portal session.
-2. Before any release, verify the existing Site's live version/audience and run `pnpm build` plus browser checks.
-3. After a real refresh or deployment, replace the relevant state above and append `CHANGELOG.md`; do not simply add another contradictory note.
+1. Verify the current hosted deployment and audience against `main`.
+2. Restore the correct `.openai/hosting.json` and confirm a clean production build.
+3. Add automated data validation and browser smoke tests before the next portal refresh.
+4. Remove hard-coded stale copy by rendering all refresh summaries from `member-profiles.js`.
+5. Decide whether to retain or archive legacy Claude-artifact maintenance files after their useful history is captured.
