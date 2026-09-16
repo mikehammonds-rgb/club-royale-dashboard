@@ -1,0 +1,30 @@
+{
+  "name": "Club Royale Offer Compass",
+  "short_name": "Offer Compass",
+  "description": "A private dashboard for Club Royale casino offers and eligible Royal Caribbean sailings.",
+  "start_url": "/#overview",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#071b2d",
+  "theme_color": "#071b2d",
+  "icons": [
+    {
+      "src": "/icons/club-royale-compass-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/club-royale-compass-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/club-royale-compass-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

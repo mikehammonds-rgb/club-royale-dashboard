@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071b2d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Offer Compass">
+  <meta name="description" content="A private, mobile-first dashboard for Club Royale casino offers and eligible Royal Caribbean sailings.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/club-royale-compass-192.png">
+  <link rel="canonical" href="https://club-royale-offer-compass.the-unlimite-3666.chatgpt.site/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Club Royale Offer Compass">
+  <meta property="og:description" content="Casino comps, clearly charted.">
+  <meta property="og:url" content="https://club-royale-offer-compass.the-unlimite-3666.chatgpt.site/">
+  <meta property="og:image" content="https://club-royale-offer-compass.the-unlimite-3666.chatgpt.site/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Club Royale Offer Compass">
+  <meta name="twitter:description" content="Casino comps, clearly charted.">
+  <meta name="twitter:image" content="https://club-royale-offer-compass.the-unlimite-3666.chatgpt.site/og.png">
+  <title>Club Royale Compass</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#overview" aria-label="Club Royale Compass home">
+        <span class="brand-mark" aria-hidden="true">CR</span>
+        <span><strong>Club Royale</strong><small>Offer Compass</small></span>
+      </a>
+      <div class="member-controls">
+        <label class="member-switcher"><span>Viewing offers for</span><select id="member-select" aria-label="Choose Club Royale member"><option value="mike">Mike</option><option value="tully">Tully</option></select></label>
+        <button class="profile-button" type="button" aria-label="Open Club Royale profile details" data-profile-open>
+          <span class="tier-dot" aria-hidden="true"></span>
+          <span><small id="header-member-name">Mike · Casino tier</small><strong id="header-member-tier">Prime</strong></span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="view is-active" id="overview" aria-labelledby="overview-title">
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow" id="overview-date">Wednesday, August 26</p>
+            <h1 id="overview-title">Your offers, charted.</h1>
+            <p class="intro">The clearest path from casino offer to your next cruise.</p>
+          </div>
+          <button class="freshness sync-button" type="button" id="open-sync" aria-label="View Club Royale update instructions"><span></span> <b id="verified-date">Verified Aug 26</b> · How to update</button>
+        </div>
+
+        <article class="priority-card" id="priority-card" aria-labelledby="priority-title">
+          <div class="priority-glow" aria-hidden="true"></div>
+          <div class="priority-topline">
+            <span class="priority-label">Act now</span>
+            <span class="countdown" id="priority-countdown"></span>
+          </div>
+          <div class="priority-copy">
+            <p class="offer-code" id="priority-code"></p>
+            <h2 id="priority-title"></h2>
+            <p id="priority-benefit"></p>
+          </div>
+          <div class="priority-stats" id="priority-stats"></div>
+          <button class="primary-action" type="button" data-view-target="finder">
+            Explore casino comps <span aria-hidden="true">→</span>
+          </button>
+        </article>
+
+        <section class="metrics" aria-label="Account summary">
+          <article><span class="metric-icon gold" aria-hidden="true">✦</span><div><strong id="offer-count">—</strong><span>Usable offer slots</span><small id="unique-offer-count"></small></div></article>
+          <article><span class="metric-icon aqua" aria-hidden="true">≈</span><div><strong id="sailing-count">—</strong><span>Casino-comp sailings</span></div></article>
+          <article><span class="metric-icon coral" aria-hidden="true">⌛</span><div><strong id="expiring-count">—</strong><span>Expiring soon</span></div></article>
+        </section>
+
+        <section class="dashboard-grid" aria-label="Cruise planning summary">
+          <article class="next-trip-card" id="next-trip-card"></article>
+          <article class="action-center">
+            <div class="section-heading compact"><div><p class="eyebrow">Action center</p><h2>What needs attention</h2></div></div>
+            <div class="action-list" id="action-list"></div>
+          </article>
+        </section>
+
+        <section class="change-center section-block" aria-labelledby="change-center-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">What changed?</p><h2 id="change-center-title">Portal reconciliation</h2></div>
+            <button class="text-button" type="button" id="open-sync-secondary">How updates work →</button>
+          </div>
+          <div class="change-summary" id="change-summary"></div>
+          <div class="change-grid" id="change-grid"></div>
+        </section>
+
+        <section class="section-block" aria-labelledby="top-offers-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">Best opportunities</p><h2 id="top-offers-title">Offers worth opening</h2></div>
+            <button class="text-button" type="button" data-view-target="offers">View all <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="offer-preview-grid" id="offer-preview-grid"></div>
+        </section>
+      </section>
+
+      <section class="view" id="offers" aria-labelledby="offers-title" hidden>
+        <div class="page-heading">
+          <div><p class="eyebrow">Your private offer library</p><h1 id="offers-title">Every offer, in order.</h1><p id="offers-page-copy">Every account offer appears here. Finder dates, ports, ships, and cabin filters never change this list.</p></div>
+          <div class="update-badge"><span></span> Checked live today</div>
+        </div>
+        <div class="urgent-ribbon" id="urgent-ribbon"></div>
+        <div class="filter-toolbar offer-sort-toolbar">
+          <p id="offer-toolbar-copy">Offer entries · duplicates are separate redemptions</p>
+          <label class="sort-control"><span>Sort all offers</span><select id="offer-sort"><option value="urgency">Redeem soonest</option><option value="value">Best value</option><option value="name">Offer name</option></select></label>
+        </div>
+        <p class="results-meta" id="offer-results-meta" aria-live="polite"></p>
+        <section class="slot-ledger" aria-labelledby="slot-ledger-title">
+          <div><p class="eyebrow">Redemption ledger</p><h2 id="slot-ledger-title">Every usable copy, accounted for.</h2></div>
+          <div class="slot-ledger-grid" id="slot-ledger-grid"></div>
+        </section>
+        <div class="offer-library" id="offer-library"></div>
+      </section>
+
+      <section class="view" id="finder" aria-labelledby="finder-title" hidden>
+        <div class="page-heading finder-heading">
+          <div><p class="eyebrow">Your casino-comp finder</p><h1 id="finder-title">Find a Club Royale comp.</h1><p>Start with Florida and Oasis class, or widen the search. Add a date only when it matters.</p></div>
+        </div>
+
+        <div class="comp-only-banner">
+          <span class="comp-only-icon" aria-hidden="true">♠</span>
+          <div><strong>Club Royale casino comps only</strong><small>Every result is tied to one of your casino offer codes and an eligible comp cabin—never a general retail cruise search.</small></div>
+        </div>
+
+        <form class="finder-form" id="finder-form">
+          <div class="date-field">
+            <label for="aboard-date">I want to be aboard on <span class="optional-tag">Optional</span></label>
+            <div class="date-input-row">
+              <input id="aboard-date" name="aboard-date" type="date" min="2026-08-23">
+              <button type="button" id="clear-aboard-date">Clear date</button>
+            </div>
+            <div class="date-empty-state" id="aboard-date-empty" hidden>
+              <span>✓ No date selected</span>
+              <button type="button" id="choose-aboard-date">Choose a date</button>
+            </div>
+            <small class="field-help">Leave blank to browse every cruise matching your ports, ship class, and other choices.</small>
+          </div>
+
+          <section class="saved-searches-panel" aria-labelledby="saved-searches-title">
+            <div class="saved-searches-heading">
+              <div><strong id="saved-searches-title">My saved searches</strong><small>Saved privately in your cloud dashboard, with fresh-match counts.</small></div>
+              <button type="button" id="save-current-search">+ Save current</button>
+            </div>
+            <div class="saved-search-list" id="saved-search-list"></div>
+          </section>
+
+          <button class="saved-search-button" type="button" id="christmas-search"><span aria-hidden="true">✦</span><span><strong>Christmas Day</strong><small>Built-in saved search · Dec 25, 2026</small></span></button>
+          <div class="finder-presets" aria-label="Quick searches">
+            <button type="button" data-finder-preset="value">Best comp cabins</button>
+            <button type="button" data-finder-preset="expiry">Expiring soonest</button>
+            <button type="button" data-finder-preset="balcony">Balcony only</button>
+          </div>
+
+          <fieldset class="quick-filter-fieldset">
+            <legend>Departure ports <small>Florida is your default</small></legend>
+            <div class="port-scope-toggle" role="group" aria-label="Departure port scope">
+              <button type="button" class="is-active" data-port-scope="florida" aria-pressed="true">Florida</button>
+              <button type="button" data-port-scope="all" aria-pressed="false">All eligible ports</button>
+            </div>
+            <p class="port-scope-note" id="port-scope-note">Showing all four Florida departure ports.</p>
+            <div class="check-chips port-chips" id="port-filters">
+              <label><input type="checkbox" value="Miami" checked><span>Miami</span></label>
+              <label><input type="checkbox" value="Fort Lauderdale" checked><span>Fort Lauderdale</span></label>
+              <label><input type="checkbox" value="Orlando (Port Canaveral)" checked><span>Port Canaveral</span></label>
+              <label><input type="checkbox" value="Tampa" checked><span>Tampa</span></label>
+              <span class="additional-port-chips" id="additional-port-filters" hidden>
+                <label><input type="checkbox" value="Baltimore"><span>Baltimore</span></label>
+                <label><input type="checkbox" value="Cape Liberty (New York)"><span>New York / Cape Liberty</span></label>
+                <label><input type="checkbox" value="Galveston"><span>Galveston</span></label>
+                <label><input type="checkbox" value="Los Angeles"><span>Los Angeles</span></label>
+                <label><input type="checkbox" value="New Orleans"><span>New Orleans</span></label>
+                <label><input type="checkbox" value="San Diego"><span>San Diego</span></label>
+                <label><input type="checkbox" value="San Juan"><span>San Juan</span></label>
+              </span>
+            </div>
+          </fieldset>
+
+          <fieldset class="quick-filter-fieldset class-fieldset">
+            <legend>Ship class <small>Specific ship overrides class</small></legend>
+            <div class="check-chips class-chips" id="class-filters">
+              <label><input type="checkbox" value="Oasis" checked><span>Oasis <b data-class-count="Oasis"></b></span></label>
+              <label><input type="checkbox" value="Freedom"><span>Freedom <b data-class-count="Freedom"></b></span></label>
+              <label><input type="checkbox" value="Voyager"><span>Voyager <b data-class-count="Voyager"></b></span></label>
+              <label><input type="checkbox" value="Radiance"><span>Radiance <b data-class-count="Radiance"></b></span></label>
+              <label><input type="checkbox" value="Icon" disabled><span>Icon <b data-class-count="Icon">none</b></span></label>
+              <label><input type="checkbox" value="Quantum" disabled><span>Quantum <b data-class-count="Quantum">none</b></span></label>
+              <label><input type="checkbox" value="Vision" disabled><span>Vision <b data-class-count="Vision">none</b></span></label>
+            </div>
+          </fieldset>
+
+          <div class="quick-selects">
+            <label><span>Trip length</span><select id="nights-filter"><option value="any">Any length</option><option value="2-3">2–3 nights</option><option value="4-5">4–5 nights</option><option value="6+">6+ nights</option></select></label>
+            <label><span>Cabin</span><select id="room-filter"><option value="any">Any cabin</option><option value="Balcony">Balcony</option><option value="Ocean View">Ocean View</option><option value="Interior">Interior</option></select></label>
+            <label><span>Sailing month</span><select id="sailing-month"><option value="any">Any month</option></select></label>
+            <label><span>Minimum FreePlay</span><select id="min-freeplay"><option value="0">Any amount</option><option value="50">$50+</option><option value="75">$75+</option><option value="100">$100+</option></select></label>
+          </div>
+
+          <details class="advanced-filters">
+            <summary>More filters <span>Flexible dates, ship, conflicts, and result order</span></summary>
+            <div class="advanced-grid">
+              <label><span>Depart no earlier than</span><input id="depart-start" type="date" min="2026-08-23"></label>
+              <label><span>Return no later than</span><input id="return-end" type="date" min="2026-08-23"></label>
+              <label><span>Ship</span><select id="ship-filter"><option value="any">Any ship</option></select></label>
+              <label><span>Sort results</span><select id="sailing-sort"><option value="score">Best opportunity score</option><option value="value">Best cabin value</option><option value="date">Soonest departure</option><option value="nights">Longest sailing</option><option value="expiry">Offer expiring soonest</option></select></label>
+            </div>
+            <div class="toggle-options">
+              <label><input id="weekend-only" type="checkbox"><span>Weekend departures only</span></label>
+              <label><input id="exclude-conflicts" type="checkbox" checked><span>Hide cruises that overlap my booked trips</span></label>
+              <label><input id="duplicate-only" type="checkbox"><span>Only offers with more than one redemption copy</span></label>
+              <label><input id="hide-sailed-ships" type="checkbox"><span>Hide ships already in my booked trips</span></label>
+              <label><input id="back-to-back-only" type="checkbox"><span>Only back-to-back opportunities</span></label>
+            </div>
+            <p class="score-note">Opportunity scores weigh cabin, trip length, FreePlay, ship class, Florida convenience, redemption timing, and booked-trip conflicts.</p>
+          </details>
+
+          <div class="finder-actions">
+            <button class="secondary-action" type="button" id="finder-reset">Reset</button>
+            <button class="primary-action" type="submit">Show <span id="live-match-count">casino comps</span> <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+
+        <div class="finder-alert" id="finder-alert" hidden></div>
+
+        <section class="finder-results" aria-labelledby="finder-results-title">
+          <div class="section-heading finder-results-heading">
+            <div><p class="eyebrow" id="finder-result-kicker">Recommended now</p><h2 id="finder-results-title">Top sailing opportunities</h2></div>
+            <span class="result-total" id="finder-result-total" aria-live="polite"></span>
+          </div>
+          <div class="active-filter-summary" id="active-filter-summary"></div>
+          <div class="sailing-list" id="sailing-list"></div>
+          <button class="load-more" id="load-more" type="button" hidden>Show more sailings</button>
+        </section>
+      </section>
+
+      <section class="view" id="trips" aria-labelledby="trips-title" hidden>
+        <div class="page-heading trips-heading">
+          <div><p class="eyebrow">Booked with Club Royale</p><h1 id="trips-title">Your cruise calendar.</h1><p id="trips-page-copy">Confirmed casino cruises, with the practical details, costs, companions, and trip-prep workspace in one private place.</p></div>
+          <span class="update-badge"><span></span> <b id="confirmed-count">0 confirmed</b></span>
+        </div>
+        <section class="trip-timeline" id="trip-timeline" aria-label="Upcoming cruise timeline"></section>
+        <section class="calendar-panel" aria-labelledby="calendar-title">
+          <div class="calendar-toolbar">
+            <div><p class="eyebrow">Cruise calendar</p><h2 id="calendar-title">Comp opportunities by month</h2></div>
+            <div class="calendar-controls"><button type="button" id="calendar-prev" aria-label="Previous month">←</button><strong id="calendar-month-label"></strong><button type="button" id="calendar-next" aria-label="Next month">→</button></div>
+          </div>
+          <div class="calendar-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+          <div class="cruise-calendar" id="cruise-calendar"></div>
+          <div class="calendar-legend"><span><i class="is-comp"></i>Comp departures</span><span><i class="is-booked"></i>Booked cruise</span><span><i class="is-deadline"></i>Redeem deadline</span></div>
+        </section>
+        <div class="trip-list" id="trip-list"></div>
+        <section class="section-block" aria-labelledby="history-title">
+          <div class="section-heading"><div><p class="eyebrow">Offer history</p><h2 id="history-title">Your baseline is saved</h2></div><span class="history-date">Since Aug 23, 2026</span></div>
+          <article class="history-card" id="history-card"></article>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Primary navigation">
+      <button class="nav-item is-active" type="button" data-view-target="overview" aria-current="page"><span aria-hidden="true">⌂</span><strong>Overview</strong></button>
+      <button class="nav-item" type="button" data-view-target="offers"><span aria-hidden="true">◇</span><strong>Offers</strong></button>
+      <button class="nav-item" type="button" data-view-target="finder"><span aria-hidden="true">⌕</span><strong>Find</strong></button>
+      <button class="nav-item" type="button" data-view-target="trips"><span aria-hidden="true">▦</span><strong>Trips</strong></button>
+    </nav>
+  </div>
+
+  <dialog class="profile-dialog" id="profile-dialog">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close profile details">×</button>
+      <p class="eyebrow">Club Royale profile</p>
+      <h2 id="profile-title">Mike · Prime member</h2>
+      <div class="tier-progress"><span id="tier-progress-bar" style="width:43%"></span></div>
+      <p><strong id="tier-credit-count">1,082 tier credits</strong><br><span id="tier-credit-message">1,418 more to keep Prime</span></p>
+      <div class="member-number"><span>Club Royale number</span><strong id="masked-number">••••••429</strong><button type="button" id="reveal-number">Show</button></div>
+      <p class="profile-separation-note">Offers, saved searches, trips, and redemption statuses stay separate for each member.</p>
+    </form>
+  </dialog>
+  <dialog class="save-search-dialog" id="save-search-dialog">
+    <form id="save-search-form">
+      <button class="dialog-close" type="button" id="close-save-search" aria-label="Close save search dialog">×</button>
+      <p class="eyebrow">Save this Finder setup</p>
+      <h2>Name your search</h2>
+      <p>Your date can stay blank. Ports, ship class, cabin, trip length, and sorting will all be remembered.</p>
+      <label for="saved-search-name">Search name</label>
+      <input id="saved-search-name" name="saved-search-name" type="text" maxlength="50" required autocomplete="off">
+      <div class="save-dialog-actions">
+        <button class="secondary-action" type="button" id="cancel-save-search">Cancel</button>
+        <button class="primary-action" type="submit">Save search</button>
+      </div>
+    </form>
+  </dialog>
+  <aside class="compare-tray" id="compare-tray" hidden>
+    <div><strong id="compare-count">0 selected</strong><small>Compare up to 4 casino-comp cruises</small></div>
+    <button class="secondary-action" type="button" id="clear-compare">Clear</button>
+    <button class="primary-action" type="button" id="open-compare">Compare</button>
+  </aside>
+  <dialog class="compare-dialog" id="compare-dialog">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close comparison">×</button>
+      <p class="eyebrow">Side-by-side</p><h2>Compare casino comps</h2>
+      <div class="comparison-grid" id="comparison-grid"></div>
+    </form>
+  </dialog>
+  <dialog class="sync-dialog" id="sync-dialog">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close update information">×</button>
+      <p class="eyebrow">Offer update workflow</p><h2>This dashboard cannot refresh Royal Caribbean by itself.</h2>
+      <p>Royal Caribbean keeps each signed-in browser session isolated. Signing in with Safari does not give this cloud dashboard—or Codex in Chrome—access to that Safari tab. Your password is never stored here.</p>
+      <div class="sync-status"><span></span><div><strong>Last verified Aug 26, 2026</strong><small>10 unique codes · 13 usable offer slots · 1,636 dated comp rows · 1 new and 2 expired offers</small></div></div>
+      <ol class="sync-steps">
+        <li><span>1</span><div><strong>Open Club Royale in Chrome</strong><small>Use the exact casino-offers page below.</small></div></li>
+        <li><span>2</span><div><strong>Sign in there if needed</strong><small>Keep the offers page open after it loads.</small></div></li>
+        <li><span>3</span><div><strong>Return to Codex</strong><small>Say: “Check my Club Royale offers.” I’ll compare the live portal and update this private dashboard.</small></div></li>
+      </ol>
+      <div class="sync-actions"><a class="primary-action" href="https://www.royalcaribbean.com/club-royale/offers?country=USA" target="_blank" rel="noreferrer">Open Club Royale</a><button class="secondary-action" value="close">Close</button></div>
+    </form>
+  </dialog>
+  <dialog class="trip-dialog" id="trip-dialog">
+    <form method="dialog">
+      <button class="dialog-close" value="close" aria-label="Close trip details">×</button>
+      <div id="trip-dialog-content"></div>
+    </form>
+  </dialog>
+  <script src="data/club-royale-data.js"></script>
+  <script src="data/live-sailing-groups.js"></script>
+  <script src="data/mike-26pas603.js"></script>
+  <script src="data/booked-cruises.js"></script>
+  <script src="data/tully-data.js"></script>
+  <script src="data/member-profiles.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
