@@ -86,4 +86,5 @@ The current project provides a web-app manifest, standalone display mode, Apple 
 3. Review `git diff` and `git status`; confirm no raw capture, secret, or unrelated file is staged.
 4. Commit to `main` with a concise message such as `Refresh Mike Club Royale snapshot for YYYY-MM-DD`.
 5. Push to `origin main`, fetch/inspect the remote, and confirm local `HEAD` equals `origin/main`.
-6. Report the commit hash, live snapshot counts, validation/build outcome, deployment status, and any remaining manual action. GitHub is not updated until the push succeeds.
+6. Stop after the verified push unless Mike separately requests a ChatGPT Sites publish. This repository has no hosting/project-ID configuration, so an agent working only from this repo cannot identify or publish the live Site.
+7. Report the commit hash, live snapshot counts, validation/build outcome, and that deployment remains pending unless the live Site was actually checked and manually published. Never infer deployment from a successful build or push.

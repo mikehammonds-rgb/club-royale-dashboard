@@ -2,6 +2,14 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-16 — hosting and deployment correction
+
+- Corrected the shared handoff documentation after verifying the supplied patch's intent against the actual `mikehammonds-rgb/club-royale-dashboard` repository.
+- Clarified that no `.openai/hosting.json`, `wrangler.toml`, or equivalent hosting/project-ID configuration exists in this repository; that configuration lives in the ChatGPT/Codex environment.
+- Recorded the decision that deployment stays manual through ChatGPT Sites. This repository is the shared code/data layer, and neither Claude nor Codex should infer, trigger, or claim a deployment from Git state alone.
+- Removed the follow-up instruction to restore a hosting file in this repository. A successful push is not evidence that the live Site was published.
+- Source data, database schema, and application behavior are unchanged. No portal access or deployment occurred.
+
 ## 2026-09-16
 
 ### GitHub migration and shared AI handoff

@@ -59,6 +59,12 @@ The corresponding `public/data/*.js` files are generated deployment copies, not 
 
 There is no service-worker file or registration in the current repository. The app has installable/mobile metadata, but it does not provide a repository-defined offline asset cache.
 
+## Deployment and hosting
+
+The live site is a ChatGPT Sites project, but this repository contains no hosting or project-ID configuration: no `.openai/hosting.json`, `wrangler.toml`, or equivalent exists in the current tree. The identifying configuration lives in the ChatGPT/Codex environment rather than this shared repository.
+
+Deployment is deliberately manual through ChatGPT Sites as decided on 2026-09-16. This repository is the shared code/data layer, not the deployment mechanism. Do not add or invent hosting configuration or deployment automation without Mike's explicit request, and do not infer the live Site version from Git history.
+
 ## Maintenance tooling and historical references
 
 | Path | Responsibility |

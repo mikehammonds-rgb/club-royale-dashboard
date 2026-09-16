@@ -17,6 +17,7 @@ Last reconciled with repository `main`: 2026-09-16.
 - `/api/state` provides optional Cloudflare D1 persistence. Without D1, the app continues with seeds and member-scoped `localStorage`.
 - D1 is initialized at request time with `db/schema.ts` statements and idempotent seed/migration guards stored in `app_metadata`.
 - Mobile install metadata and icons exist. No service worker/offline cache exists.
+- Deployment/hosting configuration is not part of this repository. There is no `.openai/hosting.json`, `wrangler.toml`, or equivalent project identifier in the current tree.
 
 ## Current verified datasets
 
@@ -44,7 +45,7 @@ Last reconciled with repository `main`: 2026-09-16.
 - `maintenance/refresh-2026-08-26.mjs`, `maintenance/build_data.py`, and `maintenance/docs/` describe older data shapes or Claude-artifact workflows and are not the current production build path.
 - `README.md` still describes an older August snapshot and should be brought into line during the next data/product documentation refresh.
 - The HTML sync dialog contains some hard-coded August 26 copy even though live header values are rendered from member data. Treat hard-coded explanatory counts/dates as cleanup debt.
-- A clean `pnpm build` currently transforms the application modules, then the OpenAI Sites plugin fails because `.openai/hosting.json` is absent from the repository. Restore or regenerate the correct project-specific hosting configuration before treating the build as publishable; do not invent its project values.
+- A clean `pnpm build` currently transforms the application modules, then the OpenAI Sites plugin fails because it expects `.openai/hosting.json`. That hosting configuration lives outside this shared repository; do not invent or commit project-specific values merely to make the local build finish.
 - No service worker means no guaranteed offline operation or background content refresh.
 - Full member/reservation details are private. Avoid adding further sensitive raw portal material to Git.
 
@@ -54,12 +55,12 @@ Last reconciled with repository `main`: 2026-09-16.
 - The product has moved from earlier standalone Claude artifact pages to the current static dashboard inside a vinext/Next.js Cloudflare application.
 - Multi-member D1 tables were added after legacy single-member tables. Runtime initialization still retains and migrates legacy rows to Mike once.
 - Shared, model-neutral handoff documentation was added on 2026-09-16. GitHub is now the intended handoff point for both ChatGPT/Codex and Claude.
-- The September 12 refreshed source was previously prepared for deployment, but `NEXT_SESSION.md` says final Site save/deploy had not yet occurred at that handoff. Verify the actual hosting/deployment state before claiming the September 12 snapshot is live.
+- Deployment deliberately remains a separate, manual ChatGPT Sites action as decided on 2026-09-16. This repository is the shared code/data layer only. Neither Claude nor Codex should infer, trigger, or claim a deployment from repository state alone.
+- The September 12 refreshed source was previously prepared for deployment, but `NEXT_SESSION.md` contains conflicting publication wording. The live Site state is unresolved until it is checked directly or confirmed by Mike.
 
 ## Next safe priorities
 
-1. Verify the current hosted deployment and audience against `main`.
-2. Restore the correct `.openai/hosting.json` and confirm a clean production build.
-3. Add automated data validation and browser smoke tests before the next portal refresh.
-4. Remove hard-coded stale copy by rendering all refresh summaries from `member-profiles.js`.
-5. Decide whether to retain or archive legacy Claude-artifact maintenance files after their useful history is captured.
+1. Verify the current hosted deployment and audience directly; do not infer it from `main`.
+2. Add automated data validation and browser smoke tests before the next portal refresh.
+3. Remove hard-coded stale copy by rendering all refresh summaries from `member-profiles.js`.
+4. Decide whether to retain or archive legacy Claude-artifact maintenance files after their useful history is captured.
