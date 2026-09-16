@@ -2,6 +2,19 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-16 — Mike offer refresh
+
+- Live-checked Mike's signed-in Royal Caribbean Club Royale account (Claude, via browser automation on the user's authenticated session).
+- `26TOR604` "Play Your Way" expired on schedule (Sep 15, 2026) and is no longer on the account. Removed from `data/club-royale-data.js`, `data/live-sailing-groups.js` (161 sailing groups removed), and `member-profiles.js` `returnedOffers`.
+- `26TOR704` "Super Spins" changed: now carries $100 bonus FreePlay (previously `fp: 0`, no perk text). Redeem-by (2026-10-07), uses (2), and cabin options unchanged. Updated in `data/club-royale-data.js`.
+- `26RCL904` "September Monthly Mix" and `26QFP204` "Autumn Showdown" unchanged. Note: `26QFP204` redeems by 2026-09-16 — same day as this check.
+- No previously-removed offer returned this cycle.
+- Result: 3 unique active codes (was 4), 4 usable slots (was 6), 459 expanded dated sailing rows (was 897) — this count was computed by actually running `app.js`'s own `expandRoyalSailingGroups` logic against the refreshed `data/live-sailing-groups.js`, not estimated.
+- Updated `data/club-royale-data.js`, `data/live-sailing-groups.js`, `data/member-profiles.js` (Mike's `snapshot`, `portalCheck`, `returnedOffers`), `app/api/state/route.ts` (seed profile snapshot date, new idempotent `mike_snapshot_2026_09_16` migration/snapshot following the existing pattern), `README.md` (current-data counts), `AI_STATE.md`.
+- Validation: ran `pnpm sync-static` and confirmed root/public byte-identical for all six data files plus `index.html`/`app.js`/`styles.css`. Independently recomputed (outside `app.js`, in a standalone script using the same expansion function) `uniqueOffers`, `usableSlots`, `sailingRows`, and confirmed every sailing group references an active offer, no invalid `uses`, no bad dates/nights, no `undefined`/`NaN` in offer data. Ran `pnpm build`: module transformation succeeds; build fails only at the already-documented `.openai/hosting.json` step, unchanged by this refresh.
+- Tully: not checked this cycle (user scoped this refresh to Mike only).
+- Deployment: not performed. Per the 2026-09-16 decision, this refresh stops at a verified push; publishing to ChatGPT Sites remains a separate manual step.
+
 ## 2026-09-16 — hosting and deployment correction
 
 - Corrected the shared handoff documentation after verifying the supplied patch's intent against the actual `mikehammonds-rgb/club-royale-dashboard` repository.

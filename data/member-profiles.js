@@ -8,21 +8,21 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 1082,
     progressPercent: 43,
     tierMessage: "1,418 more tier credits to keep Prime",
-    snapshot: "2026-09-12",
+    snapshot: "2026-09-16",
     offers: MIKE_OFFERS,
     sailingGroups: MIKE_ROYAL_SAILING_GROUPS,
     seedBookings: MIKE_BOOKED_CRUISES,
-    returnedOffers: ["26TOR604"],
+    returnedOffers: [],
     portalCheck: {
-      checkedAt: "2026-09-12T00:00:00+08:00",
-      uniqueOffers: 4,
-      usableSlots: 6,
-      sailingRows: 897,
-      newCodes: ["26TOR704"],
-      removedCodes: ["26VAR504", "26MIX504", "26EST204"],
-      changedCodes: [],
-      duplicateCodes: ["26TOR704", "26TOR604"],
-      note: "The Sep 12 refresh found 6 usable slots across 4 active offer codes. Super Spins is new and appears twice. Three expired codes were retired from the active listing. Play Your Way also remains available twice."
+      checkedAt: "2026-09-16T14:30:00-04:00",
+      uniqueOffers: 3,
+      usableSlots: 4,
+      sailingRows: 459,
+      newCodes: [],
+      removedCodes: ["26TOR604"],
+      changedCodes: ["26TOR704"],
+      duplicateCodes: ["26TOR704"],
+      note: "Sep 16 refresh: 4 usable slots across 3 active offer codes. Play Your Way (26TOR604) expired on schedule Sep 15 and dropped off the account. Super Spins (26TOR704) now carries $100 bonus FreePlay (previously none); its redeem-by, uses, and cabin terms are unchanged. September Monthly Mix and Autumn Showdown are unchanged. Autumn Showdown (26QFP204) redeems by Sep 16, 2026 (today)."
     }
   },
   tully: {

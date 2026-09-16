@@ -21,7 +21,7 @@ Last reconciled with repository `main`: 2026-09-16.
 
 ## Current verified datasets
 
-- Mike snapshot: 2026-09-12; 4 active unique offer codes, 6 usable slots, 897 expanded dated sailing rows. Active codes: `26TOR704`, `26RCL904`, `26TOR604`, `26QFP204`. Duplicate codes: `26TOR704`, `26TOR604`.
+- Mike snapshot: 2026-09-16; 3 active unique offer codes, 4 usable slots, 459 expanded dated sailing rows (all computed by actually running `app.js`'s expansion logic against the refreshed data, not estimated). Active codes: `26TOR704` (×2, now with $100 bonus FreePlay it didn't previously have), `26RCL904`, `26QFP204` (redeems by 2026-09-16, i.e. same-day as this check). `26TOR604` "Play Your Way" expired on schedule Sep 15 and is no longer on the account or in `returnedOffers`.
 - Tully snapshot: 2026-08-27; 12 offer codes/slots and 1,207 expanded sailing rows in profile metadata. One FreePlay-only offer is marked `comp: false` and excluded from Finder results.
 - Mike has four seeded booked cruises. The Christmas 2026 Wonder booking uses historical offer `26PAS603`; its August 29 sailing snapshot is preserved separately and is not part of the active Finder dataset.
 - The UI keeps members separate except for the account switcher. Do not restore earlier combined comparison/overlap presentation.
