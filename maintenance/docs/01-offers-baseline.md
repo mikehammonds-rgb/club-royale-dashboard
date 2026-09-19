@@ -105,8 +105,6 @@ expand each group to every date, so its per-offer counts (e.g. 26 for 26RCL804) 
 - **26RCL804**: 4 matching sailings — Wonder (Miami), Oasis (Ft. Lauderdale) — Sep 7, 2026–Mar 8, 2027
 - **26BAF206**: 0 matches (West Coast-focused offer)
 
-## Published pages
-- Dashboard: https://claude.ai/code/artifact/10666cab-28a6-4f14-bd72-05e44d80ab66
-- Sailing Finder: https://claude.ai/code/artifact/4daf5e9a-2f7e-425d-94b0-a6c6619117b7
+## Historical publication references
 
-See `03-workflow-procedures.md` for the update rules for both.
+The former Claude artifact dashboard and Finder are retired historical outputs. They are not the current product and must not be updated or republished. The canonical source is the GitHub repository `mikehammonds-rgb/club-royale-dashboard`; current refresh and release instructions are in the root `WORKFLOW.md`. The production dashboard is the existing GitHub-backed ChatGPT Site recorded in `AI_STATE.md`.

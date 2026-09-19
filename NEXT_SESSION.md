@@ -1,5 +1,7 @@
 # Club Royale dashboard handoff
 
+> **Archived handoff (September 12, 2026).** This file records an earlier session and is not an active work queue or publication instruction. For current source, workflow, and deployment state, use `AGENTS.md`, `AI_STATE.md`, and `WORKFLOW.md`. The current GitHub-backed dashboard was successfully published to the existing ChatGPT Site on September 16, 2026; do not resume the obsolete deployment step below.
+
 ## Refresh completed locally on September 12, 2026
 
 - Portal checked once using Mike's signed-in Royal Caribbean session.
@@ -10,7 +12,7 @@
 - Finder index now contains 897 dated casino-comp sailings.
 - The standard Florida-port Christmas 2026 search still has no qualifying cruise covering December 25.
 - Source build passed and the refresh is committed.
-- The refreshed source was successfully pushed to the cloud repository, and a deployment archive was prepared. Nothing has been published yet because the user asked to stop. Resume at the final Site version save-and-deploy step with the site's current custom audience.
+- Historical status at the end of this session: the refreshed source had been pushed and a deployment archive prepared, but publication was paused. This was superseded by the successful GitHub-backed ChatGPT Sites publication on September 16, 2026.
 
 ## Interface separation completed
 
@@ -22,4 +24,4 @@ Keep Mike and Tully completely separate throughout the presentation layer:
 - When Mike is selected, show only Mike's offers, Finder results, saved searches, and trips.
 - When Tully is selected, show only Tully's corresponding data.
 
-Completed after the September 12 refresh was published: the account dropdown remains, while all cross-member comparison, overlap, and combined-offer presentation has been removed.
+Later completed and published: the account dropdown remains, while all cross-member comparison, overlap, and combined-offer presentation has been removed.

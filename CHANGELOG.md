@@ -2,6 +2,14 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-19 — Reconciled canonical workflow and deployment records
+
+- Verified GitHub `main` as the canonical source and directly confirmed that ChatGPT Site version 21 was successfully published on September 16, 2026 from the GitHub-backed source workflow.
+- Updated `AI_STATE.md` and `PROJECT_MAP.md` with the verified production URL and publication state.
+- Marked `NEXT_SESSION.md` and the former Claude artifact procedure as historical, and removed instructions that could send an agent back to the retired artifact publishing flow.
+- Replaced the Claude fallback's fixed `~/Documents/club-royale-dashboard` path with any clean, current GitHub clone so the Mac folder remains optional.
+- Documentation only: no offer, sailing, booking, application, schema, audience, or live deployment change.
+
 ## 2026-09-16 — Documented Claude's git push fallback
 
 - Confirmed Claude's cloud sandbox cannot push directly to this repository (session-level git-proxy restriction, independent of credentials) and that routing git through Mike's Mac via the device-bridge local shell also does not currently work (`device_bash` reports the local sandbox fails to start, even after app restarts on current version 2.110.0).

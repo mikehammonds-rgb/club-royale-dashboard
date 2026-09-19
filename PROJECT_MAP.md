@@ -61,7 +61,7 @@ There is no service-worker file or registration in the current repository. The a
 
 ## Deployment and hosting
 
-The live site is a ChatGPT Sites project, but this repository contains no hosting or project-ID configuration: no `.openai/hosting.json`, `wrangler.toml`, or equivalent exists in the current tree. The identifying configuration lives in the ChatGPT/Codex environment rather than this shared repository.
+The live site is the existing GitHub-backed ChatGPT Sites project at `https://club-royale-offer-compass.the-unlimite-3666.chatgpt.site`. Site version 21 was verified as successfully published on September 16, 2026. This repository contains no hosting or project-ID configuration: no `.openai/hosting.json`, `wrangler.toml`, or equivalent exists in the current tree. The identifying configuration lives in the ChatGPT/Codex environment rather than this shared repository.
 
 Deployment is deliberately manual through ChatGPT Sites as decided on 2026-09-16. This repository is the shared code/data layer, not the deployment mechanism. Do not add or invent hosting configuration or deployment automation without Mike's explicit request, and do not infer the live Site version from Git history.
 

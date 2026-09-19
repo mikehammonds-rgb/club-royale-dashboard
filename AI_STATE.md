@@ -53,7 +53,7 @@ Last reconciled with repository `main`: 2026-09-16.
 
 - Codex/ChatGPT pushes directly to this repository from its own environment.
 - Claude (cloud sandbox) is blocked from pushing to this repository by its own outbound git proxy at the session level — confirmed independent of credentials. An attempt to route around this via Mike's Mac (device-bridge local shell) also failed; that shell does not start on his device as of 2026-09-16, even after app restarts.
-- Current fallback: Claude commits locally, hands Mike a patch/updated file plus exact git commands, and Mike pushes from his own working local clone (`~/Documents/club-royale-dashboard`). See `WORKFLOW.md` section 8 for detail. Revisit if either blocker is later resolved.
+- Current fallback: Claude commits locally, hands Mike a patch/updated file plus exact git commands, and Mike pushes from any clean, current clone of this GitHub repository. No fixed Mac folder is required. See `WORKFLOW.md` section 8 for detail. Revisit if either blocker is later resolved.
 
 ## Migration state
 
@@ -62,11 +62,10 @@ Last reconciled with repository `main`: 2026-09-16.
 - Multi-member D1 tables were added after legacy single-member tables. Runtime initialization still retains and migrates legacy rows to Mike once.
 - Shared, model-neutral handoff documentation was added on 2026-09-16. GitHub is now the intended handoff point for both ChatGPT/Codex and Claude.
 - Deployment deliberately remains a separate, manual ChatGPT Sites action as decided on 2026-09-16. This repository is the shared code/data layer only. Neither Claude nor Codex should infer, trigger, or claim a deployment from repository state alone.
-- The September 12 refreshed source was previously prepared for deployment, but `NEXT_SESSION.md` contains conflicting publication wording. The live Site state is unresolved until it is checked directly or confirmed by Mike.
+- The existing ChatGPT Site was checked directly on 2026-09-19. Site version 21, built from the GitHub-backed source workflow, was successfully published on 2026-09-16 to `https://club-royale-offer-compass.the-unlimite-3666.chatgpt.site`. The Site retains its custom audience. `NEXT_SESSION.md` is an archived September 12 handoff and is not current publication guidance.
 
 ## Next safe priorities
 
-1. Verify the current hosted deployment and audience directly; do not infer it from `main`.
-2. Add automated data validation and browser smoke tests before the next portal refresh.
-3. Remove hard-coded stale copy by rendering all refresh summaries from `member-profiles.js`.
-4. Decide whether to retain or archive legacy Claude-artifact maintenance files after their useful history is captured.
+1. Add automated data validation and browser smoke tests before the next portal refresh.
+2. Remove hard-coded stale copy by rendering all refresh summaries from `member-profiles.js`.
+3. Consider moving the now-clearly-labeled legacy Claude-artifact maintenance material into a dedicated archive if its research history remains useful.
