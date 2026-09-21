@@ -104,6 +104,16 @@ The UI switches the entire active dataset through this object. Do not combine me
 
 Bookings are flexible JSON records. Missing package status fields are standardized to `"Not recorded"` by the API on save. Preserve unknown fields during edits.
 
+For receipt-backed booking updates, use the most specific fields available rather than collapsing evidence into a note:
+
+- Guests and documents: `guestNames[]`, `issueDate`, `companionCrownAnchor`.
+- Cabin: `cabin`, `cabinCode`, `stateroom`, `obstructedView`.
+- Cruise charges: `fare`, `fareLabel`, `taxesFees`, `total`, `amountPaid`, `balanceDue`, `gratuities`, `cruiseGratuitiesStatus`, `protection`.
+- Dining: `diningSeating`, `diningPackage`, `diningPackageQuantity`, `diningPackageSubtotal`, `diningPackageGratuities`, `diningPackageTotal`, `diningPackagePaymentStatus`, `diningPackageStatus`, `diningGratuitiesStatus`, `diningReservations[]`.
+- Beverages: `drinkPackage`, `drinkPackageQuantity`, `drinkPackageSubtotal`, `drinkPackageGratuities`, `drinkPackageTotal`, `drinkPackagePaymentStatus`, `drinkPackageStatus`, `drinkGratuitiesStatus`.
+
+Keep separately sourced facts when they do not conflict. For example, a cruise receipt may add the cabin and base-cruise charges while a later order confirmation adds an Unlimited Dining Package and a Deluxe Beverage Package. The later package order supplements the booking; it does not replace the cruise receipt or unrelated spa, FreePlay, companion-reservation, or travel-group details.
+
 ## Saved searches and offer status
 
 A saved Finder search is a JSON object with `id`, `name`, `date`, `departStart`, `returnEnd`, `weekendOnly`, `excludeConflicts`, `ports[]`, `classes[]`, `nights`, `room`, `month`, `minFreePlay`, `duplicateOnly`, `hideSailedShips`, `backToBackOnly`, `ship`, `sort`, optional `offer`, and `savedAt`.

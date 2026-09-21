@@ -2,6 +2,14 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-21 — Clarified cross-agent booking and publication workflow
+
+- Added a shared, step-by-step workflow for updating booked trips from receipts, order confirmations, screenshots, and corrected facts.
+- Documented the required canonical booking, API seed, idempotent D1 migration, UI rendering, static synchronization, local browser verification, GitHub commit/push, and live Sites verification steps.
+- Clarified how later dining/beverage orders supplement the base cruise receipt and how to preserve unrelated verified details.
+- Documented the separate GitHub and Sites commit histories, the need to preserve Sites-managed `.openai/` files, the existing custom audience, and the correct saved-version/deployment sequence.
+- Made the Claude boundary explicit: Claude may prepare a commit or patch when blocked from pushing, but must not describe GitHub or the live dashboard as updated until Codex/Mike completes those delivery steps.
+
 ## 2026-09-21 — Completed November 27 Wonder booking details
 
 - Reconciled Mike's November 27, 2026 Wonder of the Seas booking against Royal Caribbean receipt 9951558 issued March 4, 2026.
