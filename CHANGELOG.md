@@ -2,6 +2,14 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-21 — Completed November 27 Wonder booking details
+
+- Reconciled Mike's November 27, 2026 Wonder of the Seas booking against Royal Caribbean receipt 9951558 issued March 4, 2026.
+- Added the three-night Bahamas & Perfect Day itinerary and ports, Ocean View Balcony Guarantee (`XB GTY`) status, pending stateroom/obstructed-view assignment, guest names and companion Crown & Anchor number, My Time dining, 4:00 PM departure, declined travel protection, exact taxes/fees, amount paid, zero balance, and prepaid gratuity amount.
+- Recorded the Unlimited Dining Package for two ($251.94 + $45.30 gratuities = $297.24) with its five reservations, and the Deluxe Beverage Package for two ($431.94 + $77.70 gratuities = $509.64), both paid in full.
+- Preserved the separately sourced dining, beverage, spa, FreePlay, companion-reservation, and travel-group details already recorded for the trip.
+- Added an idempotent D1 migration so existing saved cloud bookings receive the receipt details, and expanded the trip dialog to display issue date, guests, companion loyalty number, amount paid, and balance due.
+
 ## 2026-09-19 — Reconciled canonical workflow and deployment records
 
 - Verified GitHub `main` as the canonical source and directly confirmed that ChatGPT Site version 21 was successfully published on September 16, 2026 from the GitHub-backed source workflow.

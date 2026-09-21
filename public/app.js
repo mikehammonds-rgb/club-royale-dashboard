@@ -927,21 +927,28 @@ function bookingCostSections(booking) {
   const taxesFees = Number.isFinite(booking.taxesFees) ? formatMoney(booking.taxesFees) : "Not itemized";
   const cruiseTotal = Number.isFinite(booking.total) ? formatMoney(booking.total) : "Not recorded";
   const cruisePayment = booking.paymentStatus || "Not recorded";
+  const amountPaid = Number.isFinite(booking.amountPaid) ? formatMoney(booking.amountPaid) : "Not recorded";
+  const balanceDue = Number.isFinite(booking.balanceDue) ? formatMoney(booking.balanceDue) : "Not recorded";
   const cruiseGratuities = booking.cruiseGratuitiesStatus || booking.gratuities || "Not recorded";
   const diningPackage = booking.diningPackage || booking.dining || "Not recorded";
   const diningStatus = booking.diningPackageStatus || (/not purchased/i.test(diningPackage) ? "Not purchased" : "Not recorded");
   const diningGratuities = booking.diningGratuitiesStatus || "Not recorded";
+  const diningQuantity = Number.isFinite(booking.diningPackageQuantity) ? String(booking.diningPackageQuantity) : "Not recorded";
+  const diningSubtotal = Number.isFinite(booking.diningPackageSubtotal) ? formatMoney(booking.diningPackageSubtotal) : "Not recorded";
   const diningTotal = Number.isFinite(booking.diningPackageTotal) ? formatMoney(booking.diningPackageTotal) : "Not recorded";
+  const diningReservations = booking.diningReservations?.length ? booking.diningReservations.join("; ") : "Not recorded";
   const drinkPackage = booking.drinkPackage || booking.drinks || "Not recorded";
   const drinkStatus = booking.drinkPackageStatus || (/not purchased/i.test(drinkPackage) ? "Not purchased" : "Not recorded");
   const drinkGratuities = booking.drinkGratuitiesStatus || (Number.isFinite(booking.drinkPackageGratuities) ? `Paid — ${formatMoney(booking.drinkPackageGratuities)}` : "Not recorded");
+  const drinkQuantity = Number.isFinite(booking.drinkPackageQuantity) ? String(booking.drinkPackageQuantity) : "Not recorded";
+  const drinkSubtotal = Number.isFinite(booking.drinkPackageSubtotal) ? formatMoney(booking.drinkPackageSubtotal) : "Not recorded";
   const drinkTotal = Number.isFinite(booking.drinkPackageTotal) ? formatMoney(booking.drinkPackageTotal) : "Not recorded";
 
   const row = (label, value, tone = "") => `<div><dt>${label}</dt><dd class="${tone}">${escapeHtml(value)}</dd></div>`;
   return `<div class="trip-cost-sections">
-    <section class="trip-cost-section"><div class="trip-cost-heading"><span>04</span><h3>Cruise fare & gratuities</h3></div><dl>${row("Cruise fare", cruiseFare)}${row("Taxes & fees", taxesFees)}${row("Cruise total", cruiseTotal)}${row("Payment", cruisePayment, bookingStatusTone(cruisePayment))}${row("Gratuities", cruiseGratuities, bookingStatusTone(cruiseGratuities))}</dl></section>
-    <section class="trip-cost-section"><div class="trip-cost-heading"><span>05</span><h3>Dining package</h3></div><dl>${row("Purchase", diningStatus, bookingStatusTone(diningStatus))}${row("Package / plan", diningPackage)}${row("Gratuities", diningGratuities, bookingStatusTone(diningGratuities))}${row("Package total", diningTotal)}</dl></section>
-    <section class="trip-cost-section"><div class="trip-cost-heading"><span>06</span><h3>Drink package</h3></div><dl>${row("Purchase", drinkStatus, bookingStatusTone(drinkStatus))}${row("Package / plan", drinkPackage)}${row("Gratuities", drinkGratuities, bookingStatusTone(drinkGratuities))}${row("Package total", drinkTotal)}</dl></section>
+    <section class="trip-cost-section"><div class="trip-cost-heading"><span>04</span><h3>Cruise fare & gratuities</h3></div><dl>${row("Cruise fare", cruiseFare)}${row("Taxes & fees", taxesFees)}${row("Cruise total", cruiseTotal)}${row("Amount paid", amountPaid)}${row("Balance due", balanceDue)}${row("Payment", cruisePayment, bookingStatusTone(cruisePayment))}${row("Gratuities", cruiseGratuities, bookingStatusTone(cruiseGratuities))}</dl></section>
+    <section class="trip-cost-section"><div class="trip-cost-heading"><span>05</span><h3>Dining package</h3></div><dl>${row("Purchase", diningStatus, bookingStatusTone(diningStatus))}${row("Package / plan", diningPackage)}${row("Quantity", diningQuantity)}${row("Subtotal", diningSubtotal)}${row("Gratuities", diningGratuities, bookingStatusTone(diningGratuities))}${row("Package total", diningTotal)}${row("Reservations", diningReservations)}</dl></section>
+    <section class="trip-cost-section"><div class="trip-cost-heading"><span>06</span><h3>Drink package</h3></div><dl>${row("Purchase", drinkStatus, bookingStatusTone(drinkStatus))}${row("Package / plan", drinkPackage)}${row("Quantity", drinkQuantity)}${row("Subtotal", drinkSubtotal)}${row("Gratuities", drinkGratuities, bookingStatusTone(drinkGratuities))}${row("Package total", drinkTotal)}</dl></section>
   </div>`;
 }
 
@@ -950,12 +957,13 @@ function bookingOverviewSections(booking) {
   const cabinDetails = [booking.cabin || "Not recorded", booking.cabinCode, booking.stateroom ? `Stateroom ${booking.stateroom}` : ""].filter(Boolean).join(" · ");
   const itinerary = booking.itinerary || (booking.itineraryStops?.length ? booking.itineraryStops.join(" → ") : "Not recorded");
   const companionText = booking.companions?.length ? booking.companions.join(", ") : "None recorded";
+  const guestText = booking.guestNames?.length ? booking.guestNames.join(", ") : companionText;
   const maybeText = booking.maybes?.length ? booking.maybes.join(", ") : "None recorded";
 
   return `<div class="trip-standard-sections">
     <section class="trip-standard-section"><div class="trip-standard-heading"><span>01</span><h3>Cruise details</h3></div><div class="trip-detail-grid">${row("Sailing dates", `${formatLongDate(booking.depart)} – ${formatLongDate(booking.return)}`)}${row("Length", `${booking.nights} nights`)}${row("Departure port", booking.port || "Not recorded")}${row("Itinerary", itinerary)}${row("Offer code", booking.offer || "Not recorded")}${row("Casino FreePlay", booking.freePlay ? formatMoney(booking.freePlay) : "None listed")}</div></section>
-    <section class="trip-standard-section"><div class="trip-standard-heading"><span>02</span><h3>Reservation & stateroom</h3></div><div class="trip-detail-grid">${row("Reservation", booking.reservation || "Not recorded")}${row("Crown & Anchor", booking.crownAnchor || "Not recorded")}${row("Cabin", cabinDetails)}${row("Obstructed view", booking.obstructedView || "Not recorded")}${row("Travel protection", booking.protection || "Not recorded")}${row("Check-in window", booking.checkInWindow || "Not recorded")}</div></section>
-    <section class="trip-standard-section"><div class="trip-standard-heading"><span>03</span><h3>Plans & people</h3></div><div class="trip-detail-grid">${row("Traveling with", companionText)}${row("Maybe joining", maybeText)}${row("Departure time", booking.departureTime || "Not recorded")}${row("Dining seating", booking.diningSeating || (/waitlist/i.test(booking.dining || "") ? booking.dining : "Not recorded"))}</div></section>
+    <section class="trip-standard-section"><div class="trip-standard-heading"><span>02</span><h3>Reservation & stateroom</h3></div><div class="trip-detail-grid">${row("Reservation", booking.reservation || "Not recorded")}${row("Issue date", booking.issueDate ? formatLongDate(booking.issueDate) : "Not recorded")}${row("Crown & Anchor", booking.crownAnchor || "Not recorded")}${row("Companion Crown & Anchor", booking.companionCrownAnchor || "Not recorded")}${row("Cabin", cabinDetails)}${row("Obstructed view", booking.obstructedView || "Not recorded")}${row("Travel protection", booking.protection || "Not recorded")}${row("Check-in window", booking.checkInWindow || "Not recorded")}</div></section>
+    <section class="trip-standard-section"><div class="trip-standard-heading"><span>03</span><h3>Plans & people</h3></div><div class="trip-detail-grid">${row("Guests", guestText)}${row("Traveling with", companionText)}${row("Maybe joining", maybeText)}${row("Departure time", booking.departureTime || "Not recorded")}${row("Dining seating", booking.diningSeating || (/waitlist/i.test(booking.dining || "") ? booking.dining : "Not recorded"))}</div></section>
   </div>`;
 }
 
