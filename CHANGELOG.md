@@ -2,6 +2,17 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-22 — Refreshed Mike's Club Royale offers (Claude, offer-level only)
+
+- Live-checked Mike's signed-in Royal Caribbean Club Royale account (browser session, not estimated).
+- Active set moved from 3 unique codes / 4 usable slots (Sep 16 snapshot) to 6 unique codes / 8 usable slots.
+- Removed: `26QFP204` "Autumn Showdown" — redeemed by Sep 16 as scheduled, no longer on the account.
+- Unchanged: `26TOR704` "Super Spins" (×2, $100 FreePlay), `26RCL904` "September Monthly Mix" ($50 FreePlay).
+- New: `26BAF405` "Double Down Days" (comp Ocean View or Interior + bonus Interior GTY room for two, no FreePlay listed), `26RSR103` "Limitless Luck" (comp Balcony for two, $50 FreePlay), `26SHC604` "Island Rollers" (comp Balcony or Ocean View for two, $50 bonus FreePlay), `26TOR804` "Isle or Nothing" (×2, comp Interior/Balcony/Ocean View or $725 off an upgrade, $50 FreePlay).
+- Updated `data/club-royale-data.js` and Mike's `portalCheck`/`snapshot`/`returnedOffers` in `data/member-profiles.js`. Ran `sync-static`; root and `public/data` copies confirmed byte-identical. Parsed both files and reconciled unique-offer/usable-slot counts (6/8) against the live portal.
+- Not done this pass: `data/live-sailing-groups.js` (Finder dated-sailing expansion) was not re-pulled — the 4 new offers' "View sailings" lists still need to be captured and run through `maintenance/build_live_offer_snapshot.mjs`. `sailingRows` in `portalCheck` still reflects the Sep 16 count (459) and is flagged stale in its note. Finder results for the new offers should not be trusted until that follow-up runs.
+- Delivery requested: commit and push this refresh to GitHub `main`, then publish the matching changes through the separate Sites deployment mirror.
+
 ## 2026-09-21 — Clarified cross-agent booking and publication workflow
 
 - Added a shared, step-by-step workflow for updating booked trips from receipts, order confirmations, screenshots, and corrected facts.

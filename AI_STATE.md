@@ -1,6 +1,6 @@
 # Current AI State
 
-Last reconciled with repository `main`: 2026-09-21.
+Last reconciled with repository `main`: 2026-09-22 (Mike offer-level refresh).
 
 ## Canonical repository and branch
 
@@ -21,7 +21,7 @@ Last reconciled with repository `main`: 2026-09-21.
 
 ## Current verified datasets
 
-- Mike snapshot: 2026-09-16; 3 active unique offer codes, 4 usable slots, 459 expanded dated sailing rows (all computed by actually running `app.js`'s expansion logic against the refreshed data, not estimated). Active codes: `26TOR704` (×2, now with $100 bonus FreePlay it didn't previously have), `26RCL904`, `26QFP204` (redeems by 2026-09-16, i.e. same-day as this check). `26TOR604` "Play Your Way" expired on schedule Sep 15 and is no longer on the account or in `returnedOffers`.
+- Mike snapshot: 2026-09-22; 6 active unique offer codes, 8 usable slots. Active codes: `26TOR704` (×2, $100 FreePlay, unchanged), `26RCL904` ($50 FreePlay, unchanged), `26BAF405` (new, comp Ocean View/Interior + bonus Interior GTY room, no FreePlay listed), `26RSR103` (new, comp Balcony, $50 FreePlay), `26SHC604` (new, comp Balcony/Ocean View, $50 FreePlay), `26TOR804` (new, ×2, comp Interior/Balcony/Ocean View or $725 off an upgrade, $50 FreePlay). `26QFP204` "Autumn Showdown" redeemed by Sep 16 as scheduled and is no longer on the account. sailingRows/sailingGroups were NOT re-expanded this refresh and still reflect the Sep 16 count (459) — treat Finder results as stale for the 4 new offers until `maintenance/build_live_offer_snapshot.mjs` is run against a fresh "View sailings" capture.
 - Tully snapshot: 2026-08-27; 12 offer codes/slots and 1,207 expanded sailing rows in profile metadata. One FreePlay-only offer is marked `comp: false` and excluded from Finder results.
 - Mike has four seeded booked cruises. The Christmas 2026 Wonder booking uses historical offer `26PAS603`; its August 29 sailing snapshot is preserved separately and is not part of the active Finder dataset.
 - The November 27, 2026 Wonder booking is reconciled to the Royal Caribbean receipt issued March 4, 2026, including itinerary, XB guarantee cabin status, guests, My Time dining, exact taxes/payment balance, gratuities, and protection status.

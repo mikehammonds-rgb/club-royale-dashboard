@@ -8,21 +8,21 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 1082,
     progressPercent: 43,
     tierMessage: "1,418 more tier credits to keep Prime",
-    snapshot: "2026-09-16",
+    snapshot: "2026-09-22",
     offers: MIKE_OFFERS,
     sailingGroups: MIKE_ROYAL_SAILING_GROUPS,
     seedBookings: MIKE_BOOKED_CRUISES,
     returnedOffers: [],
     portalCheck: {
-      checkedAt: "2026-09-16T14:30:00-04:00",
-      uniqueOffers: 3,
-      usableSlots: 4,
+      checkedAt: "2026-09-22T00:00:00-04:00",
+      uniqueOffers: 6,
+      usableSlots: 8,
       sailingRows: 459,
-      newCodes: [],
-      removedCodes: ["26TOR604"],
-      changedCodes: ["26TOR704"],
-      duplicateCodes: ["26TOR704"],
-      note: "Sep 16 refresh: 4 usable slots across 3 active offer codes. Play Your Way (26TOR604) expired on schedule Sep 15 and dropped off the account. Super Spins (26TOR704) now carries $100 bonus FreePlay (previously none); its redeem-by, uses, and cabin terms are unchanged. September Monthly Mix and Autumn Showdown are unchanged. Autumn Showdown (26QFP204) redeems by Sep 16, 2026 (today)."
+      newCodes: ["26BAF405", "26RSR103", "26SHC604", "26TOR804"],
+      removedCodes: ["26QFP204"],
+      changedCodes: [],
+      duplicateCodes: ["26TOR704", "26TOR804"],
+      note: "Sep 22 refresh: 8 usable slots across 6 active offer codes. Autumn Showdown (26QFP204) redeemed by Sep 16 as scheduled and is no longer on the account. Four new offers appeared: Double Down Days (26BAF405, comp Ocean View or Interior + bonus Interior room for two, no FreePlay listed), Limitless Luck (26RSR103, comp Balcony for two, $50 FreePlay), Island Rollers (26SHC604, comp Balcony or Ocean View for two, $50 bonus FreePlay), and Isle or Nothing (26TOR804, x2 uses, comp Interior/Balcony/Ocean View or $725 off an upgrade, $50 FreePlay). Super Spins (26TOR704, x2) and September Monthly Mix (26RCL904) are unchanged from the Sep 16 snapshot. Offer-level details only — sailingRows/sailingGroups (Finder dated-sailing expansion) were not re-pulled this refresh and still reflect the Sep 16 snapshot; treat Finder results as stale until a full 'View sailings' capture is run for the four new offers."
     }
   },
   tully: {
