@@ -2,6 +2,20 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-28 — Refreshed Mike's Club Royale offers and closed out stale sailing groups (Claude)
+
+- Live-checked Mike's signed-in Royal Caribbean Club Royale account via browser automation (Claude in Chrome), verifying each offer's exact terms through its "Offer details" panel rather than relying on card summaries alone.
+- Active set moved from 6 unique codes / 8 usable slots (Sep 22 snapshot) to 7 unique codes / 10 usable slots.
+- New: `26TOR905` "Go for Gold" (×2 uses, comp Interior/Balcony/Ocean View or $850 off an upgraded stateroom, $50 bonus FreePlay, redeem by Oct 28, 2026).
+- Unchanged (individually re-verified in Offer details): `26TOR704` "Super Spins" (×2, $100 FreePlay), `26TOR804` "Isle or Nothing" (×2, $50 FreePlay), `26BAF405` "Double Down Days" (no FreePlay), `26RSR103` "Limitless Luck" ($50 FreePlay), `26SHC604` "Island Rollers" ($50 FreePlay), `26RCL904` "September Monthly Mix" ($50 FreePlay, redeems by Sep 30, 2026 — 2 days from this check).
+- No codes removed or returned this cycle.
+- Closed out the sailing-groups follow-up flagged in the Sep 22 entry: ran a full "View sailings" capture for all 7 active codes (not just the four that were missing), extracting the actual DOM table (ship/port, itinerary, benefit/room, dates, and itinerary link) via in-page JavaScript rather than manual transcription, to avoid transcription errors across ~450 sailing groups. Captured JSON was downloaded from the browser and pulled into the working environment through the linked-device folder bridge.
+- Result: 454 sailing groups → 1,109 expanded dated sailing rows (was 459, stale since Sep 16) — this count was computed by actually running `app.js`'s own `expandRoyalSailingGroups` logic against the refreshed `data/live-sailing-groups.js`, not estimated.
+- Updated `data/club-royale-data.js`, `data/live-sailing-groups.js`, `data/member-profiles.js` (Mike's `snapshot`, `portalCheck`), `app/api/state/route.ts` (seed profile snapshot date, new idempotent `mike_snapshot_2026_09_28` migration/snapshot — note: the Sep 22 refresh did not add its own D1 migration, so that intermediate state has no snapshot row; this table now jumps from `mike_snapshot_2026_09_16` to `mike_snapshot_2026_09_28`), `README.md` (current-data counts).
+- Validation: ran `pnpm sync-static` and confirmed root/public byte-identical for all six data files plus `index.html`/`app.js`/`styles.css`. Parsed the data files and reconciled `uniqueOffers` (7), `usableSlots` (10), and `sailingRows` (1,109) against the live portal and against independently re-running the expansion logic outside `app.js`. Confirmed every sailing group references an active offer code, no invalid `uses`, no bad dates/nights, no `undefined`/`NaN`. Ran `pnpm build`: module transformation succeeds (219 modules); build fails only at the already-documented `.openai/hosting.json` step, unchanged by this refresh. Rendered the built static app in a headless browser at a mobile viewport and confirmed Overview, Offers, and Finder all show the correct counts, urgency flags, and per-offer sailing totals with no unexpected console errors (only an expected 404 for `/api/state`, since no Next.js/D1 server was running locally).
+- Tully: not checked this cycle (user scoped this refresh to Mike only).
+- Deployment: not performed. This refresh stops at a verified local commit + patch handoff; publishing to GitHub (via Mike's own clone) and, separately, to ChatGPT Sites remain outstanding manual steps.
+
 ## 2026-09-22 — Refreshed Mike's Club Royale offers (Claude, offer-level only)
 
 - Live-checked Mike's signed-in Royal Caribbean Club Royale account (browser session, not estimated).

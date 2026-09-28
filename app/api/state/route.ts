@@ -8,7 +8,7 @@ type DatabaseEnv = { DB?: D1Database };
 
 const allowedMemberIds = new Set(["mike", "tully"]);
 const seedProfiles = [
-  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-09-16" },
+  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-09-28" },
   { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-08-27" }
 ];
 const seedBookings = [
@@ -92,6 +92,17 @@ async function initialize(db: D1Database) {
         christmasMatch: false
       })),
     db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_09_16', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-09-28', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_09_28')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("mike", "refresh-2026-09-28", "2026-09-28", 7, 10, 1109, JSON.stringify({
+        note: "One new offer appeared: Go for Gold (26TOR905, x2 uses, comp Interior/Balcony/Ocean View or $850 off an upgrade, $50 FreePlay). Double Down Days, Limitless Luck, Island Rollers, Isle or Nothing (x2), Super Spins (x2), and September Monthly Mix are all unchanged from Sep 22 (individually re-verified). A full 'View sailings' capture was run for all 7 active codes, closing out the Sep 22 stale-sailing-groups follow-up; sailingRows now reflects a complete current expansion instead of a carried-over stale count. Note: the Sep 22 offer-level-only refresh did not add its own D1 migration/snapshot row, so there is a gap in this table between the Sep 16 and Sep 28 snapshots; the canonical record of that intermediate state is CHANGELOG.md.",
+        newCodes: ["26TOR905"],
+        removedCodes: [],
+        changedCodes: [],
+        duplicateCodes: ["26TOR704", "26TOR804", "26TOR905"],
+        christmasMatch: false
+      })),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_09_28', ?)").bind(now),
     db.prepare("INSERT OR IGNORE INTO member_bookings (member_id, id, data_json, updated_at) SELECT 'mike', id, data_json, updated_at FROM bookings WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_saved_searches (member_id, id, name, criteria_json, created_at, updated_at) SELECT 'mike', id, name, criteria_json, created_at, updated_at FROM saved_searches WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_offer_statuses (member_id, slot_key, status, notes, updated_at) SELECT 'mike', slot_key, status, notes, updated_at FROM offer_statuses WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),

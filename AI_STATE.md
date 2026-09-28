@@ -1,6 +1,6 @@
 # Current AI State
 
-Last reconciled with repository `main`: 2026-09-22 (Mike offer-level refresh).
+Last reconciled with repository `main`: 2026-09-28 (Mike full offer + sailing-groups refresh).
 
 ## Canonical repository and branch
 
@@ -21,7 +21,7 @@ Last reconciled with repository `main`: 2026-09-22 (Mike offer-level refresh).
 
 ## Current verified datasets
 
-- Mike snapshot: 2026-09-22; 6 active unique offer codes, 8 usable slots. Active codes: `26TOR704` (×2, $100 FreePlay, unchanged), `26RCL904` ($50 FreePlay, unchanged), `26BAF405` (new, comp Ocean View/Interior + bonus Interior GTY room, no FreePlay listed), `26RSR103` (new, comp Balcony, $50 FreePlay), `26SHC604` (new, comp Balcony/Ocean View, $50 FreePlay), `26TOR804` (new, ×2, comp Interior/Balcony/Ocean View or $725 off an upgrade, $50 FreePlay). `26QFP204` "Autumn Showdown" redeemed by Sep 16 as scheduled and is no longer on the account. sailingRows/sailingGroups were NOT re-expanded this refresh and still reflect the Sep 16 count (459) — treat Finder results as stale for the 4 new offers until `maintenance/build_live_offer_snapshot.mjs` is run against a fresh "View sailings" capture.
+- Mike snapshot: 2026-09-28; 7 active unique offer codes, 10 usable slots, 1,109 expanded dated sailing rows (computed by actually running `app.js`'s `expandRoyalSailingGroups` logic against the refreshed data, not estimated). Active codes: `26TOR905` (new, ×2, comp Interior/Balcony/Ocean View or $850 off an upgrade, $50 FreePlay), `26TOR704` (×2, $100 FreePlay, unchanged), `26RCL904` ($50 FreePlay, unchanged, redeems by Sep 30 2026), `26BAF405` (comp Ocean View/Interior + bonus Interior GTY room, no FreePlay, unchanged), `26RSR103` (comp Balcony, $50 FreePlay, unchanged), `26SHC604` (comp Balcony/Ocean View, $50 FreePlay, unchanged), `26TOR804` (×2, comp Interior/Balcony/Ocean View or $725 off an upgrade, $50 FreePlay, unchanged). No codes removed this cycle. A full "View sailings" capture was run for all 7 active codes (not just newly-added ones), closing out the stale-sailing-groups gap flagged on 2026-09-22.
 - Tully snapshot: 2026-08-27; 12 offer codes/slots and 1,207 expanded sailing rows in profile metadata. One FreePlay-only offer is marked `comp: false` and excluded from Finder results.
 - Mike has four seeded booked cruises. The Christmas 2026 Wonder booking uses historical offer `26PAS603`; its August 29 sailing snapshot is preserved separately and is not part of the active Finder dataset.
 - The November 27, 2026 Wonder booking is reconciled to the Royal Caribbean receipt issued March 4, 2026, including itinerary, XB guarantee cabin status, guests, My Time dining, exact taxes/payment balance, gratuities, and protection status.
