@@ -31,7 +31,7 @@ Last reconciled with repository `main`: 2026-09-28 (Mike full offer + sailing-gr
 
 - Overview with priority offer, live-derived counts, change summary, next trip, and planning shortcuts.
 - Complete offer library, urgency sorting, duplicate-copy ledger, and per-slot status.
-- Sailing Finder with aboard-date logic, Florida/all-port scope, class/ship/length/cabin/month/FreePlay filters, saved searches, Christmas preset, opportunity scoring, conflict and back-to-back detection, and comparison tray.
+- Sailing Finder with aboard-date logic, Florida/all-port scope, class/ship/length/cabin/month/FreePlay filters, saved searches, opportunity scoring, conflict and back-to-back detection, and comparison tray.
 - Trips/calendar with detailed costs, packages, companions, notes, and checklist completion.
 - Per-member cloud/browser persistence for bookings, saved searches, and offer statuses.
 - Responsive mobile navigation plus installable web-app metadata.

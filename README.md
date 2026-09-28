@@ -8,7 +8,7 @@ A mobile-first private dashboard for Club Royale casino offers and eligible Roya
 - Complete offer library: 10 usable offer slots across 7 unique codes (verified Sep. 28, 2026, for Mike)
 - Clear `Usable 2×` treatment for duplicated offers
 - Sailing-first Finder with aboard-date, port, class, ship, length, cabin, and sort filters
-- Saved Christmas Day search and quick deal/expiration/cabin searches
+- Quick deal, expiration, and cabin searches
 - Cabin-first best-offer ranking, with Free Play used only after cabin category
 - Expandable eligible-offer comparisons without horizontal tables
 

@@ -2,6 +2,10 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-28 — Removed built-in Christmas Day Finder search
+
+- Removed the hard-coded Dec. 25, 2026 Finder shortcut now that the corresponding holiday cruise is booked. The booked Wonder cruise remains in the Trips workspace and continues to inform Finder conflict checks.
+
 ## 2026-09-28 — Refreshed Mike's Club Royale offers and closed out stale sailing groups (Claude)
 
 - Live-checked Mike's signed-in Royal Caribbean Club Royale account via browser automation (Claude in Chrome), verifying each offer's exact terms through its "Offer details" panel rather than relying on card summaries alone.

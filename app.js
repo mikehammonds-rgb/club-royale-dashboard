@@ -1090,16 +1090,6 @@ function resetFinder() {
   renderFinder();
 }
 
-function runChristmasSearch() {
-  resetFinder();
-  document.querySelector("#aboard-date").value = "2026-12-25";
-  syncAboardDateControl();
-  setPortScope("all");
-  document.querySelectorAll("#class-filters input:not(:disabled)").forEach(input => { input.checked = true; });
-  renderFinder();
-  document.querySelector("#finder-results-title").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
 function switchView(id) {
   document.querySelectorAll(".view").forEach(view => {
     const active = view.id === id;
@@ -1204,7 +1194,6 @@ document.querySelector("#choose-aboard-date").addEventListener("click", () => {
   }
 });
 document.querySelector("#aboard-date").addEventListener("change", () => syncAboardDateControl());
-document.querySelector("#christmas-search").addEventListener("click", runChristmasSearch);
 document.querySelector("#port-filters").addEventListener("change", () => {
   syncPortScopeAppearance(selectedPorts());
   updateAvailabilityControls();
