@@ -2,6 +2,10 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-01 — Added Club Royale contact link
+
+- Added the user-provided Club Royale phone number, 888-561-2234, to the Overview home page as a tap-to-call link.
+
 ## 2026-09-30 — Added Wonder of the Seas Miami watch search
 
 - Added a one-click Finder watch button for Wonder of the Seas from Miami, departing no earlier than June 18 and returning no later than June 24, 2027. The button checks the current active Club Royale offer data; it does not claim that a qualifying sailing is currently available.
