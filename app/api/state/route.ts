@@ -8,7 +8,7 @@ type DatabaseEnv = { DB?: D1Database };
 
 const allowedMemberIds = new Set(["mike", "tully"]);
 const seedProfiles = [
-  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-09-28" },
+  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-01" },
   { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-08-27" }
 ];
 const seedBookings = [
@@ -103,6 +103,17 @@ async function initialize(db: D1Database) {
         christmasMatch: false
       })),
     db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_09_28', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-01', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_10_01')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("mike", "refresh-2026-10-01", "2026-10-01", 7, 10, 1132, JSON.stringify({
+        note: "One new offer appeared: October Monthly Mix (26RCL1004, x1, comp Ocean View or Balcony GTY room for two, $50 bonus FreePlay, redeem by Oct 31, 2026). September Monthly Mix (26RCL904) left the account after its Sep 30 redeem-by date. Go for Gold (x2), Super Spins (x2), Double Down Days, Limitless Luck, Island Rollers, and Isle or Nothing (x2) are unchanged. A full 'View sailings' capture was run for all 7 active codes: 457 itinerary groups expand to 1,132 dated sailings.",
+        newCodes: ["26RCL1004"],
+        removedCodes: ["26RCL904"],
+        changedCodes: [],
+        duplicateCodes: ["26TOR704", "26TOR804", "26TOR905"],
+        christmasMatch: false
+      })),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_01', ?)").bind(now),
     db.prepare("INSERT OR IGNORE INTO member_bookings (member_id, id, data_json, updated_at) SELECT 'mike', id, data_json, updated_at FROM bookings WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_saved_searches (member_id, id, name, criteria_json, created_at, updated_at) SELECT 'mike', id, name, criteria_json, created_at, updated_at FROM saved_searches WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_offer_statuses (member_id, slot_key, status, notes, updated_at) SELECT 'mike', slot_key, status, notes, updated_at FROM offer_statuses WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),

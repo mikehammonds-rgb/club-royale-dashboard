@@ -2,6 +2,17 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-01 — Refreshed Mike's Club Royale offers and sailing groups (Claude)
+
+- Live-checked Mike's signed-in Royal Caribbean Club Royale account via browser automation (Claude in Chrome). The portal showed 10 tiles (7 unique codes), matching the previous 10 usable slots / 7 unique codes.
+- New: `26RCL1004` "October Monthly Mix" (×1, comp Ocean View or Balcony GTY room for two, $50 bonus FreePlay, redeem by Oct 31, 2026, sail Oct 1, 2026 – May 31, 2027), verified in Offer details.
+- Removed: `26RCL904` "September Monthly Mix" — passed its Sep 30, 2026 redeem-by date and is no longer on the account.
+- Unchanged: `26TOR905` (×2), `26TOR704` (×2; Offer details re-checked: $100 FreePlay, Balcony/Ocean View/Interior, $725 off an upgrade), `26TOR804` (×2), `26BAF405`, `26RSR103`, `26SHC604`. Tier values unchanged (Prime, 1,082 credits).
+- Sailings: full "View sailings" capture for all 7 active codes by extracting each page's table in-page, using the first issued instance link per code. Result: 457 itinerary groups (was 454) expanding to 1,132 dated sailing rows (was 1,109), generated with `maintenance/build_live_offer_snapshot.mjs`.
+- Updated `data/club-royale-data.js`, `data/live-sailing-groups.js`, `data/member-profiles.js` (snapshot, `portalCheck`), `app/api/state/route.ts` (seed profile date and new idempotent `mike_snapshot_2026_10_01` snapshot; earlier snapshots untouched), `README.md`, `AI_STATE.md`.
+- Tully: not checked this cycle (scoped to Mike only).
+- Deployment: not performed; GitHub push and ChatGPT Sites publication remain manual steps.
+
 ## 2026-10-01 — Added Club Royale contact link
 
 - Added the user-provided Club Royale phone number, 888-561-2234, to the Overview home page as a tap-to-call link.
