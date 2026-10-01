@@ -2,6 +2,10 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-09-30 — Added Wonder of the Seas Miami watch search
+
+- Added a one-click Finder watch button for Wonder of the Seas from Miami, departing no earlier than June 18 and returning no later than June 24, 2027. The button checks the current active Club Royale offer data; it does not claim that a qualifying sailing is currently available.
+
 ## 2026-09-28 — Removed built-in Christmas Day Finder search
 
 - Removed the hard-coded Dec. 25, 2026 Finder shortcut now that the corresponding holiday cruise is booked. The booked Wonder cruise remains in the Trips workspace and continues to inform Finder conflict checks.

@@ -1090,6 +1090,21 @@ function resetFinder() {
   renderFinder();
 }
 
+function runWonderMiamiJune2027Search() {
+  resetFinder();
+  setPortScope("all");
+  document.querySelectorAll("#port-filters input").forEach(input => {
+    input.checked = input.value === "Miami";
+  });
+  syncPortScopeAppearance(selectedPorts());
+  updateAvailabilityControls();
+  document.querySelector("#depart-start").value = "2027-06-18";
+  document.querySelector("#return-end").value = "2027-06-24";
+  document.querySelector("#ship-filter").value = "Wonder";
+  renderFinder();
+  document.querySelector("#finder-results-title").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function switchView(id) {
   document.querySelectorAll(".view").forEach(view => {
     const active = view.id === id;
@@ -1208,6 +1223,7 @@ document.querySelectorAll("[data-finder-preset]").forEach(button => {
   button.addEventListener("click", () => {
     resetFinder();
     const preset = button.dataset.finderPreset;
+    if (preset === "wonder-miami-june-2027") return runWonderMiamiJune2027Search();
     if (preset === "expiry") document.querySelector("#sailing-sort").value = "expiry";
     if (preset === "balcony") document.querySelector("#room-filter").value = "Balcony";
     renderFinder();
