@@ -2,6 +2,12 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-05 — Documented direct push access for local Claude Code (Claude)
+
+- Verified that Claude Code running locally on Mike's Mac (clone at `~/Projects/club-royale-dashboard`, outside Google Drive) can push to GitHub: created `push-test` from `5d7b790` with `git push origin HEAD:refs/heads/push-test`, confirmed it with `git ls-remote --heads origin push-test`, deleted it with `git push origin --delete push-test`, and confirmed only `main` (still `5d7b790`) remained. No commits were made and `main` was not touched.
+- Updated `WORKFLOW.md` section 10 and the "Git push access by agent" section of `AI_STATE.md`: local Claude Code may push directly; the proxy-block note and patch/command fallback now apply to Claude's cloud sandbox only.
+- Documentation-only change; no code, data, or deployment changes. GitHub push of this change and Sites publication remain pending.
+
 ## 2026-10-01 — Refreshed Mike's Club Royale offers and sailing groups (Claude)
 
 - Live-checked Mike's signed-in Royal Caribbean Club Royale account via browser automation (Claude in Chrome). The portal showed 10 tiles (7 unique codes), matching the previous 10 usable slots / 7 unique codes.
