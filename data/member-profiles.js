@@ -34,21 +34,21 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 0,
     progressPercent: 0,
     tierMessage: "1 tier credit to keep Choice",
-    snapshot: "2026-08-27",
+    snapshot: "2026-10-08",
     offers: TULLY_OFFERS,
     sailingGroups: TULLY_ROYAL_SAILING_GROUPS,
     seedBookings: [],
     returnedOffers: [],
     portalCheck: {
-      checkedAt: "2026-08-27T13:40:00-04:00",
-      uniqueOffers: 12,
-      usableSlots: 12,
-      sailingRows: 1207,
-      newCodes: [],
-      removedCodes: [],
+      checkedAt: "2026-10-08T13:00:00-04:00",
+      uniqueOffers: 9,
+      usableSlots: 10,
+      sailingRows: 987,
+      newCodes: ["26TCR107", "26TOR909", "26TOR808", "26PAS707", "26NDS108", "26JKP607", "26RCL1007", "26NPR807", "26SHC607"],
+      removedCodes: ["26TOR608", "26TOR508", "26TOR408", "26PAS607", "26QFP207", "26VAR507", "26PAS507", "26MIX508", "26EST207", "26OCT108", "26RCL807", "26FRP109"],
       changedCodes: [],
-      duplicateCodes: [],
-      note: "Tully's first saved baseline contains 12 Club Royale offers. One is FreePlay-only and is excluded from the casino-comp Finder."
+      duplicateCodes: ["26TCR107"],
+      note: "Oct 8 refresh: Tully's full account turned over: all 12 Aug 27 codes expired and 9 new codes (10 usable slots) are live: Mega Spins (26TCR107 x2, redeem by Nov 6), Go for Gold (26TOR909), Isle or Nothing (26TOR808), 2026 Caribbean Chips (26PAS707), Winter Wins (26NDS108), Fortune Flash (26JKP607), October Monthly Mix (26RCL1007), Suit Escape (26NPR807), and Island Rollers (26SHC607). Full 'View sailings' capture was run for all nine codes; 372 itinerary groups expand to 987 dated sailings. Tier is unchanged: Choice, 0 tier credits."
     }
   }
 };

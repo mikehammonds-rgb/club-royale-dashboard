@@ -3,6 +3,7 @@
 ## 1. Preflight for every change
 
 1. Read all six root handoff documents listed in `AGENTS.md`.
+   - If the portal is signed out or signed in as the wrong member, do not stop the run: ask the user to sign in as the requested member and wait. Never read portal data for the wrong member. The user signs themselves back in when finished.
 2. Run `git status`, switch to `main`, and run `git pull --ff-only origin main`.
 3. Stop and resolve unexpected local changes before touching overlapping files.
 4. Confirm the requested member and refresh scope. Never mix Mike and Tully data.
@@ -14,9 +15,13 @@
 1. Open the authenticated Royal Caribbean Club Royale offers page for the requested member.
 2. Compare every live tile with both the current active offers and historical records. Count repeated instances of the same code; a code shown twice is two usable slots.
 3. Classify each code as unchanged, changed, new, returned, or removed. A removed code can later return.
-4. Open offer details and the issued offer's actual “View sailings” link. Preserve its instance-specific URL rather than fabricating a bare code URL.
+4. Open offer details and the issued offer's actual “View sailings” link for every new or changed code. If every live code is new (a full account turnover, as with Tully on 2026-10-08), nothing carries forward: capture all codes and replace the member's offers and sailing groups instead of merging. Stored itinerary links never include `?playerOfferId=…` or any query string; they use the format `https://www.royalcaribbean.com/itinerary/<slug(itin)>-from-<slug(first word of port)>-on-<slug(first word of ship)>-<LINKCODE>`, where `slug` lowercases, drops `&`, and turns every non-alphanumeric run into one hyphen, and `LINKCODE` is the last segment of the row's own itinerary href on the live page (for example `SR07X071`). Verify the slug prefix of every row against the live hrefs.
 5. Capture offer name, redeem-by date, usable copies, FreePlay/perk text, benefit, cabin choices, and whether it is a cruise comp (`comp`).
-6. Capture each eligible sailing row as an itinerary group: offer code, date lines, itinerary, link, port, room category, and ship.
+6. Capture each eligible sailing row as an itinerary group: offer code, date lines, itinerary, link, port, room category, and ship. Large sailing tables are captured by checksum-verified transcription. This works around browser tools that truncate output (about 1,000 characters) and block output containing URLs with query strings:
+   1. Read the table with `get_page_text` (it returns the whole table).
+   2. In the page, compute a djb2 checksum (`x = ((x*33) ^ charCode) >>> 0`, starting at 5381, hex padded to 8) over the rows joined by newline. Each row is `Ship(without " of the Seas")@Port@Itinerary@Room(Interior|Ocean View|Balcony)@dates joined by "|" (e.g. 2026|Nov 8, Nov 29|2027|Jan 4)@LINKCODE`. The page renders each link three times, so use only the first third of the `a[href*="/itinerary/"]` anchors. Output only the counts, codes, and checksum, never URLs.
+   3. Transcribe the rows into a scratch file (outside the repo) with the same line format and compute the same checksum in Node (`Math.imul(x,33)`). The two checksums must match before the capture is accepted.
+   4. Never commit the scratch capture files.
 7. Re-check standing or saved searches affected by the refresh, including the built-in Christmas Day search. “Aboard on” means the date falls within the cruise interval, including a return-date match that docks that morning.
 
 ## 3. Update canonical data without erasing history
@@ -26,12 +31,12 @@
    - Tully: offer section of `data/tully-data.js`
 2. Generate or update the member's sailing groups:
    - Mike: use `maintenance/build_live_offer_snapshot.mjs <verified-input.json> data/live-sailing-groups.js YYYY-MM-DD` when the captured input matches that builder's contract.
-   - Tully: use `maintenance/build_member_data.mjs <verified-input.json> data/tully-data.js`, after updating its embedded offer metadata from verified data.
+   - Tully: use `maintenance/build_member_data.mjs <verified-input.json> data/tully-data.js`. The offers dict and the “verified <date>” header comment are hardcoded in that script, so edit them first from verified data (name, redeemBy, uses, fp, perk, benefit, cabinOptions, comp). The input is a JSON array of `{offer, dates, itin, link, port, room, ship}` rows generated from the verified captures; `ship` is the full name (for example “Serenade of the Seas”). Duplicate tiles are one code with `uses` set to the copy count.
 3. Update the member in `data/member-profiles.js`: profile/tier values, `snapshot`, `portalCheck` counts and arrays, returned codes, and explanatory note.
 4. Preserve removed/expired history in `CHANGELOG.md`, `AI_STATE.md` when still operationally relevant, and an append-only D1 snapshot/migration when cloud history must be exposed. Do not leave removed codes in active offer/Finder data.
 5. Preserve booked-offer snapshots such as `data/mike-26pas603.js`; a booked offer can remain historically important after it leaves the active account.
 6. If booking facts changed, update both `data/booked-cruises.js` and the matching fallback/seed booking in `app/api/state/route.ts`. Add an idempotent `app_metadata`-guarded migration when existing D1 rows also need the correction.
-7. For a new refresh history record, add an idempotent `member_offer_snapshots` insert in `app/api/state/route.ts` or a migration. Never overwrite earlier snapshots.
+7. For a new refresh history record, add an idempotent `member_offer_snapshots` insert in `app/api/state/route.ts` or a migration. Never overwrite earlier snapshots. Follow the existing Mike pattern for either member: update the member's seed `snapshot_date`, then add a block with an `UPDATE member_profiles SET snapshot_date …` guarded by `NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = '<member>_snapshot_YYYY_MM_DD')`, an `INSERT OR IGNORE INTO member_offer_snapshots` with id `refresh-YYYY-MM-DD` (and the correct `member_id`, e.g. `tully`), and the `app_metadata` guard-key insert. Use a new key every refresh.
 8. Update `README.md` counts/date if its “Current data” section changed.
 
 ## 4. Booked-trip receipt and package updates
@@ -51,6 +56,10 @@ Use this workflow when Mike supplies a cruise receipt, order confirmation, scree
 8. Run static synchronization and validation from sections 5 and 6. Open the affected trip locally and verify the exact visible values and browser console before committing.
 9. Update `AI_STATE.md` and add a dated `CHANGELOG.md` entry describing the evidence, preserved data, migration key, and checks.
 10. Commit and push GitHub `main`. If Mike asked to update the live dashboard, continue with section 9. Otherwise report that publication is still pending.
+
+### Delivery from the cloud sandbox
+
+When the cloud sandbox cannot push, write the summary and `git diff --stat`, wait for the user's go-ahead, commit locally with the required trailers, and produce `git format-patch -1 HEAD --stdout`. Confirm it applies to a fresh clone of `origin/main` (use absolute paths), deliver it as a file, and state that GitHub and the live Site are unchanged until it is applied, pushed, and published. If `origin/main` moved while you worked (for example another agent landed the same change), rebase onto it before creating the patch.
 
 ### Agent boundary
 
@@ -79,6 +88,7 @@ for file in data/*.js; do cmp "$file" "public/data/$(basename "$file")"; done
 ## 6. Validate the refresh
 
 1. Validate the data mechanically: parse every data file, confirm expected offer codes and object keys, expand grouped dates with the same logic as `app.js`, and reconcile unique offers, usable slots, itinerary groups, and dated-sailing counts with `portalCheck`.
+   - Run the member's own data through `app.js`'s `expandRoyalSailingGroups` (extract the function with its helper `addDaysToIso` into a Node `vm` context). Mike uses `MIKE_OFFERS` / `MIKE_ROYAL_SAILING_GROUPS`; Tully uses `TULLY_OFFERS` / `TULLY_ROYAL_SAILING_GROUPS` from `data/tully-data.js`. Report unique offers, usable slots (sum of `uses`), groups, dated rows, orphan groups, bad dates or night counts, skipped groups (no parseable “N Night” or no room), room labels, `undefined`/`NaN`, and duplicate sailings (offer/ship/port/itin/room/depart).
 2. Confirm every sailing references an active offer, except explicitly preserved historical files that are not wired into `sailingGroups`.
 3. Confirm dates are valid ISO results, itinerary text contains a parseable night count, cabin labels match UI expectations, and no generated text contains `undefined` or `NaN`.
 4. Confirm Mike and Tully remain separate after switching accounts: offers, Finder results, bookings, saved searches, statuses, and snapshots must not leak between members.
@@ -91,6 +101,8 @@ pnpm build
 ```
 
 `pnpm build` runs `sync-static` first. Fix build, runtime, or browser-console errors before publishing.
+
+Known issue (2026-10-08): `pnpm build` currently fails at the Sites plugin `.openai/hosting.json` step, and it fails identically on unmodified `main`, so it is unrelated to a data refresh. In that case run `node scripts/sync-static.mjs && npx vite build` and `npx tsc --noEmit -p tsconfig.json` instead, delete any stray `tsconfig.tsbuildinfo`, and report the pre-existing failure. Do not claim the standard build passed.
 
 ## 7. Mobile/PWA refresh behavior
 

@@ -2,6 +2,17 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-08 — Refreshed Tully's Club Royale offers and sailing groups (Claude)
+
+- Live-checked Tully's signed-in Royal Caribbean Club Royale account (portal name Christine) via browser automation (Claude in Chrome), read-only. The portal header showed All Offers (10): 10 tiles across 9 unique codes (was 12 slots / 12 codes on Aug 27). Tier unchanged: Choice, 0 credits.
+- New (all nine live codes): `26TCR107` "Mega Spins" (×2, redeem by Nov 6, Interior/Ocean View stateroom offer or $350 off an upgraded stateroom, $25 FreePlay online), `26TOR909` "Go for Gold" (Oct 28), `26TOR808` "Isle or Nothing" (Oct 14), `26PAS707` "2026 Caribbean Chips" (Oct 28), `26NDS108` "Winter Wins" (Oct 30), `26JKP607` "Fortune Flash" (Oct 16), `26RCL1007` "October Monthly Mix" (Oct 31), `26NPR807` "Suit Escape" (Oct 21), `26SHC607` "Island Rollers" (Oct 16). Offer details were read from the offers page for each.
+- Removed: all 12 Aug 27 codes (`26TOR608`, `26TOR508`, `26TOR408`, `26PAS607`, `26QFP207`, `26VAR507`, `26PAS507`, `26MIX508`, `26EST207`, `26OCT108`, `26RCL807`, `26FRP109`); all passed their redeem-by dates. No codes carried forward, so Tully's offers and sailing groups were replaced, not merged.
+- Sailings: full "View sailings" capture for all nine codes, each table checksum-verified against the live page: 372 itinerary groups expanding to 987 dated rows (Interior and Ocean View only). Itinerary links follow the repo's slug format with no query strings.
+- Updated `maintenance/build_member_data.mjs` (embedded offers dict and date), `data/tully-data.js`, `data/member-profiles.js` (snapshot, `portalCheck`), `app/api/state/route.ts` (seed profile date and new idempotent `tully_snapshot_2026_10_08` snapshot; the Aug 27 baseline is untouched), `README.md`, `AI_STATE.md`, plus synced `public/` copies. Mike's data is unchanged.
+- Validation: ran the real `expandRoyalSailingGroups` logic: 9 offers / 10 slots / 372 groups / 987 rows, 0 orphans, 0 bad dates, 0 skipped groups, no `undefined`/`NaN`, no duplicate sailings. Note: `pnpm build` fails at the Sites plugin `.openai/hosting.json` step on pristine main as well (pre-existing, unrelated).
+- Updated `WORKFLOW.md` (sections 1, 2, 3, 6 and a new cloud-sandbox delivery note) to match the process actually used: ask the user to sign in instead of stopping, checksum-verified sailing capture, the itinerary link format, the full-turnover rule, the hardcoded Tully builder offers dict, the Tully snapshot pattern in `route.ts`, member-specific validation, and the known `pnpm build` Sites-plugin failure.
+- Deployment: not performed; GitHub push and ChatGPT Sites publication remain manual steps.
+
 ## 2026-10-05 — Documented direct push access for local Claude Code (Claude)
 
 - Verified that Claude Code running locally on Mike's Mac (clone at `~/Projects/club-royale-dashboard`, outside Google Drive) can push to GitHub: created `push-test` from `5d7b790` with `git push origin HEAD:refs/heads/push-test`, confirmed it with `git ls-remote --heads origin push-test`, deleted it with `git push origin --delete push-test`, and confirmed only `main` (still `5d7b790`) remained. No commits were made and `main` was not touched.
