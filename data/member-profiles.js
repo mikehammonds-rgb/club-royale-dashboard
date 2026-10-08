@@ -8,21 +8,21 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 1082,
     progressPercent: 43,
     tierMessage: "1,418 more tier credits to keep Prime",
-    snapshot: "2026-10-01",
+    snapshot: "2026-10-08",
     offers: MIKE_OFFERS,
     sailingGroups: MIKE_ROYAL_SAILING_GROUPS,
     seedBookings: MIKE_BOOKED_CRUISES,
     returnedOffers: [],
     portalCheck: {
-      checkedAt: "2026-10-01T11:50:00-04:00",
-      uniqueOffers: 7,
-      usableSlots: 10,
-      sailingRows: 1132,
-      newCodes: ["26RCL1004"],
-      removedCodes: ["26RCL904"],
+      checkedAt: "2026-10-08T12:32:00-04:00",
+      uniqueOffers: 6,
+      usableSlots: 9,
+      sailingRows: 1271,
+      newCodes: ["26TCR104"],
+      removedCodes: ["26TOR704", "26RSR103"],
       changedCodes: [],
-      duplicateCodes: ["26TOR704", "26TOR804", "26TOR905"],
-      note: "Oct 1 refresh: 10 usable slots across 7 active offer codes. One new offer appeared: October Monthly Mix (26RCL1004, x1, comp Ocean View or Balcony GTY room for two, $50 bonus FreePlay, redeem by Oct 31, 2026, sailings Oct 1, 2026 - May 31, 2027). September Monthly Mix (26RCL904) is no longer on the account after its Sep 30 redeem-by date. Go for Gold (26TOR905 x2), Super Spins (26TOR704 x2), Double Down Days (26BAF405), Limitless Luck (26RSR103), Island Rollers (26SHC604), and Isle or Nothing (26TOR804 x2) are unchanged. A full 'View sailings' capture was run for all 7 active codes: 457 itinerary groups expand to 1,132 dated sailings."
+      duplicateCodes: ["26TCR104", "26TOR804", "26TOR905"],
+      note: "Oct 8 refresh: 9 usable slots across 6 active offer codes (portal header: All Offers (9)). One new offer appeared: Mega Spins (26TCR104, x2, comp Ocean View/Balcony/Interior GTY room for two or $725 off an upgraded stateroom, $50 FreePlay when redeemed online, redeem by Nov 6, 2026, sailings Dec 2, 2026 - May 31, 2027). Super Spins (26TOR704 x2) and Limitless Luck (26RSR103) are no longer on the account after their Oct 7 and Oct 5 redeem-by dates. Go for Gold (26TOR905 x2), Isle or Nothing (26TOR804 x2), October Monthly Mix (26RCL1004), Double Down Days (26BAF405), and Island Rollers (26SHC604) are unchanged by tile (name, redeem-by date, sail window, room types). A full 'View sailings' capture was run for the new code only (156 itinerary groups); the sailing groups for the five unchanged codes were carried forward from the Oct 1 capture. 456 itinerary groups expand to 1,271 dated sailings."
     }
   },
   tully: {
