@@ -2,6 +2,18 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-11 — Refreshed Mike's Club Royale offers and sailing groups (Claude)
+
+- Live-checked Mike's signed-in Royal Caribbean Club Royale account via browser automation (Claude in Chrome), read-only first. The portal header showed All Offers (10): 10 tiles across 7 unique codes (was 9 slots / 6 codes on Oct 8). Tier values were not re-read this cycle (Prime, 1,082 credits carried forward).
+- New: `26PAS703` "2026 Caribbean Chips" (×1, complimentary Interior, Balcony (GTY), or Ocean View room for two - just pay taxes & fees, redeem by Oct 28, 2026, sail Jan 2 – Mar 29, 2027), verified in Offer details. No FreePlay perk appears on the tile or in Offer details, so `fp` is 0.
+- Removed: none.
+- Unchanged by tile: `26TCR104` (×2), `26TOR905` (×2), `26TOR804` (×2), `26RCL1004`, `26BAF405`, `26SHC604` (name, redeem-by date, sail window, and room types matched the repo).
+- Sailings: full "View sailings" capture for the new code only, using the first issued instance's page: 134 itinerary groups / 326 dated rows. Group fields were read from the live table; itinerary links follow the repo's slug format and all 134 predicted slugs matched the portal's links. Sailing groups for the six unchanged codes were carried forward from Oct 8. Result: 590 itinerary groups (was 456) expanding to 1,597 dated sailing rows (was 1,271).
+- Updated `data/club-royale-data.js`, `data/live-sailing-groups.js`, `data/member-profiles.js` (snapshot, `portalCheck`), `app/api/state/route.ts` (seed profile date and new idempotent `mike_snapshot_2026_10_11` snapshot; earlier snapshots untouched), `README.md`, `AI_STATE.md`, plus synced `public/` copies.
+- Validation: ran the real `expandRoyalSailingGroups` logic: 7 offers / 10 slots / 590 groups / 1,597 rows, 0 orphaned groups, every active offer has sailings, 0 bad dates, no `undefined`/`NaN`; new-code dates all fall within Jan 2 – Mar 29, 2027.
+- Tully: not checked this cycle (scoped to Mike only).
+- Deployment: not performed; GitHub push and ChatGPT Sites publication remain manual steps.
+
 ## 2026-10-08 — Refreshed Tully's Club Royale offers and sailing groups (Claude)
 
 - Live-checked Tully's signed-in Royal Caribbean Club Royale account (portal name Christine) via browser automation (Claude in Chrome), read-only. The portal header showed All Offers (10): 10 tiles across 9 unique codes (was 12 slots / 12 codes on Aug 27). Tier unchanged: Choice, 0 credits.

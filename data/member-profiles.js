@@ -8,21 +8,21 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 1082,
     progressPercent: 43,
     tierMessage: "1,418 more tier credits to keep Prime",
-    snapshot: "2026-10-08",
+    snapshot: "2026-10-11",
     offers: MIKE_OFFERS,
     sailingGroups: MIKE_ROYAL_SAILING_GROUPS,
     seedBookings: MIKE_BOOKED_CRUISES,
     returnedOffers: [],
     portalCheck: {
-      checkedAt: "2026-10-08T12:32:00-04:00",
-      uniqueOffers: 6,
-      usableSlots: 9,
-      sailingRows: 1271,
-      newCodes: ["26TCR104"],
-      removedCodes: ["26TOR704", "26RSR103"],
+      checkedAt: "2026-10-11T15:18:00-04:00",
+      uniqueOffers: 7,
+      usableSlots: 10,
+      sailingRows: 1597,
+      newCodes: ["26PAS703"],
+      removedCodes: [],
       changedCodes: [],
       duplicateCodes: ["26TCR104", "26TOR804", "26TOR905"],
-      note: "Oct 8 refresh: 9 usable slots across 6 active offer codes (portal header: All Offers (9)). One new offer appeared: Mega Spins (26TCR104, x2, comp Ocean View/Balcony/Interior GTY room for two or $725 off an upgraded stateroom, $50 FreePlay when redeemed online, redeem by Nov 6, 2026, sailings Dec 2, 2026 - May 31, 2027). Super Spins (26TOR704 x2) and Limitless Luck (26RSR103) are no longer on the account after their Oct 7 and Oct 5 redeem-by dates. Go for Gold (26TOR905 x2), Isle or Nothing (26TOR804 x2), October Monthly Mix (26RCL1004), Double Down Days (26BAF405), and Island Rollers (26SHC604) are unchanged by tile (name, redeem-by date, sail window, room types). A full 'View sailings' capture was run for the new code only (156 itinerary groups); the sailing groups for the five unchanged codes were carried forward from the Oct 1 capture. 456 itinerary groups expand to 1,271 dated sailings."
+      note: "Oct 11 refresh: 10 usable slots across 7 active offer codes (portal header: All Offers (10)). One new offer appeared: 2026 Caribbean Chips (26PAS703, x1, complimentary Interior, Balcony (GTY), or Ocean View room for two - just pay taxes & fees, redeem by Oct 28, 2026, sailings Jan 2 - Mar 29, 2027; no FreePlay perk shown on the tile or in Offer details). Nothing was removed. Mega Spins (26TCR104 x2), Go for Gold (26TOR905 x2), Isle or Nothing (26TOR804 x2), October Monthly Mix (26RCL1004), Double Down Days (26BAF405), and Island Rollers (26SHC604) are unchanged by tile (name, redeem-by date, sail window, room types). A full 'View sailings' capture was run for the new code only (134 itinerary groups / 326 dated sailings); the sailing groups for the six unchanged codes were carried forward from the Oct 8 data. 590 itinerary groups expand to 1,597 dated sailings."
     }
   },
   tully: {

@@ -1,6 +1,6 @@
 # Current AI State
 
-Last reconciled with repository `main`: 2026-10-08 (Mike offer refresh; new-code sailing capture).
+Last reconciled with repository `main`: 2026-10-11 (Mike offer refresh; new-code sailing capture).
 
 ## Canonical repository and branch
 
@@ -21,7 +21,7 @@ Last reconciled with repository `main`: 2026-10-08 (Mike offer refresh; new-code
 
 ## Current verified datasets
 
-- Mike snapshot: 2026-10-08; 6 active unique offer codes, 9 usable slots, 456 itinerary groups expanding to 1,271 dated sailing rows (computed by running `app.js`'s `expandRoyalSailingGroups` logic against the refreshed data, not estimated). Active codes: `26TCR104` (new, ×2, comp Ocean View/Balcony/Interior GTY room for two or $725 off an upgrade, $50 FreePlay when redeemed online, redeems by Nov 6 2026), `26TOR905` (×2, unchanged, redeems by Oct 28), `26TOR804` (×2, unchanged, redeems by Oct 14), `26RCL1004` (unchanged, redeems by Oct 31), `26BAF405` (unchanged, redeems by Oct 21), `26SHC604` (unchanged, redeems by Oct 16). Removed: `26TOR704` (Super Spins, expired Oct 7) and `26RSR103` (Limitless Luck, expired Oct 5). The "View sailings" capture was run for the new code only (156 groups / 429 dated rows); sailing groups for the five unchanged codes were carried forward from the 2026-10-01 capture, since their tiles (name, redeem-by, sail window, room types) matched.
+- Mike snapshot: 2026-10-11; 7 active unique offer codes, 10 usable slots, 590 itinerary groups expanding to 1,597 dated sailing rows (computed by running `app.js`'s `expandRoyalSailingGroups` logic against the refreshed data, not estimated). Active codes: `26PAS703` (new, ×1, "2026 Caribbean Chips", complimentary Interior/Balcony (GTY)/Ocean View room for two, no FreePlay shown, redeems by Oct 28 2026, sails Jan 2 – Mar 29 2027), `26TCR104` (×2, unchanged, redeems by Nov 6 2026), `26TOR905` (×2, unchanged, redeems by Oct 28), `26TOR804` (×2, unchanged, redeems by Oct 14), `26RCL1004` (unchanged, redeems by Oct 31), `26BAF405` (unchanged, redeems by Oct 21), `26SHC604` (unchanged, redeems by Oct 16). Nothing was removed since Oct 8. The "View sailings" capture was run for the new code only (134 groups / 326 dated rows); sailing groups for the six unchanged codes were carried forward from the 2026-10-08 data, since their tiles matched. Tier values were not re-read this cycle.
 - Tully snapshot: 2026-10-08; 9 active unique offer codes, 10 usable slots, 372 itinerary groups expanding to 987 dated sailing rows (computed by running `app.js`'s `expandRoyalSailingGroups` logic against the refreshed data). Active codes: `26TCR107` (×2), `26TOR909`, `26TOR808`, `26PAS707`, `26NDS108`, `26JKP607`, `26RCL1007`, `26NPR807`, `26SHC607`; all are comp offers. All 12 codes from the Aug 27 baseline expired and were removed from active data (history kept in the D1 baseline snapshot and CHANGELOG). Tier unchanged: Choice, 0 credits.
 - Mike has four seeded booked cruises. The Christmas 2026 Wonder booking uses historical offer `26PAS603`; its August 29 sailing snapshot is preserved separately and is not part of the active Finder dataset.
 - The November 27, 2026 Wonder booking is reconciled to the Royal Caribbean receipt issued March 4, 2026, including itinerary, XB guarantee cabin status, guests, My Time dining, exact taxes/payment balance, gratuities, and protection status.
