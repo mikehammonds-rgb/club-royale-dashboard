@@ -8,8 +8,8 @@ type DatabaseEnv = { DB?: D1Database };
 
 const allowedMemberIds = new Set(["mike", "tully"]);
 const seedProfiles = [
-  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-11" },
-  { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-10-08" }
+  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-13" },
+  { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-10-13" }
 ];
 const seedBookings = [
   { id: "wonder-2026-11-27", ship: "Wonder", port: "Miami", depart: "2026-11-27", return: "2026-11-30", nights: 3, itinerary: "3 Night Bahamas & Perfect Day Cruise", itineraryStops: ["Miami", "Perfect Day at CocoCay", "Nassau", "Miami"], offer: "2602C05", cabin: "Ocean View Balcony Guarantee", cabinCode: "XB GTY", stateroom: "Guarantee assignment pending", obstructedView: "Pending", reservation: "9951558", crownAnchor: "385823429", companionCrownAnchor: "380366709", companionReservation: "5160477", issueDate: "2026-03-04", guestNames: ["Michael Hammonds", "Michael Hott"], fare: 379, fareLabel: "Net cruise fare after casino discounts", taxesFees: 271.48, total: 761.48, amountPaid: 761.48, balanceDue: 0, paymentStatus: "Paid in full", protection: "Declined", gratuities: "Prepaid — $111.00 included", cruiseGratuitiesStatus: "Paid — $111.00 prepaid and included", departureTime: "4:00 PM", diningSeating: "My Time dining", dining: "Unlimited Dining Package for two — $251.94 subtotal + $45.30 prepaid gratuities = $297.24, paid in full", diningPackage: "Unlimited Dining Package", diningPackageQuantity: 2, diningPackageSubtotal: 251.94, diningPackageGratuities: 45.30, diningPackageTotal: 297.24, diningPackagePaymentStatus: "Paid in full", diningPackageStatus: "Purchased — paid in full", diningGratuitiesStatus: "Paid — $45.30 prepaid and included in total", diningReservations: ["The Mason Jar brunch — Day 1 at 12:00 PM", "Chops Grille — Day 1 at 6:30 PM", "Giovanni's Italian Kitchen & Wine Bar — Day 2 at 6:30 PM", "Izumi Hibachi Experience lunch — Day 3 at 12:00 PM", "Chops Grille — Day 3 at 6:30 PM"], drinks: "Deluxe Beverage Package for two — $431.94 subtotal + $77.70 prepaid gratuities = $509.64, paid in full", drinkPackage: "Deluxe Beverage Package", drinkPackageQuantity: 2, drinkPackageSubtotal: 431.94, drinkPackageGratuities: 77.70, drinkPackageTotal: 509.64, drinkPackagePaymentStatus: "Paid in full", drinkPackageStatus: "Purchased — paid in full", drinkGratuitiesStatus: "Paid — $77.70 prepaid and included in total", freePlay: 150, companions: ["Michael Hott", "Spring & Jon"], maybes: ["Ryan & David", "Britney & Eoghan"], notes: "Two 100-minute massages booked for 3:00 PM on Day 1; massage gratuities prepaid.", checklist: ["Confirm terminal and arrival time", "Review dining reservations", "Download boarding passes"], completed: [] },
@@ -136,6 +136,17 @@ async function initialize(db: D1Database) {
         christmasMatch: false
       })),
     db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_11', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-13', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_10_13')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("mike", "refresh-2026-10-13", "2026-10-13", 9, 13, 1775, JSON.stringify({
+        note: "Two new offers appeared: Ace of Hearts (26TCR205, x2 uses, comp Ocean View/Interior/Balcony GTY room for two or $850 off an upgrade, $50 FreePlay online, redeem by Nov 11, 2026) and Reel Riches - Two Room Offer (26BAF505, x1, comp stateroom for two plus a bonus Interior GTY room, redeem by Nov 3, 2026). Nothing was removed since Oct 11. The seven existing codes are unchanged by tile. A full 'View sailings' capture was run for all 9 active codes: 669 itinerary groups expand to 1,775 dated sailings.",
+        newCodes: ["26TCR205", "26BAF505"],
+        removedCodes: [],
+        changedCodes: [],
+        duplicateCodes: ["26TCR104", "26TCR205", "26TOR804", "26TOR905"],
+        christmasMatch: false
+      })),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_13', ?)").bind(now),
     db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-08', updated_at = ? WHERE id = 'tully' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'tully_snapshot_2026_10_08')").bind(now),
     db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
       .bind("tully", "refresh-2026-10-08", "2026-10-08", 9, 10, 987, JSON.stringify({
@@ -147,6 +158,17 @@ async function initialize(db: D1Database) {
         christmasMatch: false
       })),
     db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('tully_snapshot_2026_10_08', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-13', updated_at = ? WHERE id = 'tully' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'tully_snapshot_2026_10_13')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("tully", "refresh-2026-10-13", "2026-10-13", 10, 11, 1029, JSON.stringify({
+        note: "One new offer appeared: Ace of Hearts (26TCR209, x1, Interior only, cruise fare for one plus a discounted cruise fare for the guest, $25 FreePlay online, redeem by Nov 11, 2026). Nothing was removed since Oct 8. The nine existing codes are unchanged by tile. A full 'View sailings' capture was run for all 10 active codes: 377 itinerary groups expand to 1,029 dated sailings.",
+        newCodes: ["26TCR209"],
+        removedCodes: [],
+        changedCodes: [],
+        duplicateCodes: ["26TCR107"],
+        christmasMatch: false
+      })),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('tully_snapshot_2026_10_13', ?)").bind(now),
     db.prepare("INSERT OR IGNORE INTO member_bookings (member_id, id, data_json, updated_at) SELECT 'mike', id, data_json, updated_at FROM bookings WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_saved_searches (member_id, id, name, criteria_json, created_at, updated_at) SELECT 'mike', id, name, criteria_json, created_at, updated_at FROM saved_searches WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_offer_statuses (member_id, slot_key, status, notes, updated_at) SELECT 'mike', slot_key, status, notes, updated_at FROM offer_statuses WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),

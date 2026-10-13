@@ -2,6 +2,27 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-13 — Refreshed Tully's Club Royale offers and sailing groups (Claude)
+
+- Live-checked Tully's signed-in Royal Caribbean Club Royale account (portal name Christine; the header greeting confirmed the member) via browser automation (Claude in Chrome), read-only first. The portal header showed All Offers (11): 11 tiles across 10 unique codes (was 10 slots / 9 codes on Oct 8). Tier unchanged: Choice, 0 credits.
+- New: `26TCR209` "Ace of Hearts" (×1, Interior (GTY) only, cruise fare for one plus a discounted cruise fare for the guest, $25 FreePlay when redeemed through royalcaribbean.com, the Royal Caribbean App, or a Travel Advisor, redeem by Nov 11, 2026, sail Dec 7, 2026 – Apr 26, 2027), verified in Offer details. Treated as a comp offer, matching Tully's other cruise-fare offers.
+- Removed: none. Unchanged by tile (name, redeem-by date, copy count, room types): `26TCR107` (×2), `26TOR909`, `26TOR808`, `26PAS707`, `26NDS108`, `26JKP607`, `26RCL1007`, `26NPR807`, `26SHC607`. Their displayed sail windows narrowed as the portal's date range moved forward.
+- Sailings: full "View sailings" capture for all 10 active codes (first issued instance per code), saved from the browser as one JSON file in Mike's Downloads folder with his approval and read into the working environment; the file was not committed. Itinerary links were stored without their `?playerOfferId=…` query strings (125 links had one). Built with `maintenance/build_member_data.mjs` after adding `26TCR209` to its embedded offers dict and updating its date: 377 itinerary groups (was 372) expanding to 1,029 dated rows (was 987; Interior and Ocean View only). Because every code was re-captured, rows that left the portal's lists since Oct 8 are gone (for example `26NPR807` 52 → 47, `26SHC607` 78 → 75).
+- Updated `maintenance/build_member_data.mjs`, `data/tully-data.js`, `data/member-profiles.js` (snapshot, `portalCheck`), `app/api/state/route.ts` (seed profile date and new idempotent `tully_snapshot_2026_10_13` snapshot; earlier snapshots untouched), `AI_STATE.md`, plus synced `public/` copies. Mike's data is unchanged by this entry.
+- Validation: ran the real `expandRoyalSailingGroups` logic: 10 offers / 11 slots / 377 groups / 1,029 rows, 0 orphaned groups, every active offer has sailings, 0 skipped groups, 0 bad dates, no `undefined`/`NaN`, no stored link contains a query string; earliest departure 2026-10-15.
+- Deployment: not performed; GitHub push and ChatGPT Sites publication remain manual steps.
+
+## 2026-10-13 — Refreshed Mike's Club Royale offers and sailing groups (Claude)
+
+- Live-checked Mike's signed-in Royal Caribbean Club Royale account via browser automation (Claude in Chrome), read-only first. The portal header showed All Offers (13): 13 tiles across 9 unique codes (was 10 slots / 7 codes on Oct 11). Tier values were not re-read this cycle (Prime, 1,082 credits carried forward).
+- New: `26TCR205` "Ace of Hearts" (×2, complimentary Ocean View, Interior, or Balcony (GTY) room for two or $850 off an upgraded stateroom, $50 FreePlay when redeemed online, redeem by Nov 11, 2026, sail Dec 4, 2026 – Apr 30, 2027) and `26BAF505` "Reel Riches - Two Room Offer" (×1, complimentary Interior, Ocean View, or Balcony stateroom for two plus a bonus Interior (GTY) room for two, no FreePlay or perk shown, redeem by Nov 3, 2026, sail Jan 2 – Apr 26, 2027), both verified in Offer details.
+- Removed: none. Unchanged by tile (name, redeem-by date, copy count, room types): `26TCR104` (×2), `26TOR905` (×2), `26TOR804` (×2), `26PAS703`, `26RCL1004`, `26BAF405`, `26SHC604`. Their displayed sail windows narrowed (for example `26TOR905` now Nov 1, 2026 – Mar 29, 2027) as the portal's date range moved forward.
+- Sailings: full "View sailings" capture for all 9 active codes (first issued instance per code), saved from the browser as one JSON file in Mike's Downloads folder with his approval and read into the working environment; the file was not committed. Itinerary links were stored without their `?playerOfferId=…` query strings (356 links had one). Built with `maintenance/build_live_offer_snapshot.mjs`: 669 itinerary groups (was 590) expanding to 1,775 dated rows (was 1,597). Because every code was re-captured, rows that left the portal's lists since the carried-forward captures (for example one `26TOR804` group and departures that are now past) are gone: `26TOR804` 151 → 150 groups.
+- Updated `data/club-royale-data.js`, `data/live-sailing-groups.js`, `data/member-profiles.js` (snapshot, `portalCheck`), `app/api/state/route.ts` (seed profile date and new idempotent `mike_snapshot_2026_10_13` snapshot; earlier snapshots untouched), `README.md`, `AI_STATE.md`, plus synced `public/` copies.
+- Validation: ran the real `expandRoyalSailingGroups` logic: 9 offers / 13 slots / 669 groups / 1,775 rows, 0 orphaned groups, 0 skipped groups, 0 bad dates, no `undefined`/`NaN`; earliest departure 2026-10-15.
+- Tully: not checked in this entry. Deployment: not performed; GitHub push and ChatGPT Sites publication remain manual steps.
+
+
 ## 2026-10-13 — Keep booked-trip alternatives visible and test Finder
 
 - Removed automatic overlap exclusion: initial load, Reset, and legacy saved searches leave the disabled overlap checkbox unchecked. Conflicts remain annotated rather than hiding possible better offers.

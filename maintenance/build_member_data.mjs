@@ -29,8 +29,9 @@ const offers = {
   "26JKP607": {"name":"Fortune Flash","redeemBy":"2026-10-16","uses":1,"fp":0,"perk":"","benefit":"Interior room for two","cabinOptions":["Interior"],"comp":true},
   "26RCL1007": {"name":"October Monthly Mix","redeemBy":"2026-10-31","uses":1,"fp":25,"perk":"Bonus FP $25","benefit":"Exclusive stateroom offer (Interior room for two), or cruise fare for one plus a discounted cruise fare for your guest (Ocean View)","cabinOptions":["Interior","Ocean View"],"comp":true},
   "26NPR807": {"name":"Suit Escape","redeemBy":"2026-10-21","uses":1,"fp":0,"perk":"","benefit":"Interior room for two","cabinOptions":["Interior"],"comp":true},
+  "26TCR209": {"name":"Ace of Hearts","redeemBy":"2026-11-11","uses":1,"fp":25,"perk":"$25 FreePlay when redeemed through royalcaribbean.com, the Royal Caribbean App, or a Travel Advisor","benefit":"Cruise fare for one plus a discounted cruise fare for your guest","cabinOptions":["Interior"],"comp":true},
   "26SHC607": {"name":"Island Rollers","redeemBy":"2026-10-16","uses":1,"fp":25,"perk":"Bonus FP $25","benefit":"Interior room for two, or cruise fare for one plus a discounted cruise fare for your guest (Ocean View)","cabinOptions":["Interior","Ocean View"],"comp":true},
 };
 
-const source = `// Club Royale snapshot for Tully, verified October 8, 2026.\nconst TULLY_OFFERS = ${JSON.stringify(offers)};\nconst TULLY_ROYAL_SAILING_GROUPS = ${JSON.stringify(groups)};\n`;
+const source = `// Club Royale snapshot for Tully, verified October 13, 2026.\nconst TULLY_OFFERS = ${JSON.stringify(offers)};\nconst TULLY_ROYAL_SAILING_GROUPS = ${JSON.stringify(groups)};\n`;
 await writeFile(outputPath, source);
