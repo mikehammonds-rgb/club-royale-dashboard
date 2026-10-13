@@ -13,7 +13,7 @@ function fn(name) {
   return app.slice(start, end < 0 ? app.length : end);
 }
 
-function harness() {
+function harness(member = 'mike') {
   const controls = new Map();
   const control = selector => {
     if (!controls.has(selector)) controls.set(selector, { value: '', checked: false, options: [{ value: 'any' }, { value: 'Oasis' }], scrollIntoView() {} });
@@ -44,8 +44,8 @@ function harness() {
     finderState: { selectedOffer: null }, bookings: [],
     ROOM_RANK: { Interior: 1, 'Ocean View': 2, Balcony: 3 }, SHIP_CLASS: { Oasis: 'Oasis' }, FINDER_PAGE_SIZE: 12
   });
-  vm.runInContext(read('data/club-royale-data.js') + read('data/live-sailing-groups.js') + app.split('const FLORIDA_PORTS')[0] + '\nglobalThis.OFFERS=MIKE_OFFERS;globalThis.SAILINGS=expandRoyalSailingGroups(MIKE_ROYAL_SAILING_GROUPS);', context);
-  for (const name of ['eligibleOfferRows', 'groupSailings', 'filterSailings', 'resetFinder', 'applySavedSearch']) vm.runInContext(fn(name), context);
+  vm.runInContext(read('data/club-royale-data.js') + read('data/live-sailing-groups.js') + read('data/tully-data.js') + app.split('const FLORIDA_PORTS')[0] + `\nglobalThis.OFFERS=${member === 'tully' ? 'TULLY' : 'MIKE'}_OFFERS;globalThis.SAILINGS=expandRoyalSailingGroups(${member === 'tully' ? 'TULLY' : 'MIKE'}_ROYAL_SAILING_GROUPS);`, context);
+  for (const name of ['syncManualFinderToggles', 'handleFinderChange', 'eligibleOfferRows', 'groupSailings', 'filterSailings', 'resetFinder', 'applySavedSearch']) vm.runInContext(fn(name), context);
   context.resetFinder();
   return { context, control, html };
 }
@@ -90,3 +90,27 @@ test('restrictive cabin filters still work intentionally', () => {
   control('#room-filter').value = 'Balcony';
   assert.equal(context.filterSailings().filter(g => g.depart === '2026-12-04').length, 0);
 });
+
+for (const member of ['mike', 'tully']) {
+  test(`${member}: dates and legacy saved searches cannot silently enable advanced checkboxes`, () => {
+    const { context, control } = harness(member);
+    const ids = ['weekend-only', 'duplicate-only', 'hide-sailed-ships', 'back-to-back-only'];
+    // Simulate stale/browser-restored checkbox state before a date edit.
+    ids.forEach(id => { control(`#${id}`).checked = true; });
+    context.handleFinderChange({ target: { id: 'aboard-date' } });
+    ids.forEach(id => assert.equal(control(`#${id}`).checked, false));
+    context.applySavedSearch({ ports: ['Fort Lauderdale'], classes: ['Oasis'], ship: 'Oasis', weekendOnly: true, duplicateOnly: true, hideSailedShips: true, backToBackOnly: true });
+    ids.forEach(id => assert.equal(control(`#${id}`).checked, false));
+    context.bookings = [{ ship: 'Oasis' }];
+    const baseline = context.filterSailings().length;
+    assert.ok(baseline > 0);
+    control('#hide-sailed-ships').checked = true;
+    context.handleFinderChange({ target: { id: 'hide-sailed-ships', checked: true } });
+    assert.equal(context.filterSailings().length, 0);
+    context.handleFinderChange({ target: { id: 'aboard-date' } });
+    assert.equal(control('#hide-sailed-ships').checked, true);
+    context.resetFinder();
+    ids.forEach(id => assert.equal(control(`#${id}`).checked, false));
+    assert.equal(context.filterSailings().length, baseline);
+  });
+}

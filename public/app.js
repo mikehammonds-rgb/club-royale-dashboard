@@ -538,6 +538,24 @@ function renderSavedSearches() {
     </div>`).join("");
 }
 
+function syncManualFinderToggles(reset = false, changedInput = null) {
+  const ids = ["weekend-only", "duplicate-only", "hide-sailed-ships", "back-to-back-only"];
+  if (reset || !finderState.manualToggles) finderState.manualToggles = {};
+  if (changedInput && ids.includes(changedInput.id)) {
+    finderState.manualToggles[changedInput.id] = changedInput.checked;
+  }
+  ids.forEach(id => {
+    document.querySelector(`#${id}`).checked = finderState.manualToggles[id] === true;
+  });
+  document.querySelector("#exclude-conflicts").checked = false;
+}
+
+function handleFinderChange(event) {
+  syncManualFinderToggles(false, event.target);
+  if (event.target.id === "aboard-date") syncAboardDateControl();
+  renderFinder();
+}
+
 function applySavedSearch(search) {
   document.querySelector("#finder-form").reset();
   document.querySelectorAll("#port-filters input").forEach(input => {
@@ -552,15 +570,11 @@ function applySavedSearch(search) {
   syncAboardDateControl();
   document.querySelector("#depart-start").value = search.departStart || "";
   document.querySelector("#return-end").value = search.returnEnd || "";
-  document.querySelector("#weekend-only").checked = Boolean(search.weekendOnly);
-  document.querySelector("#exclude-conflicts").checked = false;
+  syncManualFinderToggles(true);
   document.querySelector("#nights-filter").value = search.nights || "any";
   document.querySelector("#room-filter").value = search.room || "any";
   document.querySelector("#sailing-month").value = search.month || "any";
   document.querySelector("#min-freeplay").value = search.minFreePlay || "0";
-  document.querySelector("#duplicate-only").checked = Boolean(search.duplicateOnly);
-  document.querySelector("#hide-sailed-ships").checked = Boolean(search.hideSailedShips);
-  document.querySelector("#back-to-back-only").checked = Boolean(search.backToBackOnly);
   document.querySelector("#sailing-sort").value = search.sort || "score";
   const shipSelect = document.querySelector("#ship-filter");
   shipSelect.value = [...shipSelect.options].some(option => option.value === search.ship) ? search.ship : "any";
@@ -655,14 +669,10 @@ function searchMatchesRow(sailing, search) {
   if (search.departStart && sailing.depart < search.departStart) return false;
   if (search.returnEnd && sailing.return > search.returnEnd) return false;
   if (search.month && search.month !== "any" && !sailing.depart.startsWith(search.month)) return false;
-  if (search.weekendOnly && ![5, 6].includes(parseLocalDate(sailing.depart).getDay())) return false;
   if (search.ship && search.ship !== "any" && sailing.ship !== search.ship) return false;
   if ((!search.ship || search.ship === "any") && search.classes?.length && !search.classes.includes(SHIP_CLASS[sailing.ship])) return false;
   if (search.room && search.room !== "any" && ROOM_RANK[sailing.room] < ROOM_RANK[search.room]) return false;
   if (Number(search.minFreePlay || 0) > effectiveFreePlay(OFFERS[sailing.offer])) return false;
-  if (search.duplicateOnly && OFFERS[sailing.offer]?.uses < 2) return false;
-  if (search.hideSailedShips && bookings.some(booking => booking.ship === sailing.ship)) return false;
-  if (search.backToBackOnly && bookingConflict(sailing)?.type !== "back-to-back") return false;
   if (search.nights === "2-3" && sailing.nights > 3) return false;
   if (search.nights === "4-5" && (sailing.nights < 4 || sailing.nights > 5)) return false;
   if (search.nights === "6+" && sailing.nights < 6) return false;
@@ -682,6 +692,7 @@ function savedSearchMatchLabel(search) {
 }
 
 function filterSailings() {
+  syncManualFinderToggles();
   const date = document.querySelector("#aboard-date").value;
   const departStart = document.querySelector("#depart-start").value;
   const returnEnd = document.querySelector("#return-end").value;
@@ -1069,6 +1080,7 @@ function switchActiveMember(memberId) {
 
 function resetFinder() {
   document.querySelector("#finder-form").reset();
+  syncManualFinderToggles(true);
   syncAboardDateControl();
   document.querySelector("#exclude-conflicts").checked = false;
   setPortScope("florida");
@@ -1184,10 +1196,7 @@ document.querySelector("#finder-form").addEventListener("submit", event => {
   renderFinder();
   document.querySelector("#finder-results-title").scrollIntoView({ behavior: "smooth", block: "start" });
 });
-document.querySelector("#finder-form").addEventListener("change", event => {
-  if (event.target.id === "aboard-date") syncAboardDateControl();
-  renderFinder();
-});
+document.querySelector("#finder-form").addEventListener("change", handleFinderChange);
 document.querySelector("#finder-reset").addEventListener("click", resetFinder);
 document.querySelector("#clear-aboard-date").addEventListener("click", () => {
   const dateInput = document.querySelector("#aboard-date");

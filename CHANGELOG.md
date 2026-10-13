@@ -2,6 +2,12 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-13 — Make advanced Finder checkboxes manual-only for both members
+
+- Added explicit per-search opt-in for weekend-only, duplicate-only, hide booked ships, and back-to-back-only. Date edits cannot enable these restrictions; Reset/member changes/saved-search loading clear them. Disabled browser form autocomplete and ignore stale checkbox state unless a checkbox change occurs.
+- Saved-search counts no longer apply historical checkbox flags that loading the search will ignore. Existing saved-search records, offers, and bookings are preserved.
+- Added Mike and Tully regression cases for stale controls, legacy saved searches, explicit checkbox selection, subsequent date edits, and Reset. Six logic-level tests pass; browser-specific restoration was simulated rather than visually reproduced.
+
 ## 2026-10-13 — Refreshed Tully's Club Royale offers and sailing groups (Claude)
 
 - Live-checked Tully's signed-in Royal Caribbean Club Royale account (portal name Christine; the header greeting confirmed the member) via browser automation (Claude in Chrome), read-only first. The portal header showed All Offers (11): 11 tiles across 10 unique codes (was 10 slots / 9 codes on Oct 8). Tier unchanged: Choice, 0 credits.
