@@ -6,9 +6,10 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "test": "node --test tests/*.test.mjs",
     "sync-static": "node scripts/sync-static.mjs",
     "dev": "node scripts/sync-static.mjs && vinext dev",
-    "build": "node scripts/sync-static.mjs && vinext build",
+    "build": "node --test tests/*.test.mjs && node scripts/sync-static.mjs && vinext build",
     "start": "vinext start"
   },
   "dependencies": {

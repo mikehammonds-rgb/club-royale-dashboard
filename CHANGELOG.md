@@ -2,6 +2,13 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-13 — Keep booked-trip alternatives visible and test Finder
+
+- Removed automatic overlap exclusion: initial load, Reset, and legacy saved searches leave the disabled overlap checkbox unchecked. Conflicts remain annotated rather than hiding possible better offers.
+- Added four automated regression tests exercising real Finder functions: December 4 Oasis / 26TCR104 with overlapping bookings, Reset after stale June restrictions, legacy saved searches, and intentional cabin filtering.
+- Added `pnpm test` and made tests a prerequisite of `pnpm build`. Offer, sailing, booking, and member data are unchanged.
+
+
 ## 2026-10-11 — Refreshed Mike's Club Royale offers and sailing groups (Claude)
 
 - Live-checked Mike's signed-in Royal Caribbean Club Royale account via browser automation (Claude in Chrome), read-only first. The portal header showed All Offers (10): 10 tiles across 7 unique codes (was 9 slots / 6 codes on Oct 8). Tier values were not re-read this cycle (Prime, 1,082 credits carried forward).

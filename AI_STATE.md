@@ -1,6 +1,12 @@
 # Current AI State
 
-Last reconciled with repository `main`: 2026-10-11 (Mike offer refresh; new-code sailing capture).
+Last reconciled with repository `main`: 2026-10-13 (Finder overlap visibility and regression tests; offer snapshots unchanged).
+
+## Finder regression safeguards
+
+- Booked-trip overlaps remain visible, with conflict annotations. Do not hide alternatives: Mike may call Club Royale to change an existing booking's offer code.
+- Reset and legacy saved searches cannot enable overlap hiding. The old control is disabled and unchecked; filtering no longer excludes overlaps.
+- `pnpm test` runs the real Finder functions against current sailing data with simulated form controls, including December 4 Oasis / 26TCR104, Reset after stale June dates, saved-search restoration, and intentional cabin filtering. The production build runs these tests first. This is logic-level coverage, not a substitute for browser/mobile QA.
 
 ## Canonical repository and branch
 

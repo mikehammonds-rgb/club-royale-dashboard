@@ -553,7 +553,7 @@ function applySavedSearch(search) {
   document.querySelector("#depart-start").value = search.departStart || "";
   document.querySelector("#return-end").value = search.returnEnd || "";
   document.querySelector("#weekend-only").checked = Boolean(search.weekendOnly);
-  document.querySelector("#exclude-conflicts").checked = search.excludeConflicts !== false;
+  document.querySelector("#exclude-conflicts").checked = false;
   document.querySelector("#nights-filter").value = search.nights || "any";
   document.querySelector("#room-filter").value = search.room || "any";
   document.querySelector("#sailing-month").value = search.month || "any";
@@ -686,7 +686,6 @@ function filterSailings() {
   const departStart = document.querySelector("#depart-start").value;
   const returnEnd = document.querySelector("#return-end").value;
   const weekendOnly = document.querySelector("#weekend-only").checked;
-  const excludeConflicts = document.querySelector("#exclude-conflicts").checked;
   const nights = document.querySelector("#nights-filter").value;
   const room = document.querySelector("#room-filter").value;
   const ship = document.querySelector("#ship-filter").value;
@@ -721,7 +720,6 @@ function filterSailings() {
 
   const groups = groupSailings(rows);
   const visibleGroups = groups.filter(group => {
-    if (excludeConflicts && group.conflict?.type === "overlap") return false;
     if (backToBackOnly && group.conflict?.type !== "back-to-back") return false;
     return true;
   });
@@ -1072,6 +1070,7 @@ function switchActiveMember(memberId) {
 function resetFinder() {
   document.querySelector("#finder-form").reset();
   syncAboardDateControl();
+  document.querySelector("#exclude-conflicts").checked = false;
   setPortScope("florida");
   document.querySelector("#nights-filter").value = "any";
   document.querySelector("#room-filter").value = "any";

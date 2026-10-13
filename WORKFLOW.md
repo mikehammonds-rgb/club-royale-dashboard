@@ -87,6 +87,9 @@ for file in data/*.js; do cmp "$file" "public/data/$(basename "$file")"; done
 
 ## 6. Validate the refresh
 
+Run `pnpm test` before every refresh delivery. The build also runs it automatically. These regression tests cover actual Finder filtering, December 4 Oasis / 26TCR104, overlap visibility, Reset, and legacy saved searches. Do not weaken tests to accommodate a failure without first verifying whether the source data legitimately changed. Add a regression test for each confirmed search defect.
+
+
 1. Validate the data mechanically: parse every data file, confirm expected offer codes and object keys, expand grouped dates with the same logic as `app.js`, and reconcile unique offers, usable slots, itinerary groups, and dated-sailing counts with `portalCheck`.
    - Run the member's own data through `app.js`'s `expandRoyalSailingGroups` (extract the function with its helper `addDaysToIso` into a Node `vm` context). Mike uses `MIKE_OFFERS` / `MIKE_ROYAL_SAILING_GROUPS`; Tully uses `TULLY_OFFERS` / `TULLY_ROYAL_SAILING_GROUPS` from `data/tully-data.js`. Report unique offers, usable slots (sum of `uses`), groups, dated rows, orphan groups, bad dates or night counts, skipped groups (no parseable “N Night” or no room), room labels, `undefined`/`NaN`, and duplicate sailings (offer/ship/port/itin/room/depart).
 2. Confirm every sailing references an active offer, except explicitly preserved historical files that are not wired into `sailingGroups`.
