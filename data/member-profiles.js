@@ -8,21 +8,21 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 1082,
     progressPercent: 43,
     tierMessage: "1,418 more tier credits to keep Prime",
-    snapshot: "2026-10-13",
+    snapshot: "2026-10-19",
     offers: MIKE_OFFERS,
     sailingGroups: MIKE_ROYAL_SAILING_GROUPS,
     seedBookings: MIKE_BOOKED_CRUISES,
     returnedOffers: [],
     portalCheck: {
-      checkedAt: "2026-10-13T12:00:00-04:00",
+      checkedAt: "2026-10-19T16:05:29.890Z",
       uniqueOffers: 9,
-      usableSlots: 13,
-      sailingRows: 1775,
-      newCodes: ["26TCR205", "26BAF505"],
-      removedCodes: [],
+      usableSlots: 12,
+      sailingRows: 1360,
+      newCodes: ["26FLS104", "26VAR604"],
+      removedCodes: ["26TOR804", "26SHC604"],
       changedCodes: [],
-      duplicateCodes: ["26TCR104", "26TCR205", "26TOR804", "26TOR905"],
-      note: "Oct 13 refresh: 13 usable slots across 9 active offer codes (portal header: All Offers (13)). Two new offers appeared: Ace of Hearts (26TCR205, x2 uses, comp Ocean View/Interior/Balcony GTY room for two or $850 off an upgraded stateroom, $50 FreePlay online, redeem by Nov 11, 2026, sail Dec 4, 2026 - Apr 30, 2027) and Reel Riches - Two Room Offer (26BAF505, x1, comp stateroom for two plus a bonus Interior GTY room for two, no FreePlay shown, redeem by Nov 3, 2026, sail Jan 2 - Apr 26, 2027). Nothing was removed since Oct 11. The seven existing codes (26TCR104 x2, 26TOR905 x2, 26TOR804 x2, 26RCL1004, 26BAF405, 26SHC604, 26PAS703) are unchanged by tile (name, redeem-by date, copy count, room types); their sail windows narrowed as the portal's date range moved forward. A full 'View sailings' capture was run for all 9 active codes, so sailing groups for every code are current as of this date (669 groups, 1,775 dated rows). Tier values were not re-read this cycle (Prime, 1,082 credits carried forward)."
+      duplicateCodes: ["26TCR104", "26TCR205", "26TOR905"],
+      note: "October 19 live check of Mike's account: 12 slots across 9 unique codes. New: Tropic Hopper (26FLS104, redeem Nov 18; sail Nov 22, 2026 - Mar 29, 2027) and Sunny Shuffle (26VAR604, redeem Nov 12; sail Dec 3, 2026 - Feb 26, 2027), each one complimentary Ocean View or Balcony GTY room for two, taxes and fees payable; no FreePlay shown. Removed expired codes: 26TOR804 (2 slots, Oct 14) and 26SHC604 (1 slot, Oct 16). Seven other codes match the live tiles; their sailing groups are carried forward from October 13, not re-captured today. Both new sailing tables were checksum-verified (21 and 24 groups); total 518 groups / 1360 dated sailings. Prime / 1,082 credits re-verified. Tully was not checked."
     }
   },
   tully: {

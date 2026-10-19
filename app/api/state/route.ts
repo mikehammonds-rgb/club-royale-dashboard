@@ -8,7 +8,7 @@ type DatabaseEnv = { DB?: D1Database };
 
 const allowedMemberIds = new Set(["mike", "tully"]);
 const seedProfiles = [
-  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-13" },
+  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-19" },
   { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-10-13" }
 ];
 const seedBookings = [
@@ -147,6 +147,32 @@ async function initialize(db: D1Database) {
         christmasMatch: false
       })),
     db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_13', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-19', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_10_19')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("mike", "refresh-2026-10-19", "2026-10-19", 9, 12, 1360, JSON.stringify({
+          "note": "October 19 live check of Mike's account: 12 slots across 9 unique codes. New: Tropic Hopper (26FLS104, redeem Nov 18; sail Nov 22, 2026 - Mar 29, 2027) and Sunny Shuffle (26VAR604, redeem Nov 12; sail Dec 3, 2026 - Feb 26, 2027), each one complimentary Ocean View or Balcony GTY room for two, taxes and fees payable; no FreePlay shown. Removed expired codes: 26TOR804 (2 slots, Oct 14) and 26SHC604 (1 slot, Oct 16). Seven other codes match the live tiles; their sailing groups are carried forward from October 13, not re-captured today. Both new sailing tables were checksum-verified (21 and 24 groups); total 518 groups / 1360 dated sailings. Prime / 1,082 credits re-verified. Tully was not checked.",
+          "newCodes": [
+            "26FLS104",
+            "26VAR604"
+          ],
+          "removedCodes": [
+            "26TOR804",
+            "26SHC604"
+          ],
+          "changedCodes": [],
+          "duplicateCodes": [
+            "26TCR104",
+            "26TCR205",
+            "26TOR905"
+          ],
+          "checkedAt": "2026-10-19T16:05:29.890Z",
+          "sailingSources": {
+            "newCodes": "2026-10-19",
+            "unchangedCodes": "2026-10-13"
+          },
+          "christmasMatch": true
+        })),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_19', ?)").bind(now),
     db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-08', updated_at = ? WHERE id = 'tully' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'tully_snapshot_2026_10_08')").bind(now),
     db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
       .bind("tully", "refresh-2026-10-08", "2026-10-08", 9, 10, 987, JSON.stringify({

@@ -14,6 +14,6 @@ A mobile-first private dashboard for Club Royale casino offers and eligible Roya
 
 ## Current data
 
-Mike's offer list was verified live on Royal Caribbean on October 13, 2026: 13 usable slots across 9 unique codes (`26TCR104` ×2, `26TCR205` ×2, `26TOR905` ×2, `26TOR804` ×2, `26PAS703`, `26RCL1004`, `26BAF405`, `26BAF505`, `26SHC604`), expanding to 1,775 dated eligible sailings. `26TCR205` "Ace of Hearts" and `26BAF505` "Reel Riches - Two Room Offer" are new this cycle; nothing left the account since the October 11 refresh.
+Mike's offer list was verified live on October 19, 2026: 12 usable slots across 9 unique codes, 518 itinerary groups and 1360 dated sailings. New: Tropic Hopper (26FLS104) and Sunny Shuffle (26VAR604). Expired/removed: 26TOR804 and 26SHC604. New-code sailing tables were captured today; seven unchanged codes retain their October 13 sailing groups.
 
 This remains a snapshot rather than a live Royal Caribbean API connection. Future refreshes should re-check the signed-in offer page, update the canonical offer/sailing data, and verify the saved searches before publishing.

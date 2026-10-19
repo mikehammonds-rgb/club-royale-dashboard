@@ -2,6 +2,16 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-19 — Prepared Mike offer refresh; publication blocked
+
+- Verified Mike's signed-in Royal Caribbean account: Prime / 1,082 credits; 12 offer tiles across 9 unique codes, previously 13 slots / 9 codes.
+- New: `26FLS104` Tropic Hopper (one slot, redeem Nov 18, sail Nov 22, 2026 – Mar 29, 2027) and `26VAR604` Sunny Shuffle (one slot, redeem Nov 12, sail Dec 3, 2026 – Feb 26, 2027). Both offer a complimentary Ocean View or Balcony GTY room for two, taxes/fees payable, no FreePlay shown; details opened.
+- Removed expired active codes: `26TOR804` Isle or Nothing (two slots, redeem-by Oct 14, $50 online FreePlay, Interior/Ocean View/Balcony or $725 upgrade discount) and `26SHC604` Island Rollers (one slot, redeem-by Oct 16, $50 FreePlay, Balcony/Ocean View room for two). Historical snapshots, previous changelog entries, all bookings/statuses, and booked-offer sailing history remain intact.
+- Captured the two new full sailing tables with checksum-verified transcription: Tropic Hopper 21 groups / 53 dates (137c5710); Sunny Shuffle 24 groups / 60 dates (5c6b9f5d). Generated via the canonical builder. Seven unchanged offer tables are retained from October 13; they were not re-captured. Active data now contains 518 groups / 1,360 dated sailings, with no orphan groups or invalid dates/night counts.
+- Updated Mike's canonical offer/sailing/profile data, README, API seed date, append-only D1 refresh migration `mike_snapshot_2026_10_19`, and synchronized public copies. Tully data and metadata are unchanged. No qualifying Wonder/Miami sailing within June 18–24, 2027 exists in this snapshot.
+- Validation: six existing Finder tests pass; static copies are byte-identical. Production build could not run after its passing tests/sync because `vinext` is missing. Browser/mobile/live checks remain pending.
+- Delivery: GitHub connector verified base `0f207dd` is still current. Git pull and Sites source opening fail DNS resolution before authentication. GitHub and live Sites version 37 remain unchanged; publication must resume after shell networking and dependencies are available.
+
 ## 2026-10-13 — Make advanced Finder checkboxes manual-only for both members
 
 - Added explicit per-search opt-in for weekend-only, duplicate-only, hide booked ships, and back-to-back-only. Date edits cannot enable these restrictions; Reset/member changes/saved-search loading clear them. Disabled browser form autocomplete and ignore stale checkbox state unless a checkbox change occurs.
