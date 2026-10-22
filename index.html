@@ -206,8 +206,8 @@
           <details class="advanced-filters">
             <summary>More filters <span>Flexible dates, ship, conflicts, and result order</span></summary>
             <div class="advanced-grid">
-              <label><span>Depart no earlier than</span><input id="depart-start" type="date" min="2026-08-23"></label>
-              <label><span>Return no later than</span><input id="return-end" type="date" min="2026-08-23"></label>
+              <div class="flexible-date-field"><label for="depart-start">Depart no earlier than</label><div class="date-input-row"><input id="depart-start" type="date" min="2026-08-23"><button type="button" data-clear-date="depart-start" aria-label="Clear earliest departure date">Clear</button></div></div>
+              <div class="flexible-date-field"><label for="return-end">Return no later than</label><div class="date-input-row"><input id="return-end" type="date" min="2026-08-23"><button type="button" data-clear-date="return-end" aria-label="Clear latest return date">Clear</button></div></div>
               <label><span>Ship</span><select id="ship-filter"><option value="any">Any ship</option></select></label>
               <label><span>Sort results</span><select id="sailing-sort"><option value="score">Best opportunity score</option><option value="value">Best cabin value</option><option value="date">Soonest departure</option><option value="nights">Longest sailing</option><option value="expiry">Offer expiring soonest</option></select></label>
             </div>

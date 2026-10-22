@@ -32,6 +32,9 @@ function harness(member = 'mike') {
   const classes = [{ value: 'Oasis', checked: true }];
   const ports = [{ value: 'Fort Lauderdale', checked: true }];
   const context = vm.createContext({
+    Date: class extends Date {
+      constructor(...args) { super(...(args.length ? args : [2026, 9, 22, 12])); }
+    },
     document: { querySelector: control, querySelectorAll: selector => selector.includes('class') ? classes : ports },
     syncAboardDateControl() {}, setPortScope() {}, syncPortScopeAppearance() {}, updateAvailabilityControls() {}, renderFinder() {},
     selectedPorts: () => ports.filter(p => p.checked).map(p => p.value),
@@ -58,7 +61,7 @@ test('initial markup and Reset never enable overlap hiding and clear stale date 
   control('#return-end').value = '2027-06-24';
   context.resetFinder();
   assert.equal(control('#exclude-conflicts').checked, false);
-  assert.equal(control('#depart-start').value, '');
+  assert.equal(control('#depart-start').value, '2026-10-22');
   assert.equal(control('#return-end').value, '');
 });
 

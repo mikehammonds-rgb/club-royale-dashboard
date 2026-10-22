@@ -2,6 +2,15 @@
 
 Last reconciled with repository `main`: 2026-10-22 (verified Mike refresh; local refresh validated; GitHub delivery and Sites publication blocked).
 
+## October 22 Finder delivery follow-up
+
+- Local commit adds today as the initial/Reset departure date and individual date Clear controls. All six tests, direct Clear-handler checks and root/public synchronization pass. Production build now succeeds in the Sites deployment mirror after dependency restoration. Browser/mobile QA was unavailable.
+- Sites source access and package downloads now work. Canonical GitHub push was blocked by automatic approval review: publishing private offer/booking data requires explicit destination approval. GitHub and live Sites remain unchanged pending that approval.
+
+## Finder date controls
+
+- Earliest departure and latest return each have a Clear button that removes only that limit and immediately recomputes results. Initial load, member switching and full Reset set the earliest departure to today in the browser’s local timezone. Clear removes that limit without resetting other filters.
+
 ## Finder regression safeguards
 
 - Advanced checkboxes (weekend-only, duplicate-only, hide booked ships, back-to-back-only) require an explicit checkbox change in the current search. Reset, member switches, and saved-search loading clear them; date edits and stale browser-restored state cannot opt in. Saved-search counts ignore historical flags that are no longer automatically applied. Ports and ship-class selections retain their established defaults.

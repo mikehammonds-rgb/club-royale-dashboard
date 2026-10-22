@@ -221,3 +221,5 @@ select,input[type="date"]{min-height:46px;width:100%;border:1px solid var(--line
 /* Standardized booking cost sections */
 .trip-cost-heading h3{font-size:20px}.trip-cost-section dt,.trip-cost-section dd{font-size:14px;line-height:1.45}.trip-cost-section dl div{grid-template-columns:minmax(130px,.8fr) minmax(0,1.5fr);padding:10px 0}
 @media (max-width:560px){.trip-detail-grid{grid-template-columns:1fr}.trip-cost-section dl div{grid-template-columns:1fr;gap:4px}.trip-cost-section dd{text-align:left}.trip-cost-heading h3{font-size:18px}}
+
+.flexible-date-field{min-width:0}.flexible-date-field>label{display:block;margin-bottom:8px}.flexible-date-field .date-input-row{grid-template-columns:minmax(0,1fr) auto}.flexible-date-field input{min-width:0}

@@ -2,6 +2,11 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-22 — Clear individual Finder date limits
+
+- Added visible, accessible Clear buttons beside the earliest departure and latest return date fields. Each clears only its own date and immediately refreshes Finder results through the existing change handler, preserving all other filters. Initial load, member switching and full Reset default earliest departure to today in the browser’s local timezone. Clear removes either date limit while retaining other filters. Existing Finder tests use a fixed local date for repeatable checks.
+- Synchronized public copies; JavaScript syntax, six existing Finder tests and static synchronization verified. Production build passed in the Sites mirror after dependency restoration. Direct checks verified both Clear handlers preserve the other date and trigger an immediate change event. Browser/mobile QA was unavailable. GitHub push was rejected by automatic approval review pending explicit approval to publish private data to the repository; the live dashboard is unchanged.
+
 ## 2026-10-22 — Refreshed Mike offers; live publication blocked
 
 - Live portal checked on October 22: Prime / 1,082 credits, All Offers (14), 10 unique codes. Previously 9 codes / 12 copies / 518 groups / 1,360 dated sailings.

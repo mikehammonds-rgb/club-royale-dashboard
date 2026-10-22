@@ -1080,6 +1080,8 @@ function switchActiveMember(memberId) {
 
 function resetFinder() {
   document.querySelector("#finder-form").reset();
+  const today = new Date();
+  document.querySelector("#depart-start").value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
   syncManualFinderToggles(true);
   syncAboardDateControl();
   document.querySelector("#exclude-conflicts").checked = false;
@@ -1198,6 +1200,13 @@ document.querySelector("#finder-form").addEventListener("submit", event => {
 });
 document.querySelector("#finder-form").addEventListener("change", handleFinderChange);
 document.querySelector("#finder-reset").addEventListener("click", resetFinder);
+document.querySelectorAll("[data-clear-date]").forEach(button => {
+  button.addEventListener("click", () => {
+    const input = document.getElementById(button.dataset.clearDate);
+    input.value = "";
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+});
 document.querySelector("#clear-aboard-date").addEventListener("click", () => {
   const dateInput = document.querySelector("#aboard-date");
   dateInput.value = "";
