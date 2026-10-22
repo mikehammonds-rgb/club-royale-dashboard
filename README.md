@@ -14,6 +14,6 @@ A mobile-first private dashboard for Club Royale casino offers and eligible Roya
 
 ## Current data
 
-Mike's offer list was verified live on October 19, 2026: 12 usable slots across 9 unique codes, 518 itinerary groups and 1360 dated sailings. New: Tropic Hopper (26FLS104) and Sunny Shuffle (26VAR604). Expired/removed: 26TOR804 and 26SHC604. New-code sailing tables were captured today; seven unchanged codes retain their October 13 sailing groups.
+Mike's offer list was verified live on October 22, 2026: 14 usable slots across 10 unique codes, 627 itinerary groups and 1667 dated sailings. New: Bankroll Blitz (26TCR304, two copies, $75 FreePlay each) and Quick Getaways (26PAS804). Expired/removed: Double Down Days (26BAF405). New sailing tables captured today; eight retained codes use October 13/19 sailing snapshots.
 
 This remains a snapshot rather than a live Royal Caribbean API connection. Future refreshes should re-check the signed-in offer page, update the canonical offer/sailing data, and verify the saved searches before publishing.

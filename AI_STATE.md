@@ -1,6 +1,6 @@
 # Current AI State
 
-Last reconciled with repository `main`: 2026-10-19 (local offer refresh prepared; GitHub push and Sites publication blocked by shell DNS/network access).
+Last reconciled with repository `main`: 2026-10-22 (verified Mike refresh; local refresh validated; GitHub delivery and Sites publication blocked).
 
 ## Finder regression safeguards
 
@@ -29,7 +29,7 @@ Last reconciled with repository `main`: 2026-10-19 (local offer refresh prepared
 
 ## Current verified datasets
 
-- Mike snapshot: 2026-10-19; 9 active codes, 12 slots, 518 itinerary groups, 1,360 dated sailings. October 19 live check of Mike's account: 12 slots across 9 unique codes. New: Tropic Hopper (26FLS104, redeem Nov 18; sail Nov 22, 2026 - Mar 29, 2027) and Sunny Shuffle (26VAR604, redeem Nov 12; sail Dec 3, 2026 - Feb 26, 2027), each one complimentary Ocean View or Balcony GTY room for two, taxes and fees payable; no FreePlay shown. Removed expired codes: 26TOR804 (2 slots, Oct 14) and 26SHC604 (1 slot, Oct 16). Seven other codes match the live tiles; their sailing groups are carried forward from October 13, not re-captured today. Both new sailing tables were checksum-verified (21 and 24 groups); total 518 groups / 1360 dated sailings. Prime / 1,082 credits re-verified. Tully was not checked.
+- Mike snapshot: 2026-10-22; 10 active codes, 14 slots, 627 itinerary groups, 1,667 dated sailings. October 22 live check of Mike's account: 14 slots across 10 unique codes. New: Bankroll Blitz (26TCR304, two copies, redeem Nov 20; sail Dec 2, 2026 - Apr 30, 2027; cruise fare for two in Ocean View/Balcony/Interior GTY or $650 upgrade discount; $75 online FreePlay per redemption) and Quick Getaways (26PAS804, one copy, redeem Nov 11; sail Dec 4, 2026 - Apr 19, 2027; cruise fare for two in Interior/Balcony/Ocean View GTY; no FreePlay shown). Removed: expired Double Down Days (26BAF405, one copy, deadline Oct 21). All eight retained codes match the live tiles; sailing groups carried forward from October 13 (six codes) and October 19 (26FLS104, 26VAR604), not re-captured today. Both new full tables captured and checksum-verified: 128 and 9 groups; total 627 groups / 1667 dated sailings. Prime / 1,082 credits re-verified. Tully not checked.
 - Tully snapshot: 2026-10-13; 10 active unique offer codes, 11 usable slots, 377 itinerary groups expanding to 1,029 dated sailing rows (computed by running `app.js`'s `expandRoyalSailingGroups` logic against the refreshed data). Active codes: `26TCR209` (new, ×1, "Ace of Hearts", Interior only, cruise fare for one plus a discounted fare for the guest, $25 FreePlay online, redeems by Nov 11 2026), `26TCR107` (×2), `26TOR909`, `26TOR808` (redeems Oct 14), `26PAS707`, `26NDS108`, `26JKP607` (Oct 16), `26RCL1007`, `26NPR807`, `26SHC607` (Oct 16); all are comp offers and the nine older codes are unchanged. Nothing was removed since Oct 8. A full "View sailings" capture was run for all 10 codes. Tier unchanged: Choice, 0 credits.
 - Mike has four seeded booked cruises. The Christmas 2026 Wonder booking uses historical offer `26PAS603`; its August 29 sailing snapshot is preserved separately and is not part of the active Finder dataset.
 - The November 27, 2026 Wonder booking is reconciled to the Royal Caribbean receipt issued March 4, 2026, including itinerary, XB guarantee cabin status, guests, My Time dining, exact taxes/payment balance, gratuities, and protection status.
@@ -44,11 +44,14 @@ Last reconciled with repository `main`: 2026-10-19 (local offer refresh prepared
 - Per-member cloud/browser persistence for bookings, saved searches, and offer statuses.
 - Responsive mobile navigation plus installable web-app metadata.
 
-## October 19 delivery status
+## October 22 delivery status
 
-- Connected GitHub reads confirm local base `0f207dd5027f5624917ba835aff499662a0c9006` equals current GitHub main. The required `git pull --ff-only` failed before authentication: `Could not resolve host: github.com`.
-- Sites connector confirms existing Offer Compass version 37 and the custom Mike-owner / Michael-Hott-viewer audience. Opening its source with the supported Sites helper failed before authentication: `Could not resolve host: git.chatgpt-team.site`. No publication was performed.
-- Six Finder regression tests and static synchronization passed. Standard build reached the build command but failed because `vinext` is unavailable in this checkout; the package-manager dependencies need restoration when network access works. Browser/mobile and live verification remain pending.
+- GitHub connector confirms canonical base `0966aadf5b7373396e988d7ae7ac040fafb22478`, matching local main. Earlier October 19 GitHub delivery is now confirmed despite stale prior notes.
+- Shell Git pull/push is blocked by DNS for github.com. Connected GitHub create_tree was rejected: MCP tool call requires approval, but approval policy is never. No remote commit/ref update succeeded; the refresh remains local.
+- Existing Sites project is version 38 with custom Mike-owner / Michael-Hott-viewer access. Source helper in a clean scratch directory fails resolving git.chatgpt-team.site; no new live publication is possible this session. Version 38 remains unchanged.
+- Both new sailing tables checksum-match the live DOM (26TCR304: 128 groups / 319 dates, 24425dc6; 26PAS804: 9 groups / 34 dates, ea06d69d). Eight retained sailing tables are explicitly carried forward from October 13/19.
+- All six Finder regression tests and root/public synchronization pass. Both member datasets mechanically reconcile with zero orphan groups, skipped groups, invalid dates, query-string links, or duplicate dated sailings. No qualifying Wonder/Miami sailing within June 18–24, 2027.
+- Standard production build fails because vinext is missing. Dependency restoration also fails resolving registry.npmjs.org. Browser/mobile QA, TypeScript compilation, production build and live verification remain unverified; source data was validated directly. Tully and bookings are unchanged.
 
 ## Known constraints and risks
 

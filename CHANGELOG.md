@@ -2,6 +2,17 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-22 — Refreshed Mike offers; live publication blocked
+
+- Live portal checked on October 22: Prime / 1,082 credits, All Offers (14), 10 unique codes. Previously 9 codes / 12 copies / 518 groups / 1,360 dated sailings.
+- New 26TCR304 Bankroll Blitz: two copies, redeem November 20; December 2, 2026–April 30, 2027; cruise fare for two in Ocean View/Balcony/Interior GTY or $650 upgrade discount; $75 FreePlay per online redemption, up to 72 hours for invoice update. Opened details and actual issued sailing link.
+- New 26PAS804 Quick Getaways: one copy, redeem November 11; December 4, 2026–April 19, 2027; cruise fare for two in Interior/Balcony/Ocean View GTY; no FreePlay shown. Opened details and actual issued sailing link.
+- Removed expired 26BAF405 Double Down Days (one copy, October 21 deadline, no FreePlay; two-room benefit). Retained historical snapshots and changelog, all bookings and redemption state; Tully unchanged.
+- Captured complete new sailing tables: Bankroll 128 groups / 319 dates (24425dc6), Quick Getaways 9 groups / 34 dates (ea06d69d), checksum-verified. Bankroll live itinerary URL prefixes all match canonical slugs; Quick Getaways URLs transcribed from the live table. Eight retained codes match live tiles, with sailing tables carried forward from October 13/19. Canonical builder produced 627 groups / 1,667 dated sailings.
+- Updated active offers, sailings, profile/portalCheck, README, API seed date and append-only guarded D1 snapshot mike_snapshot_2026_10_22; synchronized public files. No Wonder/Miami match within June 18–24, 2027.
+- Validation: six Finder tests pass; root/public byte-identical; Mike/Tully counts reconcile with zero orphan groups, skipped groups, invalid dates, query-string links or duplicate dated sailings. Production build blocked by missing vinext; dependency install blocked by registry DNS. Browser/mobile and TypeScript/build verification remain pending.
+- Delivery: canonical base 0966aad verified through GitHub connector; shell Git DNS fails. Connected GitHub create_tree rejected the write because approval is required while the session approval policy is never. No remote commit/ref update succeeded; refresh remains local. Existing Sites version 38/custom audience confirmed; opening source in a clean directory fails DNS for git.chatgpt-team.site, so live publication is pending.
+
 ## 2026-10-19 — Prepared Mike offer refresh; publication blocked
 
 - Verified Mike's signed-in Royal Caribbean account: Prime / 1,082 credits; 12 offer tiles across 9 unique codes, previously 13 slots / 9 codes.

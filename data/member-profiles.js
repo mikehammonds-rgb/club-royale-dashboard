@@ -8,21 +8,31 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 1082,
     progressPercent: 43,
     tierMessage: "1,418 more tier credits to keep Prime",
-    snapshot: "2026-10-19",
+    snapshot: "2026-10-22",
     offers: MIKE_OFFERS,
     sailingGroups: MIKE_ROYAL_SAILING_GROUPS,
     seedBookings: MIKE_BOOKED_CRUISES,
     returnedOffers: [],
     portalCheck: {
-      checkedAt: "2026-10-19T16:05:29.890Z",
-      uniqueOffers: 9,
-      usableSlots: 12,
-      sailingRows: 1360,
-      newCodes: ["26FLS104", "26VAR604"],
-      removedCodes: ["26TOR804", "26SHC604"],
-      changedCodes: [],
-      duplicateCodes: ["26TCR104", "26TCR205", "26TOR905"],
-      note: "October 19 live check of Mike's account: 12 slots across 9 unique codes. New: Tropic Hopper (26FLS104, redeem Nov 18; sail Nov 22, 2026 - Mar 29, 2027) and Sunny Shuffle (26VAR604, redeem Nov 12; sail Dec 3, 2026 - Feb 26, 2027), each one complimentary Ocean View or Balcony GTY room for two, taxes and fees payable; no FreePlay shown. Removed expired codes: 26TOR804 (2 slots, Oct 14) and 26SHC604 (1 slot, Oct 16). Seven other codes match the live tiles; their sailing groups are carried forward from October 13, not re-captured today. Both new sailing tables were checksum-verified (21 and 24 groups); total 518 groups / 1360 dated sailings. Prime / 1,082 credits re-verified. Tully was not checked."
+      "checkedAt": "2026-10-22T19:57:02.166Z",
+      "uniqueOffers": 10,
+      "usableSlots": 14,
+      "sailingRows": 1667,
+      "newCodes": [
+        "26TCR304",
+        "26PAS804"
+      ],
+      "removedCodes": [
+        "26BAF405"
+      ],
+      "changedCodes": [],
+      "duplicateCodes": [
+        "26TCR104",
+        "26TCR205",
+        "26TOR905",
+        "26TCR304"
+      ],
+      "note": "October 22 live check of Mike's account: 14 slots across 10 unique codes. New: Bankroll Blitz (26TCR304, two copies, redeem Nov 20; sail Dec 2, 2026 - Apr 30, 2027; cruise fare for two in Ocean View/Balcony/Interior GTY or $650 upgrade discount; $75 online FreePlay per redemption) and Quick Getaways (26PAS804, one copy, redeem Nov 11; sail Dec 4, 2026 - Apr 19, 2027; cruise fare for two in Interior/Balcony/Ocean View GTY; no FreePlay shown). Removed: expired Double Down Days (26BAF405, one copy, deadline Oct 21). All eight retained codes match the live tiles; sailing groups carried forward from October 13 (six codes) and October 19 (26FLS104, 26VAR604), not re-captured today. Both new full tables captured and checksum-verified: 128 and 9 groups; total 627 groups / 1667 dated sailings. Prime / 1,082 credits re-verified. Tully not checked."
     }
   },
   tully: {

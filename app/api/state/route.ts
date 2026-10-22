@@ -8,7 +8,7 @@ type DatabaseEnv = { DB?: D1Database };
 
 const allowedMemberIds = new Set(["mike", "tully"]);
 const seedProfiles = [
-  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-19" },
+  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-22" },
   { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-10-13" }
 ];
 const seedBookings = [
@@ -114,6 +114,41 @@ async function initialize(db: D1Database) {
         christmasMatch: false
       })),
     db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_01', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-22', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_10_22')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("mike", "refresh-2026-10-22", "2026-10-22", 10, 14, 1667, JSON.stringify({
+  "checkedAt": "2026-10-22T19:57:02.166Z",
+  "uniqueOffers": 10,
+  "usableSlots": 14,
+  "sailingRows": 1667,
+  "newCodes": [
+    "26TCR304",
+    "26PAS804"
+  ],
+  "removedCodes": [
+    "26BAF405"
+  ],
+  "changedCodes": [],
+  "duplicateCodes": [
+    "26TCR104",
+    "26TCR205",
+    "26TOR905",
+    "26TCR304"
+  ],
+  "note": "October 22 live check of Mike's account: 14 slots across 10 unique codes. New: Bankroll Blitz (26TCR304, two copies, redeem Nov 20; sail Dec 2, 2026 - Apr 30, 2027; cruise fare for two in Ocean View/Balcony/Interior GTY or $650 upgrade discount; $75 online FreePlay per redemption) and Quick Getaways (26PAS804, one copy, redeem Nov 11; sail Dec 4, 2026 - Apr 19, 2027; cruise fare for two in Interior/Balcony/Ocean View GTY; no FreePlay shown). Removed: expired Double Down Days (26BAF405, one copy, deadline Oct 21). All eight retained codes match the live tiles; sailing groups carried forward from October 13 (six codes) and October 19 (26FLS104, 26VAR604), not re-captured today. Both new full tables captured and checksum-verified: 128 and 9 groups; total 627 groups / 1667 dated sailings. Prime / 1,082 credits re-verified. Tully not checked.",
+  "sailingSources": {
+    "newCodes": "2026-10-22",
+    "retainedCodes": [
+      "2026-10-13",
+      "2026-10-19"
+    ]
+  },
+  "sailingChecksums": {
+    "26TCR304": "24425dc6",
+    "26PAS804": "ea06d69d"
+  }
+})),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_22', ?)").bind(now),
     db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-08', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_10_08')").bind(now),
     db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
       .bind("mike", "refresh-2026-10-08", "2026-10-08", 6, 9, 1271, JSON.stringify({
