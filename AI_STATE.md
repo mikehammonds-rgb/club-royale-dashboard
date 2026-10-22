@@ -2,6 +2,12 @@
 
 Last reconciled with repository `main`: 2026-10-22 (verified Mike refresh; local refresh validated; GitHub delivery and Sites publication blocked).
 
+## October 22 publication completed
+
+- Mike explicitly approved GitHub and existing shared-dashboard publication. GitHub main 4f084df63b74ffc50d65765f89d26a5b1bdf2618 includes the October 22 offer refresh and today-default/Clear date controls; local main matched origin/main after push.
+- Sites version 39 published successfully from deployment-mirror commit e18654a018bbdd38a78e5b40271801a6188a8cd3. Deployment appgdep_6ada8ed6ae7481918257ec232262b950 returned succeeded and the existing production URL. Existing custom audience preserved.
+- Production build, six Finder tests, Clear-handler checks and static synchronization passed. Browser/mobile visual verification was unavailable. Earlier blocked-delivery notes below are historical and superseded by this successful publication.
+
 ## October 22 Finder delivery follow-up
 
 - Local commit adds today as the initial/Reset departure date and individual date Clear controls. All six tests, direct Clear-handler checks and root/public synchronization pass. Production build now succeeds in the Sites deployment mirror after dependency restoration. Browser/mobile QA was unavailable.

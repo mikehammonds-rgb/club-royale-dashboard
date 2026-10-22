@@ -2,6 +2,12 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-22 — Published offer refresh and Finder date controls
+
+- After Mike's explicit approval, pushed canonical GitHub main 4f084df and confirmed local/remote equality. This includes the earlier d84c3e8 offer refresh.
+- Preserved Sites-managed configuration and custom audience. Published Sites version 39 from mirror commit e18654a018bbdd38a78e5b40271801a6188a8cd3; deployment appgdep_6ada8ed6ae7481918257ec232262b950 succeeded at the existing production URL.
+- Production build and all six Finder tests passed. Direct Clear-handler and static synchronization checks passed; browser/mobile visual verification unavailable. Prior blocking notes are superseded by this completed publication.
+
 ## 2026-10-22 — Clear individual Finder date limits
 
 - Added visible, accessible Clear buttons beside the earliest departure and latest return date fields. Each clears only its own date and immediately refreshes Finder results through the existing change handler, preserving all other filters. Initial load, member switching and full Reset default earliest departure to today in the browser’s local timezone. Clear removes either date limit while retaining other filters. Existing Finder tests use a fixed local date for repeatable checks.
