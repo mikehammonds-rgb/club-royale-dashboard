@@ -4,6 +4,7 @@ All notable project, data, workflow, and deployment changes should be recorded h
 
 ## 2026-10-26 — Queen of Diamonds and Multi-Line Mix refresh
 
+- Local implementation committed as `238e7e9`. GitHub connector mutation rejected by the session never-approval policy; shell GitHub and Sites source access fail DNS. Remote GitHub and live Sites unchanged.
 - Verified Mike's active list: 10 → 12 codes, 14 → 16 usable slots; no removals. Added `26MIX604` Queen of Diamonds (redeem Nov 24, 20 groups / 64 dates) and `26EMV504` Multi-Line Mix (redeem Nov 25, 53 groups / 142 dates). Both are Balcony/Ocean View GTY cruise fare for two; no FreePlay shown.
 - Full new sailing tables checksum-match the signed-in portal: `ad04981d` / `4029c511`. Combined Finder dataset: 627 → 700 groups, 1,667 → 1,873 dated sailings. Retained tables preserve October 13/19/22 provenance. Tully, bookings and historical snapshots preserved.
 - Updated member summary, API profile seed, append-only October 26 D1 snapshot/guard and README; regenerated public data. All six Finder tests, TypeScript, static synchronization and both-member data reconciliation pass. Full production build passes in a scratch copy with existing hosting configuration; canonical build retains its known missing-hosting-manifest failure. Browser QA unavailable because local-server binding is denied.
