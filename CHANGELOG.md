@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-26 — Publish saved Finder date-filter fix
+
+- Pushed exact saved commit `c1ba259` to canonical GitHub main after a clean fast-forward reconciliation.
+- Existing Sites version 41 deployed successfully from `6c17f3dd9b33ac28dc55f51e4028a6adff55c469` (deployment `appgdep_6adf9bc4ed488191b6399a205f79c7e1`). Managed hosting configuration, booking data and sharing audience preserved.
+- Production build, 11 Finder regressions and root/public synchronization passed. Native deployment confirms the live version; authenticated browser/mobile interaction remains unverified.
+
 ## 2026-10-26 — Prevent hidden stale Finder date limits
 
 - Track flexible dates explicitly so browser-restored June 2027 values cannot replace today's local default. Initial load/Reset/member switching use today and no return limit; Clear intentionally removes a limit.

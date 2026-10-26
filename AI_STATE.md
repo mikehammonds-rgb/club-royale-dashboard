@@ -1,8 +1,10 @@
 # Current AI State
 
-Last reconciled with repository `main`: 2026-10-26 (October 26 refresh published as Sites version 40).
+Last reconciled with repository `main`: 2026-10-26 (saved Finder date fix published as Sites version 41).
 
-## October 26 Finder hidden-date correction — local validation complete
+## October 26 Finder hidden-date correction — published as version 41
+
+- Delivery completed: exact saved commit `c1ba2593c5770fea29412a42aba9faa3257d3a98` fast-forwarded onto current GitHub main and pushed unchanged. Sites version **41** deployed from mirror commit `6c17f3dd9b33ac28dc55f51e4028a6adff55c469`; deployment `appgdep_6adf9bc4ed488191b6399a205f79c7e1` succeeded at the existing production URL. Production build and all 11 Finder tests passed. Existing managed hosting configuration, booking data and Mike-owner / Michael-Hott-viewer audience preserved. Earlier blocking notes below are historical and superseded by this delivery. Deployment verified by the native Sites result; authenticated browser/mobile interaction remains unverified.
 
 - Mike reported June 2027 departure limits remaining under collapsed More filters. October 22's fix covered initialization/member changes/Reset; June quick-search and saved-search ranges could remain hidden, and browser-restored dates were not guarded like advanced checkboxes.
 - Added explicit date state: today's local date is recomputed when no manual departure limit exists; latest return defaults empty. Browser-restored values cannot override this state. Clear remains an explicit empty limit, and manual/saved/preset ranges are preserved and automatically expand More filters. Date restrictions now stay in the active-filter summary even with an aboard date. Choosing a new aboard date clears the previous flexible range; pageshow recomputes the date state.
