@@ -1,8 +1,15 @@
 # Current AI State
 
-Last reconciled with repository `main`: 2026-10-26 (Mike refresh validated; publication blocked by Sites source-host DNS).
+Last reconciled with repository `main`: 2026-10-26 (October 26 refresh published as Sites version 40).
 
-## October 26 offer refresh — publication pending
+## October 26 publication completed
+
+- Canonical GitHub update `a298d82` pushed successfully from the local Codex session; local main matched origin/main before this delivery record.
+- Sites version 40 published successfully from deployment-mirror commit `59c9c1d1d8f803e410ff77446b73d8fc51fa1cf0`. Deployment `appgdep_6adf8832d90881919611195fef4f8dc7` returned succeeded at the existing production URL. Existing Mike-owner / Michael-Hott-viewer audience preserved.
+- Full production build and all six Finder regression tests passed in the Sites mirror. Queen of Diamonds and Multi-Line Mix add 206 dated sailings; Mike totals remain 12 codes, 16 slots, 700 groups, 1,873 dated sailings.
+- Browser verification reached the OpenAI sign-in security-verification page, so authenticated UI/mobile QA remains unverified. Earlier blocked-publication notes below are historical and superseded by this confirmed deployment.
+
+## October 26 offer refresh — historical preparation and blockers
 
 - Delivery result: local implementation commit `238e7e9` is preserved on `main`. GitHub `create_tree` was rejected with “MCP tool call requires approval, but approval policy is never”; no remote tree/commit/ref write succeeded. Shell Git cannot resolve `github.com`. **Canonical GitHub remains `153cc27662884e13aa34896afb82374747559a9c`, and Sites remains version 39.** No further approval question can resolve this inside the current never-approval session. Resume GitHub delivery first, then publish through Sites when network/approval capability is restored.
 

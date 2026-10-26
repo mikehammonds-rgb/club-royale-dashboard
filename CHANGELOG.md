@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-26 — Publish October 26 offer refresh
+
+- Pushed canonical update a298d82 and deployed existing Sites version 40 from 59c9c1d1d8f803e410ff77446b73d8fc51fa1cf0; deployment appgdep_6adf8832d90881919611195fef4f8dc7 succeeded.
+- Preserved the current shared audience. Production build and all six Finder tests passed; authenticated browser verification stopped at OpenAI security verification.
+
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
 ## 2026-10-26 — Queen of Diamonds and Multi-Line Mix refresh
