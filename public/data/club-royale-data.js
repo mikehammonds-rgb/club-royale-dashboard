@@ -1,4 +1,4 @@
-// Mike's live offer codes verified October 22, 2026.
+// Mike's live offer codes verified October 26, 2026.
 const MIKE_OFFERS = {
   "26TCR104":{"name":"Mega Spins","redeemBy":"2026-11-06","uses":2,"fp":50,"perk":"$50 FreePlay when redeemed through royalcaribbean.com, the Royal Caribbean App, or a Travel Advisor","benefit":"Exclusive stateroom offer (Ocean View, Balcony, or Interior), or apply $725 off an upgraded stateroom","cabinOptions":["Ocean View","Balcony","Interior"]},
   "26TOR905":{"name":"Go for Gold","redeemBy":"2026-10-28","uses":2,"fp":50,"perk":"$50 FreePlay when redeemed through royalcaribbean.com, the Royal Caribbean App, or a Travel Advisor","benefit":"Exclusive stateroom offer (Interior, Balcony, or Ocean View), or apply $850 off an upgraded stateroom","cabinOptions":["Interior","Ocean View","Balcony"]},
@@ -9,5 +9,7 @@ const MIKE_OFFERS = {
   "26FLS104":{"name":"Tropic Hopper","redeemBy":"2026-11-18","uses":1,"fp":0,"perk":"","benefit":"Complimentary Ocean View or Balcony (GTY) room for two - just pay taxes & fees","cabinOptions":["Ocean View","Balcony"],"comp":true},
   "26VAR604":{"name":"Sunny Shuffle","redeemBy":"2026-11-12","uses":1,"fp":0,"perk":"","benefit":"Complimentary Ocean View or Balcony (GTY) room for two - just pay taxes & fees","cabinOptions":["Ocean View","Balcony"],"comp":true},
   "26TCR304":{"name":"Bankroll Blitz","redeemBy":"2026-11-20","uses":2,"fp":75,"perk":"$75 FreePlay when redeemed through royalcaribbean.com, the Royal Caribbean App, or a Travel Advisor; allow up to 72 hours for the updated invoice","benefit":"Cruise fare for two guests in an Ocean View, Balcony, or Interior GTY stateroom, or apply $650 off an upgraded stateroom","cabinOptions":["Ocean View","Balcony","Interior"],"comp":true},
-  "26PAS804":{"name":"Quick Getaways","redeemBy":"2026-11-11","uses":1,"fp":0,"perk":"","benefit":"Cruise fare for two guests in an Interior, Balcony, or Ocean View GTY stateroom","cabinOptions":["Interior","Balcony","Ocean View"],"comp":true}
+  "26PAS804":{"name":"Quick Getaways","redeemBy":"2026-11-11","uses":1,"fp":0,"perk":"","benefit":"Cruise fare for two guests in an Interior, Balcony, or Ocean View GTY stateroom","cabinOptions":["Interior","Balcony","Ocean View"],"comp":true},
+  "26MIX604":{"name":"Queen of Diamonds","redeemBy":"2026-11-24","uses":1,"fp":0,"perk":"","benefit":"Cruise fare for two guests in a Balcony or Ocean View GTY stateroom","cabinOptions":["Balcony","Ocean View"],"comp":true},
+  "26EMV504":{"name":"Multi-Line Mix","redeemBy":"2026-11-25","uses":1,"fp":0,"perk":"","benefit":"Cruise fare for two guests in an Ocean View or Balcony GTY stateroom","cabinOptions":["Ocean View","Balcony"],"comp":true}
 };

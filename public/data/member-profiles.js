@@ -8,23 +8,21 @@ const CLUB_ROYALE_MEMBERS = {
     tierCredits: 1082,
     progressPercent: 43,
     tierMessage: "1,418 more tier credits to keep Prime",
-    snapshot: "2026-10-22",
+    snapshot: "2026-10-26",
     offers: MIKE_OFFERS,
     sailingGroups: MIKE_ROYAL_SAILING_GROUPS,
     seedBookings: MIKE_BOOKED_CRUISES,
     returnedOffers: [],
     portalCheck: {
-      "checkedAt": "2026-10-22T19:57:02.166Z",
-      "uniqueOffers": 10,
-      "usableSlots": 14,
-      "sailingRows": 1667,
+      "checkedAt": "2026-10-26T16:45:56.057Z",
+      "uniqueOffers": 12,
+      "usableSlots": 16,
+      "sailingRows": 1873,
       "newCodes": [
-        "26TCR304",
-        "26PAS804"
+        "26MIX604",
+        "26EMV504"
       ],
-      "removedCodes": [
-        "26BAF405"
-      ],
+      "removedCodes": [],
       "changedCodes": [],
       "duplicateCodes": [
         "26TCR104",
@@ -32,7 +30,19 @@ const CLUB_ROYALE_MEMBERS = {
         "26TOR905",
         "26TCR304"
       ],
-      "note": "October 22 live check of Mike's account: 14 slots across 10 unique codes. New: Bankroll Blitz (26TCR304, two copies, redeem Nov 20; sail Dec 2, 2026 - Apr 30, 2027; cruise fare for two in Ocean View/Balcony/Interior GTY or $650 upgrade discount; $75 online FreePlay per redemption) and Quick Getaways (26PAS804, one copy, redeem Nov 11; sail Dec 4, 2026 - Apr 19, 2027; cruise fare for two in Interior/Balcony/Ocean View GTY; no FreePlay shown). Removed: expired Double Down Days (26BAF405, one copy, deadline Oct 21). All eight retained codes match the live tiles; sailing groups carried forward from October 13 (six codes) and October 19 (26FLS104, 26VAR604), not re-captured today. Both new full tables captured and checksum-verified: 128 and 9 groups; total 627 groups / 1667 dated sailings. Prime / 1,082 credits re-verified. Tully not checked."
+      "note": "October 26 live check of Mike's account: 16 usable slots across 12 unique codes. New: Queen of Diamonds (26MIX604, one copy, redeem Nov 24; sail Dec 3, 2026 - Mar 22, 2027) and Multi-Line Mix (26EMV504, one copy, redeem Nov 25; sail Jan 2 - Mar 29, 2027). Both provide cruise fare for two in Balcony or Ocean View GTY rooms; no FreePlay shown in tiles, details, or sailing benefits. No codes removed. All ten retained codes match live tiles; their sailing groups are carried forward from October 13/19/22, not re-captured today. Both new full tables checksum-verified: Queen of Diamonds 20 groups / 64 dates (ad04981d), Multi-Line Mix 53 groups / 142 dates (4029c511). Combined 700 groups / 1,873 dated sailings. Prime / 1,082 credits re-verified. Tully and bookings unchanged.",
+      "sailingSources": {
+        "newCodes": "2026-10-26",
+        "retainedCodes": [
+          "2026-10-13",
+          "2026-10-19",
+          "2026-10-22"
+        ]
+      },
+      "sailingChecksums": {
+        "26MIX604": "ad04981d",
+        "26EMV504": "4029c511"
+      }
     }
   },
   tully: {

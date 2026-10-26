@@ -8,7 +8,7 @@ type DatabaseEnv = { DB?: D1Database };
 
 const allowedMemberIds = new Set(["mike", "tully"]);
 const seedProfiles = [
-  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-22" },
+  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-26" },
   { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-10-13" }
 ];
 const seedBookings = [
@@ -235,7 +235,42 @@ async function initialize(db: D1Database) {
     db.prepare("INSERT OR IGNORE INTO member_offer_statuses (member_id, slot_key, status, notes, updated_at) SELECT 'mike', slot_key, status, notes, updated_at FROM offer_statuses WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) SELECT 'mike', id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json FROM offer_snapshots WHERE NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'multi_member_v1')"),
     db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)").bind("tully", "baseline-2026-08-27", "2026-08-27", 12, 12, 1207, JSON.stringify({ note: "Initial verified Tully baseline; one FreePlay-only offer excluded from Finder" })),
-    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('multi_member_v1', ?)").bind(now)
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('multi_member_v1', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-10-26', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_10_26')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("mike", "refresh-2026-10-26", "2026-10-26", 12, 16, 1873, JSON.stringify({
+  "checkedAt": "2026-10-26T16:45:56.057Z",
+  "uniqueOffers": 12,
+  "usableSlots": 16,
+  "sailingRows": 1873,
+  "newCodes": [
+    "26MIX604",
+    "26EMV504"
+  ],
+  "removedCodes": [],
+  "changedCodes": [],
+  "duplicateCodes": [
+    "26TCR104",
+    "26TCR205",
+    "26TOR905",
+    "26TCR304"
+  ],
+  "note": "October 26 live check of Mike's account: 16 usable slots across 12 unique codes. New: Queen of Diamonds (26MIX604, one copy, redeem Nov 24; sail Dec 3, 2026 - Mar 22, 2027) and Multi-Line Mix (26EMV504, one copy, redeem Nov 25; sail Jan 2 - Mar 29, 2027). Both provide cruise fare for two in Balcony or Ocean View GTY rooms; no FreePlay shown in tiles, details, or sailing benefits. No codes removed. All ten retained codes match live tiles; their sailing groups are carried forward from October 13/19/22, not re-captured today. Both new full tables checksum-verified: Queen of Diamonds 20 groups / 64 dates (ad04981d), Multi-Line Mix 53 groups / 142 dates (4029c511). Combined 700 groups / 1,873 dated sailings. Prime / 1,082 credits re-verified. Tully and bookings unchanged.",
+  "sailingSources": {
+    "newCodes": "2026-10-26",
+    "retainedCodes": [
+      "2026-10-13",
+      "2026-10-19",
+      "2026-10-22"
+    ]
+  },
+  "sailingChecksums": {
+    "26MIX604": "ad04981d",
+    "26EMV504": "4029c511"
+  },
+  "christmasMatch": true
+})),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_26', ?)").bind(now)
   ]);
 }
 

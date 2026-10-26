@@ -2,6 +2,13 @@
 
 All notable project, data, workflow, and deployment changes should be recorded here. Dates use `YYYY-MM-DD`.
 
+## 2026-10-26 — Queen of Diamonds and Multi-Line Mix refresh
+
+- Verified Mike's active list: 10 → 12 codes, 14 → 16 usable slots; no removals. Added `26MIX604` Queen of Diamonds (redeem Nov 24, 20 groups / 64 dates) and `26EMV504` Multi-Line Mix (redeem Nov 25, 53 groups / 142 dates). Both are Balcony/Ocean View GTY cruise fare for two; no FreePlay shown.
+- Full new sailing tables checksum-match the signed-in portal: `ad04981d` / `4029c511`. Combined Finder dataset: 627 → 700 groups, 1,667 → 1,873 dated sailings. Retained tables preserve October 13/19/22 provenance. Tully, bookings and historical snapshots preserved.
+- Updated member summary, API profile seed, append-only October 26 D1 snapshot/guard and README; regenerated public data. All six Finder tests, TypeScript, static synchronization and both-member data reconciliation pass. Full production build passes in a scratch copy with existing hosting configuration; canonical build retains its known missing-hosting-manifest failure. Browser QA unavailable because local-server binding is denied.
+- Publication requested by Mike. Sites tools confirm existing version 39 and unchanged custom audience, but source-host DNS prevents synchronization/publishing. No new Sites version/deployment created; live dashboard remains unchanged pending source delivery.
+
 ## 2026-10-22 — Published offer refresh and Finder date controls
 
 - After Mike's explicit approval, pushed canonical GitHub main 4f084df and confirmed local/remote equality. This includes the earlier d84c3e8 offer refresh.
