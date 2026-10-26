@@ -2,6 +2,13 @@
 
 Last reconciled with repository `main`: 2026-10-26 (October 26 refresh published as Sites version 40).
 
+## October 26 Finder hidden-date correction — local validation complete
+
+- Mike reported June 2027 departure limits remaining under collapsed More filters. October 22's fix covered initialization/member changes/Reset; June quick-search and saved-search ranges could remain hidden, and browser-restored dates were not guarded like advanced checkboxes.
+- Added explicit date state: today's local date is recomputed when no manual departure limit exists; latest return defaults empty. Browser-restored values cannot override this state. Clear remains an explicit empty limit, and manual/saved/preset ranges are preserved and automatically expand More filters. Date restrictions now stay in the active-filter summary even with an aboard date. Choosing a new aboard date clears the previous flexible range; pageshow recomputes the date state.
+- Added five regressions covering both members' stale June restoration, June preset → December aboard search, explicit edits/Clear/Reset and saved-search visibility/defaults. All 11 Finder tests and JavaScript syntax pass; full production build passes in scratch using existing hosting configuration. Root/public synchronized. Browser/mobile QA remains unverified.
+- Canonical remote main verified through GitHub connector at `4eb0c7206e10fbf62a6c48670c9ff72bc898d0f6` before editing; app.js blob also matched. Shell fast-forward pull failed DNS for github.com. Sites source opening with current credentials failed DNS for git.chatgpt-team.site. No live publication occurred; version 40 remains live. GitHub create_tree was rejected: “MCP tool call requires approval, but approval policy is never.” No remote tree/commit/ref change succeeded. The validated fix is retained locally; resume canonical GitHub push, then Sites publication with the existing custom audience.
+
 ## October 26 publication completed
 
 - Canonical GitHub update `a298d82` pushed successfully from the local Codex session; local main matched origin/main before this delivery record.

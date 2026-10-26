@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-26 — Prevent hidden stale Finder date limits
+
+- Track flexible dates explicitly so browser-restored June 2027 values cannot replace today's local default. Initial load/Reset/member switching use today and no return limit; Clear intentionally removes a limit.
+- Preserve explicit manual/saved/preset date ranges and automatically expand More filters when they apply. Keep range labels visible alongside Aboard on; selecting a new aboard date clears the prior flexible range. Refresh date state on pageshow.
+- Added five regression cases: stale browser dates for both members, June preset followed by December search, explicit range/Clear/Reset, and saved-search ranges/defaults. Eleven tests, JavaScript syntax and root/public synchronization pass. Full production build passes with existing hosting config in scratch; canonical build still requires the intentionally absent hosting manifest. Browser/mobile verification unavailable.
+- GitHub source base confirmed current through connector. Shell GitHub and Sites source host DNS failures block normal delivery. Connected GitHub create_tree was rejected because tool approval is required but this session disallows approvals. No remote write succeeded; live Sites version 40 unchanged pending publication.
+
 ## 2026-10-26 — Publish October 26 offer refresh
 
 - Pushed canonical update a298d82 and deployed existing Sites version 40 from 59c9c1d1d8f803e410ff77446b73d8fc51fa1cf0; deployment appgdep_6adf8832d90881919611195fef4f8dc7 succeeded.

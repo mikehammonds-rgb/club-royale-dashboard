@@ -550,8 +550,27 @@ function syncManualFinderToggles(reset = false, changedInput = null) {
   document.querySelector("#exclude-conflicts").checked = false;
 }
 
+function localTodayIso() {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+}
+
+function syncFinderDates(reset = false, changedInput = null) {
+  if (reset || !finderState.manualDates) finderState.manualDates = {};
+  if (changedInput && ["depart-start", "return-end"].includes(changedInput.id)) {
+    finderState.manualDates[changedInput.id] = changedInput.value;
+  }
+  // Only explicit edits, presets, or saved searches can override today's default.
+  // Ignore values restored by the browser after initialization or back navigation.
+  document.querySelector("#depart-start").value = finderState.manualDates["depart-start"] ?? localTodayIso();
+  document.querySelector("#return-end").value = finderState.manualDates["return-end"] ?? "";
+  const customRange = document.querySelector("#depart-start").value !== localTodayIso() || Boolean(document.querySelector("#return-end").value);
+  if (customRange) document.querySelector("#finder-more-filters").open = true;
+}
+
 function handleFinderChange(event) {
   syncManualFinderToggles(false, event.target);
+  syncFinderDates(event.target.id === "aboard-date", event.target);
   if (event.target.id === "aboard-date") syncAboardDateControl();
   renderFinder();
 }
@@ -568,8 +587,11 @@ function applySavedSearch(search) {
   });
   document.querySelector("#aboard-date").value = search.date || "";
   syncAboardDateControl();
-  document.querySelector("#depart-start").value = search.departStart || "";
-  document.querySelector("#return-end").value = search.returnEnd || "";
+  finderState.manualDates = {
+    "depart-start": search.departStart ?? localTodayIso(),
+    "return-end": search.returnEnd || ""
+  };
+  syncFinderDates();
   syncManualFinderToggles(true);
   document.querySelector("#nights-filter").value = search.nights || "any";
   document.querySelector("#room-filter").value = search.room || "any";
@@ -756,7 +778,7 @@ function activeFilterLabels() {
   const month = document.querySelector("#sailing-month");
   const minFreePlay = Number(document.querySelector("#min-freeplay").value);
   if (date) labels.push(`Aboard ${formatLongDate(date)}`);
-  if (!date && (departStart || returnEnd)) labels.push(`${departStart ? `From ${formatLongDate(departStart)}` : "Any departure"} · ${returnEnd ? `Back by ${formatLongDate(returnEnd)}` : "Any return"}`);
+  if (departStart || returnEnd) labels.push(`${departStart ? `From ${formatLongDate(departStart)}` : "Any departure"} · ${returnEnd ? `Back by ${formatLongDate(returnEnd)}` : "Any return"}`);
   if (document.querySelector("#weekend-only").checked) labels.push("Weekend departures");
   if (document.querySelector("#exclude-conflicts").checked) labels.push("Booked-trip conflicts hidden");
   const ports = selectedPorts();
@@ -820,6 +842,7 @@ function sailingCard(group, searchedDate) {
 }
 
 function renderFinder(resetLimit = true) {
+  syncFinderDates();
   if (resetLimit) finderState.limit = FINDER_PAGE_SIZE;
   finderState.groups = filterSailings();
   const date = document.querySelector("#aboard-date").value;
@@ -1080,8 +1103,7 @@ function switchActiveMember(memberId) {
 
 function resetFinder() {
   document.querySelector("#finder-form").reset();
-  const today = new Date();
-  document.querySelector("#depart-start").value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  syncFinderDates(true);
   syncManualFinderToggles(true);
   syncAboardDateControl();
   document.querySelector("#exclude-conflicts").checked = false;
@@ -1111,8 +1133,8 @@ function runWonderMiamiJune2027Search() {
   });
   syncPortScopeAppearance(selectedPorts());
   updateAvailabilityControls();
-  document.querySelector("#depart-start").value = "2027-06-18";
-  document.querySelector("#return-end").value = "2027-06-24";
+  finderState.manualDates = { "depart-start": "2027-06-18", "return-end": "2027-06-24" };
+  syncFinderDates();
   document.querySelector("#ship-filter").value = "Wonder";
   renderFinder();
   document.querySelector("#finder-results-title").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1199,6 +1221,7 @@ document.querySelector("#finder-form").addEventListener("submit", event => {
   document.querySelector("#finder-results-title").scrollIntoView({ behavior: "smooth", block: "start" });
 });
 document.querySelector("#finder-form").addEventListener("change", handleFinderChange);
+window.addEventListener("pageshow", () => renderFinder());
 document.querySelector("#finder-reset").addEventListener("click", resetFinder);
 document.querySelectorAll("[data-clear-date]").forEach(button => {
   button.addEventListener("click", () => {

@@ -48,7 +48,7 @@ function harness(member = 'mike') {
     ROOM_RANK: { Interior: 1, 'Ocean View': 2, Balcony: 3 }, SHIP_CLASS: { Oasis: 'Oasis' }, FINDER_PAGE_SIZE: 12
   });
   vm.runInContext(read('data/club-royale-data.js') + read('data/live-sailing-groups.js') + read('data/tully-data.js') + app.split('const FLORIDA_PORTS')[0] + `\nglobalThis.OFFERS=${member === 'tully' ? 'TULLY' : 'MIKE'}_OFFERS;globalThis.SAILINGS=expandRoyalSailingGroups(${member === 'tully' ? 'TULLY' : 'MIKE'}_ROYAL_SAILING_GROUPS);`, context);
-  for (const name of ['syncManualFinderToggles', 'handleFinderChange', 'eligibleOfferRows', 'groupSailings', 'filterSailings', 'resetFinder', 'applySavedSearch']) vm.runInContext(fn(name), context);
+  for (const name of ['localTodayIso', 'syncFinderDates', 'syncManualFinderToggles', 'handleFinderChange', 'eligibleOfferRows', 'groupSailings', 'filterSailings', 'resetFinder', 'applySavedSearch', 'runWonderMiamiJune2027Search']) vm.runInContext(fn(name), context);
   context.resetFinder();
   return { context, control, html };
 }
@@ -117,3 +117,61 @@ for (const member of ['mike', 'tully']) {
     assert.equal(context.filterSailings().length, baseline);
   });
 }
+
+for (const member of ['mike', 'tully']) {
+  test(`${member}: browser-restored June dates cannot override today's default`, () => {
+    const { context, control } = harness(member);
+    control('#depart-start').value = '2027-06-18';
+    control('#return-end').value = '2027-06-24';
+    context.syncFinderDates();
+    assert.equal(control('#depart-start').value, '2026-10-22');
+    assert.equal(control('#return-end').value, '');
+    assert.ok(context.filterSailings().length > 0);
+  });
+}
+
+test('June preset is visible and choosing a new aboard date removes its stale range', () => {
+  const { context, control } = harness();
+  context.runWonderMiamiJune2027Search();
+  assert.equal(control('#depart-start').value, '2027-06-18');
+  assert.equal(control('#return-end').value, '2027-06-24');
+  assert.equal(control('#finder-more-filters').open, true);
+  control('#aboard-date').value = '2026-12-04';
+  context.handleFinderChange({ target: { id: 'aboard-date' } });
+  assert.equal(control('#depart-start').value, '2026-10-22');
+  assert.equal(control('#return-end').value, '');
+  control('#ship-filter').value = 'Oasis';
+  context.document.querySelectorAll('#port-filters input')[0].checked = true;
+  assert.ok(context.filterSailings().some(g => g.depart === '2026-12-04' && g.rows.some(r => r.offer === '26TCR104')));
+});
+
+test('explicit ranges and Clear survive subsequent edits; Reset restores today', () => {
+  const { context, control } = harness();
+  context.handleFinderChange({ target: { id: 'depart-start', value: '2027-01-01' } });
+  context.handleFinderChange({ target: { id: 'return-end', value: '2027-02-01' } });
+  context.handleFinderChange({ target: { id: 'room-filter' } });
+  assert.equal(control('#depart-start').value, '2027-01-01');
+  assert.equal(control('#return-end').value, '2027-02-01');
+  context.handleFinderChange({ target: { id: 'depart-start', value: '' } });
+  context.syncFinderDates();
+  assert.equal(control('#depart-start').value, '');
+  assert.equal(control('#return-end').value, '2027-02-01');
+  context.resetFinder();
+  assert.equal(control('#depart-start').value, '2026-10-22');
+  assert.equal(control('#return-end').value, '');
+});
+
+test('saved date ranges are visible and legacy searches without a range use today', () => {
+  const { context, control } = harness();
+  const search = { ports: ['Fort Lauderdale'], classes: ['Oasis'], departStart: '2027-06-18', returnEnd: '2027-06-24' };
+  context.applySavedSearch(search);
+  assert.equal(control('#finder-more-filters').open, true);
+  assert.equal(control('#depart-start').value, search.departStart);
+  context.syncFinderDates();
+  assert.equal(control('#return-end').value, search.returnEnd);
+  delete search.departStart;
+  delete search.returnEnd;
+  context.applySavedSearch(search);
+  assert.equal(control('#depart-start').value, '2026-10-22');
+  assert.equal(control('#return-end').value, '');
+});
