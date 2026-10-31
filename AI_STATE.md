@@ -1,5 +1,14 @@
 # Current AI State
 
+## October 31 persistence and saved-search fixes
+
+- The no-D1 API response now declares `localOnly`; hydration preserves local notes, searches and statuses instead of replacing them with seed/empty data.
+- Per-member section revisions protect edits made during cloud loading. Only the newest hydration request may apply, and member checks remain in place.
+- Cloud JSON parsing is awaited inside error handling; malformed/error responses return unavailable state.
+- Finder and saved-search counts share row filtering for dates, ports/classes, ship, offer, cabins, FreePlay, weekends, duplicate offers and booked ships. Counts also honor back-to-back filtering and use the same itinerary grouping key as Finder.
+- Validation: 21 tests, production build, TypeScript and root/public synchronization passed. Browser/mobile QA remains unverified because the preview infrastructure previously failed with a Cloudflare DNS lookup error; no infrastructure recovery was established. Offer datasets and booked facts were not changed.
+- Delivery: prepared for canonical GitHub main and the existing shared Sites project; exact commits and publication results are reported by the delivery run.
+
 Last reconciled: 2026-10-31. October 31 offer refresh published as Sites version 42; canonical GitHub synchronization authorized by Mike and included in this commit.
 
 ## October 31 Mike offer refresh — published as Sites version 42

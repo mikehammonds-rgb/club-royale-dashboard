@@ -48,7 +48,7 @@ function harness(member = 'mike') {
     ROOM_RANK: { Interior: 1, 'Ocean View': 2, Balcony: 3 }, SHIP_CLASS: { Oasis: 'Oasis' }, FINDER_PAGE_SIZE: 12
   });
   vm.runInContext(read('data/club-royale-data.js') + read('data/live-sailing-groups.js') + read('data/tully-data.js') + app.split('const FLORIDA_PORTS')[0] + `\nglobalThis.OFFERS=${member === 'tully' ? 'TULLY' : 'MIKE'}_OFFERS;globalThis.SAILINGS=expandRoyalSailingGroups(${member === 'tully' ? 'TULLY' : 'MIKE'}_ROYAL_SAILING_GROUPS);`, context);
-  for (const name of ['localTodayIso', 'syncFinderDates', 'syncManualFinderToggles', 'handleFinderChange', 'eligibleOfferRows', 'groupSailings', 'filterSailings', 'resetFinder', 'applySavedSearch', 'runWonderMiamiJune2027Search']) vm.runInContext(fn(name), context);
+  for (const name of ['localTodayIso', 'syncFinderDates', 'syncManualFinderToggles', 'handleFinderChange', 'searchMatchesRow', 'eligibleOfferRows', 'groupSailings', 'filterSailings', 'resetFinder', 'applySavedSearch', 'runWonderMiamiJune2027Search']) vm.runInContext(fn(name), context);
   context.resetFinder();
   return { context, control, html };
 }

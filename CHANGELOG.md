@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-31 — Protect saved edits and correct saved-search counts
+
+- Preserve browser state when D1 is unavailable, and prevent slow or superseded cloud loads from overwriting newer edits or another member.
+- Handle cloud JSON parsing failures and local-only responses correctly.
+- Share Finder row filters with saved-search counts, including weekend/duplicate/booked-ship/offer criteria, and match back-to-back criteria and itinerary grouping.
+- Added 10 regression tests covering the reported defects, member switching and successful cloud hydration. All 21 tests, production build, TypeScript and static synchronization passed. Browser/mobile verification remains limited by unavailable preview infrastructure.
+
 ## 2026-10-31 — Publish supplied refresh and synchronize canonical source
 
 - Applied the supplied verified offer snapshot. Sites version 42 deployed successfully from mirror commit `37cda673a240a10d64b05099b7e56e04281fa88b`, deployment `appgdep_6ae5dfb4ea508191ae8d8de98fac8a68`. Mike explicitly authorized canonical GitHub synchronization; this commit records the same application/data files and the delivery result. Existing hosting and shared access preserved.

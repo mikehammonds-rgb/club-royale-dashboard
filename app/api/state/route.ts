@@ -25,6 +25,7 @@ function database() {
 function localState(memberId: string, request: Request) {
   return Response.json({
     memberId,
+    localOnly: true,
     profiles: seedProfiles,
     viewer: { email: request.headers.get("oai-authenticated-user-email") || null },
     bookings: memberId === "mike" ? seedBookings : [],

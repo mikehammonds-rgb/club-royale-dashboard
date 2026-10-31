@@ -120,18 +120,33 @@ let bookings = loadMemberJson(BOOKING_STORAGE_KEY, ACTIVE_MEMBER.seedBookings.ma
 let offerStatuses = loadMemberJson(OFFER_STATUS_STORAGE_KEY, {});
 let cloudAvailable = false;
 let cloudSnapshots = [];
+const memberStateRevisions = new Map();
+let hydrationRequestSequence = 0;
+
+function stateRevisions(memberId) {
+  if (!memberStateRevisions.has(memberId)) {
+    memberStateRevisions.set(memberId, { bookings: 0, savedSearches: 0, offerStatuses: 0 });
+  }
+  return memberStateRevisions.get(memberId);
+}
 
 async function cloudRequest(body) {
+  const memberId = activeMemberId;
+  const section = { save_booking: "bookings", save_searches: "savedSearches", save_status: "offerStatuses" }[body?.action];
+  if (section) stateRevisions(memberId)[section] += 1;
   try {
-    const memberId = activeMemberId;
     const response = await fetch(`/api/state?member=${encodeURIComponent(memberId)}`, body ? {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...body, memberId })
     } : { headers: { Accept: "application/json" }, cache: "no-store" });
     if (!response.ok) throw new Error("Cloud state unavailable");
-    cloudAvailable = true;
-    return response.json();
+    const state = await response.json();
+    if (!state || typeof state !== "object" || Array.isArray(state) || state.ok === false) {
+      throw new Error("Invalid cloud state");
+    }
+    cloudAvailable = state.localOnly !== true;
+    return state;
   } catch {
     cloudAvailable = false;
     return null;
@@ -686,13 +701,18 @@ function opportunityScore(group) {
 }
 
 function searchMatchesRow(sailing, search) {
-  if (search.ports?.length && !search.ports.includes(sailing.port)) return false;
+  if (!OFFERS[sailing.offer]) return false;
+  if (Array.isArray(search.ports) && !search.ports.includes(sailing.port)) return false;
+  if (search.offer && sailing.offer !== search.offer) return false;
   if (search.date && !(sailing.depart <= search.date && search.date <= sailing.return)) return false;
   if (search.departStart && sailing.depart < search.departStart) return false;
   if (search.returnEnd && sailing.return > search.returnEnd) return false;
   if (search.month && search.month !== "any" && !sailing.depart.startsWith(search.month)) return false;
   if (search.ship && search.ship !== "any" && sailing.ship !== search.ship) return false;
-  if ((!search.ship || search.ship === "any") && search.classes?.length && !search.classes.includes(SHIP_CLASS[sailing.ship])) return false;
+  if ((!search.ship || search.ship === "any") && Array.isArray(search.classes) && !search.classes.includes(SHIP_CLASS[sailing.ship])) return false;
+  if (search.weekendOnly && ![5, 6].includes(parseLocalDate(sailing.depart).getDay())) return false;
+  if (search.duplicateOnly && OFFERS[sailing.offer].uses < 2) return false;
+  if (search.hideSailedShips && bookings.some(booking => booking.ship === sailing.ship)) return false;
   if (search.room && search.room !== "any" && ROOM_RANK[sailing.room] < ROOM_RANK[search.room]) return false;
   if (Number(search.minFreePlay || 0) > effectiveFreePlay(OFFERS[sailing.offer])) return false;
   if (search.nights === "2-3" && sailing.nights > 3) return false;
@@ -702,7 +722,9 @@ function searchMatchesRow(sailing, search) {
 }
 
 function savedSearchMatchCount(search) {
-  const keys = new Set(SAILINGS.filter(sailing => searchMatchesRow(sailing, search)).map(sailing => [sailing.ship, sailing.depart, sailing.return].join("|")));
+  const rows = SAILINGS.filter(sailing => searchMatchesRow(sailing, search)
+    && (!search.backToBackOnly || bookingConflict(sailing)?.type === "back-to-back"));
+  const keys = new Set(rows.map(sailing => [sailing.ship, sailing.port, sailing.itin, sailing.nights, sailing.depart, sailing.return].join("|")));
   return keys.size;
 }
 
@@ -730,26 +752,9 @@ function filterSailings() {
   const ports = selectedPorts();
   const classes = selectedClasses();
 
-  const rows = SAILINGS.filter(sailing => {
-    if (!OFFERS[sailing.offer]) return false;
-    if (!ports.includes(sailing.port)) return false;
-    if (finderState.selectedOffer && sailing.offer !== finderState.selectedOffer) return false;
-    if (date && !(sailing.depart <= date && date <= sailing.return)) return false;
-    if (departStart && sailing.depart < departStart) return false;
-    if (returnEnd && sailing.return > returnEnd) return false;
-    if (month !== "any" && !sailing.depart.startsWith(month)) return false;
-    if (weekendOnly && ![5, 6].includes(parseLocalDate(sailing.depart).getDay())) return false;
-    if (ship !== "any" && sailing.ship !== ship) return false;
-    if (ship === "any" && !classes.includes(SHIP_CLASS[sailing.ship])) return false;
-    if (room !== "any" && ROOM_RANK[sailing.room] < ROOM_RANK[room]) return false;
-    if (minFreePlay > effectiveFreePlay(OFFERS[sailing.offer])) return false;
-    if (duplicateOnly && OFFERS[sailing.offer]?.uses < 2) return false;
-    if (hideSailedShips && bookings.some(booking => booking.ship === sailing.ship)) return false;
-    if (nights === "2-3" && sailing.nights > 3) return false;
-    if (nights === "4-5" && (sailing.nights < 4 || sailing.nights > 5)) return false;
-    if (nights === "6+" && sailing.nights < 6) return false;
-    return true;
-  });
+  const search = { ports, classes, date, departStart, returnEnd, weekendOnly, nights,
+    room, ship, month, minFreePlay, duplicateOnly, hideSailedShips, offer: finderState.selectedOffer };
+  const rows = SAILINGS.filter(sailing => searchMatchesRow(sailing, search));
 
   const groups = groupSailings(rows);
   const visibleGroups = groups.filter(group => {
@@ -1054,11 +1059,15 @@ function openComparison() {
 }
 
 async function hydrateCloudState(requestedMemberId = activeMemberId) {
+  const requestSequence = ++hydrationRequestSequence;
+  const revisions = { ...stateRevisions(requestedMemberId) };
   const state = await cloudRequest();
-  if (!state || activeMemberId !== requestedMemberId || state.memberId !== requestedMemberId) return;
-  if (Array.isArray(state.bookings)) bookings = state.bookings;
-  if (Array.isArray(state.savedSearches)) savedSearches = state.savedSearches;
-  if (Array.isArray(state.offerStatuses)) offerStatuses = Object.fromEntries(state.offerStatuses.map(item => [item.slot_key, item]));
+  if (!state || state.localOnly || requestSequence !== hydrationRequestSequence
+    || activeMemberId !== requestedMemberId || state.memberId !== requestedMemberId) return;
+  const current = stateRevisions(requestedMemberId);
+  if (current.bookings === revisions.bookings && Array.isArray(state.bookings)) bookings = state.bookings;
+  if (current.savedSearches === revisions.savedSearches && Array.isArray(state.savedSearches)) savedSearches = state.savedSearches;
+  if (current.offerStatuses === revisions.offerStatuses && Array.isArray(state.offerStatuses)) offerStatuses = Object.fromEntries(state.offerStatuses.map(item => [item.slot_key, item]));
   if (Array.isArray(state.snapshots)) cloudSnapshots = state.snapshots;
   localStorage.setItem(memberStorageKey(BOOKING_STORAGE_KEY), JSON.stringify(bookings));
   localStorage.setItem(memberStorageKey(SAVED_SEARCH_STORAGE_KEY), JSON.stringify(savedSearches));
