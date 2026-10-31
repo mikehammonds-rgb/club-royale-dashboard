@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-31 — Publish supplied refresh and synchronize canonical source
+
+- Applied the supplied verified offer snapshot. Sites version 42 deployed successfully from mirror commit `37cda673a240a10d64b05099b7e56e04281fa88b`, deployment `appgdep_6ae5dfb4ea508191ae8d8de98fac8a68`. Mike explicitly authorized canonical GitHub synchronization; this commit records the same application/data files and the delivery result. Existing hosting and shared access preserved.
+- Production build, all 11 Finder tests, TypeScript, data counts and root/public synchronization passed. Browser/mobile interaction remains unverified.
+
+## 2026-10-31 — Mike offer refresh: All-In On Thrills and Jack of All Spades
+
+- Member: Mike (portal greeting "Hi, Michael", Prime; tier message 1,418 tier credits to keep Prime re-verified). Source: signed-in Club Royale offers page, checked 2026-10-31 07:58 America/New_York. Captured in Claude's cloud sandbox and supplied as a patch for this publication run.
+- Before → after: 12 → 12 unique codes, 16 → 17 usable slots (portal shows All Offers (17)), 700 → 881 itinerary groups, 1,873 → 2,306 dated sailings.
+- New: `26TCR403` "All-In On Thrills" (×3, redeem Nov 27, sail Dec 2, 2026 – May 31, 2027, $75 FreePlay, Balcony (GTY)/Ocean View/Interior cruise fare for two or $800 off an upgraded stateroom; 209 groups / 533 dates, checksum `c72dda57`) and `26GEM203` "Jack of All Spades" (×1, redeem Nov 22, sail Nov 1, 2026 – Mar 29, 2027, Bonus FP $125, complimentary Balcony/Interior/Ocean View room for two; 132 groups / 319 dates, checksum `ab5d2448`). Neither code appeared anywhere in earlier history.
+- Removed (expired Oct 28): `26TOR905` "Go for Gold" (×2, 26 groups) and `26PAS703` "2026 Caribbean Chips" (×1, 134 groups). Active offer/Finder data dropped them; their history stays in earlier snapshots and this changelog.
+- Unchanged by tile (name, redeem-by date, copy count): `26TCR104` (×2), `26TCR205` (×2), `26TCR304` (×2), `26RCL1004`, `26BAF505`, `26FLS104`, `26VAR604`, `26PAS804`, `26MIX604`, `26EMV504`. Their sailing groups are carried forward unchanged from October 13/19/22/26, not re-captured today; confirmed byte-identical to the previous commit.
+- Both new tables were captured by checksum-verified transcription (djb2 computed in the live page matched Node over the scratch capture) and every stored link slug and link code matched the live hrefs (132/132 and 209/209).
+- Files: `data/club-royale-data.js`, `data/live-sailing-groups.js`, `data/member-profiles.js`, `app/api/state/route.ts` (seed profile date plus append-only `refresh-2026-10-31` snapshot guarded by `mike_snapshot_2026_10_31`, placed after the October 26 block), regenerated `public/` copies, `README.md`, `AI_STATE.md`. Tully, bookings, saved searches and historical snapshots untouched.
+- Validation: real `expandRoyalSailingGroups` run on the refreshed data gives 12 unique offers, 17 slots, 881 groups, 2,306 dated rows with zero orphan groups, skipped groups, bad dates/nights, `undefined`/`NaN`, query-string links or duplicate dated sailings; every active offer has sailings. Earliest departure 2026-11-01 (`26GEM203`, Mariner of the Seas from New Orleans); latest 2027-05-31. The standard Florida-port Christmas Day search still has 10 matches (7 from `26TCR403`). All 11 Finder tests, `tsc --noEmit`, `node --check app.js` and root/public byte-identity pass. `vite build` still fails at the Sites plugin's missing `.openai/hosting.json` step (known issue, unrelated); standard build not claimed. Browser/mobile QA not run.
+- Time-sensitive: `26RCL1004` redeems today (Oct 31); the only Nov 1 sailing is `26GEM203`.
+- Delivery: committed locally in the cloud sandbox and delivered as a patch. GitHub `main` and the live Sites version (41) are unchanged until the patch is applied, pushed and separately published.
+
 ## 2026-10-26 — Publish saved Finder date-filter fix
 
 - Pushed exact saved commit `c1ba259` to canonical GitHub main after a clean fast-forward reconciliation.

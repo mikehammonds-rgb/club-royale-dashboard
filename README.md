@@ -14,6 +14,6 @@ A mobile-first private dashboard for Club Royale casino offers and eligible Roya
 
 ## Current data
 
-Mike's offer list was verified live on October 26, 2026: 16 usable slots across 12 unique codes, 700 itinerary groups and 1,873 dated sailings. New: Queen of Diamonds (26MIX604, redeem Nov 24) and Multi-Line Mix (26EMV504, redeem Nov 25), one copy each with Balcony or Ocean View GTY cruise fare for two; no FreePlay shown. No codes removed. Both new full tables captured and checksum-verified; ten retained codes use October 13/19/22 sailing snapshots.
+Mike's offer list was verified live on October 31, 2026: 17 usable slots across 12 unique codes, 881 itinerary groups and 2,306 dated sailings. New: All-In On Thrills (26TCR403, three copies, redeem Nov 27, $75 FreePlay) and Jack of All Spades (26GEM203, one copy, redeem Nov 22, Bonus FP $125). Removed (expired Oct 28): Go for Gold (26TOR905) and 2026 Caribbean Chips (26PAS703). Both new full tables captured and checksum-verified; ten retained codes use October 13/19/22/26 sailing snapshots.
 
 This remains a snapshot rather than a live Royal Caribbean API connection. Future refreshes should re-check the signed-in offer page, update the canonical offer/sailing data, and verify the saved searches before publishing.
