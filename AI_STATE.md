@@ -7,7 +7,7 @@
 - Cloud JSON parsing is awaited inside error handling; malformed/error responses return unavailable state.
 - Finder and saved-search counts share row filtering for dates, ports/classes, ship, offer, cabins, FreePlay, weekends, duplicate offers and booked ships. Counts also honor back-to-back filtering and use the same itinerary grouping key as Finder.
 - Validation: 21 tests, production build, TypeScript and root/public synchronization passed. Browser/mobile QA remains unverified because the preview infrastructure previously failed with a Cloudflare DNS lookup error; no infrastructure recovery was established. Offer datasets and booked facts were not changed.
-- Delivery: prepared for canonical GitHub main and the existing shared Sites project; exact commits and publication results are reported by the delivery run.
+- Delivery: canonical GitHub commit `3f91f2da636950d32f1cc643c13be35e6242764e` verified on main. Sites version **43** deployed successfully from mirror commit `68fb3bd5b312ded2c78f56fdd0fb5437e107a620`; deployment `appgdep_6ae5e57548108191a59af048c04fffbc`. Mike-owner / Michael-Hott-viewer audience preserved.
 
 Last reconciled: 2026-10-31. October 31 offer refresh published as Sites version 42; canonical GitHub synchronization authorized by Mike and included in this commit.
 

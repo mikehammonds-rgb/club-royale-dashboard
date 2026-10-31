@@ -5,6 +5,7 @@
 - Preserve browser state when D1 is unavailable, and prevent slow or superseded cloud loads from overwriting newer edits or another member.
 - Handle cloud JSON parsing failures and local-only responses correctly.
 - Share Finder row filters with saved-search counts, including weekend/duplicate/booked-ship/offer criteria, and match back-to-back criteria and itinerary grouping.
+- Delivery: GitHub main `3f91f2d`; Sites version 43 successfully deployed from `68fb3bd5b312ded2c78f56fdd0fb5437e107a620` (deployment `appgdep_6ae5e57548108191a59af048c04fffbc`).
 - Added 10 regression tests covering the reported defects, member switching and successful cloud hydration. All 21 tests, production build, TypeScript and static synchronization passed. Browser/mobile verification remains limited by unavailable preview infrastructure.
 
 ## 2026-10-31 — Publish supplied refresh and synchronize canonical source
