@@ -8,7 +8,7 @@ type DatabaseEnv = { DB?: D1Database };
 
 const allowedMemberIds = new Set(["mike", "tully"]);
 const seedProfiles = [
-  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-10-31" },
+  { id: "mike", display_name: "Mike", portal_name: "Michael", tier: "Prime", tier_credits: 1082, member_number_last4: "3429", snapshot_date: "2026-11-01" },
   { id: "tully", display_name: "Tully", portal_name: "Christine", tier: "Choice", tier_credits: 0, member_number_last4: "6861", snapshot_date: "2026-10-13" }
 ];
 const seedBookings = [
@@ -310,7 +310,47 @@ async function initialize(db: D1Database) {
   },
   "christmasMatch": true
 })),
-    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_31', ?)").bind(now)
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_10_31', ?)").bind(now),
+    db.prepare("UPDATE member_profiles SET snapshot_date = '2026-11-01', updated_at = ? WHERE id = 'mike' AND NOT EXISTS (SELECT 1 FROM app_metadata WHERE key = 'mike_snapshot_2026_11_01')").bind(now),
+    db.prepare("INSERT OR IGNORE INTO member_offer_snapshots (member_id, id, snapshot_date, unique_offers, usable_slots, sailing_rows, data_json) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind("mike", "refresh-2026-11-01", "2026-11-01", 11, 16, 2153, JSON.stringify({
+  "checkedAt": "2026-11-01T22:49:31.586Z",
+  "uniqueOffers": 11,
+  "usableSlots": 16,
+  "sailingRows": 2153,
+  "newCodes": [],
+  "removedCodes": [
+    "26RCL1004"
+  ],
+  "changedCodes": [
+    "26GEM203"
+  ],
+  "duplicateCodes": [
+    "26TCR104",
+    "26TCR205",
+    "26TCR304",
+    "26TCR403"
+  ],
+  "note": "November 1 live check of Mike's account: 16 usable slots across 11 unique codes (portal shows All Offers (16)). Removed (expired Oct 31): October Monthly Mix (26RCL1004, x1). Changed: Jack of All Spades (26GEM203, one copy, redeem Nov 22) now shows sail dates Jan 2 - Mar 29, 2027 (was Nov 1, 2026 - Mar 29, 2027); perks (Bonus FP $125) and room types unchanged. Its full sailing table was re-captured and checksum-verified against the signed-in portal (131 groups / 323 dated sailings, checksum 92b3eff5) and all 131 link slugs matched; the one earlier Nov 1 sailing dropped off and the Jewel of the Seas / Tampa / 5 Night Western Caribbean Getaway Balcony group now carries Jan 2, Jan 16, Feb 13, Feb 27, Mar 8, Mar 22 and Mar 27 under link code JW05W696 (the stored JW05W695 Balcony entry covering only Mar 8 and Mar 22 was stale and was replaced). The ten other active codes match live tiles by name, redeem-by date, copy count and sail window; their sailing groups are carried forward from October 13/19/22/26/31, not re-captured today. Combined 831 groups / 2,153 dated sailings. Prime tier message (1,418 tier credits to keep Prime; 1,082 tier credits) re-verified. Tully and bookings unchanged.",
+  "sailingSources": {
+    "newCodes": "2026-10-31",
+    "recapturedCodes": {
+      "26GEM203": "2026-11-01"
+    },
+    "retainedCodes": [
+      "2026-10-13",
+      "2026-10-19",
+      "2026-10-22",
+      "2026-10-26"
+    ]
+  },
+  "sailingChecksums": {
+    "26TCR403": "c72dda57",
+    "26GEM203": "92b3eff5"
+  },
+  "christmasMatch": true
+})),
+    db.prepare("INSERT OR IGNORE INTO app_metadata (key, value) VALUES ('mike_snapshot_2026_11_01', ?)").bind(now)
   ]);
 }
 

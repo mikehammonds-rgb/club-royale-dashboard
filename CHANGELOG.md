@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-11-01 — Standing authorization for canonical GitHub refreshes
+
+- Mike explicitly granted ongoing permission to refresh GitHub for the Club Royale dashboard. Routine requested dashboard refreshes include committing and updating `mikehammonds-rgb/club-royale-dashboard` main without a separate conversational approval. Recorded this in WORKFLOW.md. Runtime approval policies still apply.
+
+## 2026-11-01 — Mike Club Royale offer refresh
+
+- Verified Mike's signed-in Club Royale account on 2026-11-01 (Prime, 1,082 tier credits, 1,418 to keep Prime). Portal shows All Offers (16): 16 usable slots across 11 unique codes (previously 17 slots / 12 codes).
+- Removed: `26RCL1004` October Monthly Mix (x1; expired Oct 31). Its 49 sailing groups / 157 dated sailings were dropped from active Finder data; history stays in the earlier snapshots and this changelog.
+- Changed: `26GEM203` Jack of All Spades now shows sail dates Jan 2 - Mar 29, 2027 (the Oct 31 snapshot recorded Nov 1, 2026 - Mar 29, 2027). Perks (Bonus FP $125), room types, redeem-by (Nov 22) and copy count are unchanged. Re-captured its full sailing table: 131 groups / 323 dated sailings, checksum `92b3eff5` (in-page djb2 matched Node over the stored rows), and all 131 live link slugs matched. The single Nov 1 sailing dropped off, and the Jewel of the Seas / Tampa / 5 Night Western Caribbean Getaway Balcony group now carries Jan 2, Jan 16, Feb 13, Feb 27, Mar 8, Mar 22, Mar 27 under link code `JW05W696` (the stored `JW05W695` Balcony entry with only Mar 8 and Mar 22 was stale).
+- Carried forward unchanged: the ten other codes (`26TCR403`, `26TCR104`, `26TCR205`, `26TCR304`, `26BAF505`, `26FLS104`, `26VAR604`, `26PAS804`, `26MIX604`, `26EMV504`) match live tiles by name, redeem-by date, copy count and sail window; their sailing groups are byte-identical to the previous commit.
+- Current Mike dataset: **11 unique codes, 16 slots, 831 groups, 2,153 dated sailings**. Earliest departure 2026-11-22 (`26FLS104`). Dec 25, 2026 Florida-port check still finds 10 sailings (7 `26TCR403`, 2 `26TCR104`, 1 `26TCR304`); this was a data-level check, not a run of the Finder UI.
+- Added append-only D1 snapshot `refresh-2026-11-01` with guard `mike_snapshot_2026_11_01` after the Oct 31 block; seed profile date is 2026-11-01. Tully, bookings, member isolation and UI unchanged.
+- Validated: real `expandRoyalSailingGroups` logic (zero orphan/skipped groups, bad dates, duplicates or query-string links; every active offer has sailings), 21 tests, `node --check app.js`, and root/public byte-identity. Production build and TypeScript passed after applying the supplied patch in the Sites checkout. Browser/mobile QA remains unverified due to the previously unavailable preview infrastructure. Sites version 44 deployed successfully from `e32496110acf328b6cb9024e695537f7177a11ea`, deployment `appgdep_6ae7c3b38f788191be836c6c1ba90e37`. Canonical GitHub synchronization is included in this commit.
+
 ## 2026-10-31 — Protect saved edits and correct saved-search counts
 
 - Preserve browser state when D1 is unavailable, and prevent slow or superseded cloud loads from overwriting newer edits or another member.

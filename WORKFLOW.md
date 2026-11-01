@@ -1,5 +1,11 @@
 # Working and Refresh Workflow
 
+## Standing user authorization — November 1, 2026
+
+Mike explicitly instructed: "you have permission to refresh github always."
+
+For this Club Royale dashboard, routine requested refreshes and fixes include committing and updating `mikehammonds-rgb/club-royale-dashboard` on `main`, including the dashboard account, offer, sailing and booking data already maintained in this repository. Do not request separate conversational authorization for that GitHub synchronization on each refresh. Continue to follow the validation, data-preservation and safe Git procedures below. Runtime approval policies still apply; this instruction does not disable them. Requests to publish the dashboard also include the existing Sites publication workflow, preserving its audience.
+
 ## 1. Preflight for every change
 
 1. Read all six root handoff documents listed in `AGENTS.md`.

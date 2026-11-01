@@ -14,6 +14,6 @@ A mobile-first private dashboard for Club Royale casino offers and eligible Roya
 
 ## Current data
 
-Mike's offer list was verified live on October 31, 2026: 17 usable slots across 12 unique codes, 881 itinerary groups and 2,306 dated sailings. New: All-In On Thrills (26TCR403, three copies, redeem Nov 27, $75 FreePlay) and Jack of All Spades (26GEM203, one copy, redeem Nov 22, Bonus FP $125). Removed (expired Oct 28): Go for Gold (26TOR905) and 2026 Caribbean Chips (26PAS703). Both new full tables captured and checksum-verified; ten retained codes use October 13/19/22/26 sailing snapshots.
+Mike's offer list was verified live on November 1, 2026: 16 usable slots across 11 unique codes, 831 itinerary groups and 2,153 dated sailings. Removed (expired Oct 31): October Monthly Mix (26RCL1004). Jack of All Spades (26GEM203, redeem Nov 22) now shows sail dates Jan 2 - Mar 29, 2027 and its full sailing table was re-captured and checksum-verified; the ten other codes use their earlier verified sailing snapshots.
 
 This remains a snapshot rather than a live Royal Caribbean API connection. Future refreshes should re-check the signed-in offer page, update the canonical offer/sailing data, and verify the saved searches before publishing.

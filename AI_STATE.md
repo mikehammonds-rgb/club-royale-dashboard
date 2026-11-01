@@ -1,5 +1,13 @@
 # Current AI State
 
+## November 1 Mike offer refresh — published as Sites version 44
+
+- Verified Mike's signed-in Club Royale account on 2026-11-01 (Prime; 1,082 tier credits, 1,418 to keep Prime). Portal shows All Offers (16): 16 usable slots across 11 unique codes (previously 17 / 12).
+- Removed: `26RCL1004` (expired Oct 31). Changed: `26GEM203` now shows sail dates Jan 2 - Mar 29, 2027; re-captured 131 groups / 323 dated sailings, checksum `92b3eff5`, all 131 link slugs verified. Stale Jewel / Tampa / 5 Night Balcony entry (`JW05W695`) replaced by the live merged group (`JW05W696`). Ten other codes match live tiles and carry forward byte-identical sailing groups.
+- Current Mike dataset: **11 unique codes, 16 slots, 831 groups, 2,153 dated sailings**. Append-only D1 snapshot `refresh-2026-11-01`, guard `mike_snapshot_2026_11_01`.
+- Validated with the real `expandRoyalSailingGroups` logic, 21 tests, `node --check app.js` and root/public byte-identity. Production build and TypeScript also pass in the Sites checkout. Browser/mobile QA remains unverified due to the previously unavailable preview infrastructure. Capture provenance is the supplied Claude patch. Sites version **44** deployed successfully from mirror commit `e32496110acf328b6cb9024e695537f7177a11ea`, deployment `appgdep_6ae7c3b38f788191be836c6c1ba90e37`. Canonical GitHub synchronization is included in this commit. On November 1 Mike explicitly granted standing permission to refresh GitHub for this dashboard; see WORKFLOW.md.
+
+
 ## October 31 persistence and saved-search fixes
 
 - The no-D1 API response now declares `localOnly`; hydration preserves local notes, searches and statuses instead of replacing them with seed/empty data.
@@ -9,7 +17,7 @@
 - Validation: 21 tests, production build, TypeScript and root/public synchronization passed. Browser/mobile QA remains unverified because the preview infrastructure previously failed with a Cloudflare DNS lookup error; no infrastructure recovery was established. Offer datasets and booked facts were not changed.
 - Delivery: canonical GitHub commit `3f91f2da636950d32f1cc643c13be35e6242764e` verified on main. Sites version **43** deployed successfully from mirror commit `68fb3bd5b312ded2c78f56fdd0fb5437e107a620`; deployment `appgdep_6ae5e57548108191a59af048c04fffbc`. Mike-owner / Michael-Hott-viewer audience preserved.
 
-Last reconciled: 2026-10-31. October 31 offer refresh published as Sites version 42; canonical GitHub synchronization authorized by Mike and included in this commit.
+Last reconciled: 2026-11-01 (November 1 refresh published as Sites version 44; canonical GitHub synchronization included in this commit). October 31 offer refresh published as Sites version 42; canonical GitHub synchronization authorized by Mike and included in this commit.
 
 ## October 31 Mike offer refresh — published as Sites version 42
 
@@ -89,7 +97,7 @@ Last reconciled: 2026-10-31. October 31 offer refresh published as Sites version
 
 ## Current verified datasets
 
-- Mike snapshot: 2026-10-31; 12 active codes, 17 slots, 881 itinerary groups and 2,306 dated sailings. See October 31 refresh above for terms, provenance, checksums and pending delivery. A simple Florida-port check of sailings aboard December 25, 2026 finds 10 matches (7 from `26TCR403`, 2 from `26TCR104`, 1 from `26TCR304`); this was a data-level check, not a run of the Finder UI.
+- Mike snapshot: 2026-11-01; 11 active codes, 16 slots, 831 itinerary groups and 2,153 dated sailings. See the November 1 and October 31 refresh sections above for terms, provenance, checksums and delivery status. A simple Florida-port check of sailings aboard December 25, 2026 finds 10 matches (7 from `26TCR403`, 2 from `26TCR104`, 1 from `26TCR304`); this was a data-level check, not a run of the Finder UI.
 - Tully snapshot: 2026-10-13; 10 active unique offer codes, 11 usable slots, 377 itinerary groups expanding to 1,029 dated sailing rows (computed by running `app.js`'s `expandRoyalSailingGroups` logic against the refreshed data). Active codes: `26TCR209` (new, ×1, "Ace of Hearts", Interior only, cruise fare for one plus a discounted fare for the guest, $25 FreePlay online, redeems by Nov 11 2026), `26TCR107` (×2), `26TOR909`, `26TOR808` (redeems Oct 14), `26PAS707`, `26NDS108`, `26JKP607` (Oct 16), `26RCL1007`, `26NPR807`, `26SHC607` (Oct 16); all are comp offers and the nine older codes are unchanged. Nothing was removed since Oct 8. A full "View sailings" capture was run for all 10 codes. Tier unchanged: Choice, 0 credits.
 - Mike has four seeded booked cruises. The Christmas 2026 Wonder booking uses historical offer `26PAS603`; its August 29 sailing snapshot is preserved separately and is not part of the active Finder dataset.
 - The November 27, 2026 Wonder booking is reconciled to the Royal Caribbean receipt issued March 4, 2026, including itinerary, XB guarantee cabin status, guests, My Time dining, exact taxes/payment balance, gratuities, and protection status.
